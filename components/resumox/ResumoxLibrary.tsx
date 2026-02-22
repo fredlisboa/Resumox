@@ -1,49 +1,31 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import BookCard from './BookCard'
 import CategoryFilter from './CategoryFilter'
 import SearchBar from './SearchBar'
-import type { BookWithProgress, ResumoxCategory } from '@/lib/resumox-types'
+import LoadMoreButton from './LoadMoreButton'
+import { usePaginatedBooks } from '@/hooks/usePaginatedBooks'
+import type { ResumoxCategory } from '@/lib/resumox-types'
 
 export default function ResumoxLibrary() {
-  const [books, setBooks] = useState<BookWithProgress[]>([])
   const [categories, setCategories] = useState<ResumoxCategory[]>([])
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [search, setSearch] = useState('')
-  const [loading, setLoading] = useState(true)
 
-  const fetchBooks = useCallback(async () => {
-    setLoading(true)
-    try {
-      const params = new URLSearchParams()
-      if (selectedCategory) params.set('category', selectedCategory)
-      if (search) params.set('search', search)
-      params.set('limit', '50')
+  const { books, loading, loadingMore, hasMore, total, loadMore } = usePaginatedBooks({
+    category: selectedCategory,
+    search,
+  })
 
-      const res = await fetch(`/api/resumox/books?${params}`)
-      if (res.ok) {
-        const data = await res.json()
-        setBooks(data.books || [])
-      }
-    } catch (err) {
-      console.error('Error fetching books:', err)
-    } finally {
-      setLoading(false)
-    }
-  }, [selectedCategory, search])
-
+  // Fetch categories from dedicated API
   useEffect(() => {
-    fetchBooks()
-  }, [fetchBooks])
-
-  useEffect(() => {
-    // Fetch categories once
     const fetchCategories = async () => {
       try {
-        const res = await fetch('/api/resumox/books?limit=0')
+        const res = await fetch('/api/resumox/categories')
         if (res.ok) {
-          // Categories are derived from books — use a dedicated approach
+          const data = await res.json()
+          setCategories(data.categories || [])
         }
       } catch {
         // ignore
@@ -52,32 +34,8 @@ export default function ResumoxLibrary() {
     fetchCategories()
   }, [])
 
-  // Derive categories from book data for now (no separate API)
-  useEffect(() => {
-    if (books.length === 0) return
-    const catMap = new Map<string, ResumoxCategory>()
-    for (const b of books) {
-      if (!catMap.has(b.category_slug)) {
-        catMap.set(b.category_slug, {
-          slug: b.category_slug,
-          label: b.category_label,
-          emoji: b.category_emoji,
-          sort_order: 0,
-          book_count: 0,
-          created_at: '',
-        })
-      }
-      const cat = catMap.get(b.category_slug)!
-      cat.book_count++
-    }
-    setCategories(Array.from(catMap.values()))
-  }, [books])
-
   const inProgress = books.filter((b) => b.progress && b.progress.status === 'in_progress')
   const featured = books.filter((b) => b.is_featured)
-  const displayBooks = selectedCategory
-    ? books.filter((b) => b.category_slug === selectedCategory)
-    : books
 
   return (
     <div className="space-y-6">
@@ -130,7 +88,7 @@ export default function ResumoxLibrary() {
             </div>
           ))}
         </div>
-      ) : displayBooks.length === 0 ? (
+      ) : books.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-resumox-muted text-sm">
             {search ? 'Nenhum livro encontrado.' : 'Nenhum livro disponível.'}
@@ -140,17 +98,24 @@ export default function ResumoxLibrary() {
         <section>
           {(search || selectedCategory) && (
             <h2 className="text-sm font-bold text-resumox-text mb-3">
-              {displayBooks.length} {displayBooks.length === 1 ? 'livro' : 'livros'}
+              {total} {total === 1 ? 'livro' : 'livros'}
               {selectedCategory && categories.find((c) => c.slug === selectedCategory)
                 ? ` em ${categories.find((c) => c.slug === selectedCategory)!.emoji} ${categories.find((c) => c.slug === selectedCategory)!.label}`
                 : ''}
             </h2>
           )}
           <div className="space-y-2">
-            {displayBooks.map((book) => (
+            {books.map((book) => (
               <BookCard key={book.id} book={book} />
             ))}
           </div>
+          <LoadMoreButton
+            loading={loadingMore}
+            hasMore={hasMore}
+            total={total}
+            loadedCount={books.length}
+            onLoadMore={loadMore}
+          />
         </section>
       )}
     </div>

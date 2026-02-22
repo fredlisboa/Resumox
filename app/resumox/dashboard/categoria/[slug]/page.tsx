@@ -4,34 +4,33 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
 import ResumoxNav from '@/components/resumox/ResumoxNav'
 import BookCard from '@/components/resumox/BookCard'
-import type { BookWithProgress } from '@/lib/resumox-types'
+import LoadMoreButton from '@/components/resumox/LoadMoreButton'
+import { usePaginatedBooks } from '@/hooks/usePaginatedBooks'
 
 export default function CategoriaPage() {
   const { slug } = useParams<{ slug: string }>()
-  const [books, setBooks] = useState<BookWithProgress[]>([])
-  const [loading, setLoading] = useState(true)
   const [categoryLabel, setCategoryLabel] = useState('')
 
+  const { books, loading, loadingMore, hasMore, total, loadMore } = usePaginatedBooks({
+    category: slug,
+  })
+
+  // Fetch category label
   useEffect(() => {
     if (!slug) return
-    const fetchBooks = async () => {
-      setLoading(true)
+    const fetchLabel = async () => {
       try {
-        const res = await fetch(`/api/resumox/books?category=${slug}&limit=50`)
+        const res = await fetch('/api/resumox/categories')
         if (res.ok) {
           const data = await res.json()
-          setBooks(data.books || [])
-          if (data.books?.length > 0) {
-            setCategoryLabel(`${data.books[0].category_emoji} ${data.books[0].category_label}`)
-          }
+          const cat = (data.categories || []).find((c: any) => c.slug === slug)
+          if (cat) setCategoryLabel(`${cat.emoji} ${cat.label}`)
         }
       } catch {
         // ignore
-      } finally {
-        setLoading(false)
       }
     }
-    fetchBooks()
+    fetchLabel()
   }, [slug])
 
   return (
@@ -43,7 +42,7 @@ export default function CategoriaPage() {
           {categoryLabel || slug}
         </h1>
         <p className="text-sm text-resumox-muted mb-6">
-          {books.length} {books.length === 1 ? 'livro' : 'livros'}
+          {total} {total === 1 ? 'livro' : 'livros'}
         </p>
 
         {loading ? (
@@ -57,6 +56,13 @@ export default function CategoriaPage() {
             {books.map((book) => (
               <BookCard key={book.id} book={book} />
             ))}
+            <LoadMoreButton
+              loading={loadingMore}
+              hasMore={hasMore}
+              total={total}
+              loadedCount={books.length}
+              onLoadMore={loadMore}
+            />
           </div>
         )}
       </main>

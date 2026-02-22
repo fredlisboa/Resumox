@@ -19,7 +19,8 @@
     "check:webhooks": "tsx scripts/check-webhook-results.ts",
     "check:errors": "tsx scripts/check-webhook-errors.ts",
     "check:user-products": "tsx scripts/check-user-products.ts",
-    "create:first-admin": "tsx scripts/create-first-admin.ts"
+    "create:first-admin": "tsx scripts/create-first-admin.ts",
+    "import:generated": "tsx scripts/import-generated-summaries.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.78.0",
