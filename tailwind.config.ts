@@ -31,6 +31,23 @@ const config: Config = {
           300: '#67e8f9',
           glow: '#00ffff', // Neon cyan for glows
         },
+        // Resumox Brand Colors
+        resumox: {
+          bg: '#0A0A0F',
+          surface: '#13131A',
+          surface2: '#1A1A24',
+          surface3: '#22222E',
+          border: '#2A2A3A',
+          text: '#E8E8ED',
+          muted: '#8888A0',
+          accent: '#6C5CE7',
+          'accent-light': '#A29BFE',
+          gold: '#F0C040',
+          green: '#00D68F',
+          red: '#FF6B6B',
+          orange: '#FFA94D',
+          blue: '#4DABF7',
+        },
         // Keep primary as alias for backward compatibility
         primary: {
           50: '#ede9fe',

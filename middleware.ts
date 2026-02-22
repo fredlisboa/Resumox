@@ -5,10 +5,10 @@ import { checkAdminAuthentication } from './lib/admin-auth'
 const SESSION_COOKIE_NAME = 'huskyapp_session'
 
 // Rotas públicas que não precisam de autenticação
-const publicPaths = ['/', '/neuroreset', '/iemocional', '/api/auth/login', '/api/webhook/hotmart']
+const publicPaths = ['/', '/neuroreset', '/iemocional', '/resumox', '/api/auth/login', '/api/webhook/hotmart']
 
 // Rotas protegidas que exigem autenticação
-const protectedPaths = ['/dashboard', '/iemocional/dashboard']
+const protectedPaths = ['/dashboard', '/iemocional/dashboard', '/resumox/dashboard']
 
 // Rotas de admin que exigem autenticação de administrador
 const adminPaths = ['/admin']
@@ -22,7 +22,7 @@ function addSecurityHeaders(response: NextResponse) {
       "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://*.cloudflare.com https://cloudflareinsights.com",
       "style-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
       "img-src 'self' data: blob: https: http:",
-      "font-src 'self' data: https://challenges.cloudflare.com",
+      "font-src 'self' data: https://challenges.cloudflare.com https://fonts.gstatic.com",
       "connect-src 'self' https://challenges.cloudflare.com https://*.cloudflare.com https://*.supabase.co wss://*.supabase.co",
       "frame-src 'self' https://challenges.cloudflare.com https://*.cloudflare.com",
       "worker-src 'self' blob:",
@@ -61,10 +61,18 @@ export async function middleware(request: NextRequest) {
   if (isProtectedPath) {
     const sessionToken = request.cookies.get(SESSION_COOKIE_NAME)?.value
 
+    // Determinar rota de login baseado no path do produto
+    const loginRoute = pathname.startsWith('/resumox') ? '/resumox'
+      : pathname.startsWith('/iemocional') ? '/iemocional'
+      : pathname.startsWith('/sueno-infantil') ? '/sueno-infantil'
+      : pathname.startsWith('/sono-infantil') ? '/sono-infantil'
+      : pathname.startsWith('/nutricha') ? '/nutricha'
+      : '/'
+
     // Se não tem token, redirecionar para login
     if (!sessionToken) {
       const url = request.nextUrl.clone()
-      url.pathname = '/'
+      url.pathname = loginRoute
       return NextResponse.redirect(url)
     }
 
@@ -78,9 +86,9 @@ export async function middleware(request: NextRequest) {
       })
 
       if (!sessionResponse.ok) {
-        // Sessão inválida, redirecionar para login
+        // Sessão inválida, redirecionar para login do produto
         const url = request.nextUrl.clone()
-        url.pathname = '/'
+        url.pathname = loginRoute
 
         const response = NextResponse.redirect(url)
         response.cookies.delete(SESSION_COOKIE_NAME)
@@ -95,9 +103,9 @@ export async function middleware(request: NextRequest) {
     } catch (error) {
       console.error('Middleware session check error:', error)
 
-      // Em caso de erro, redirecionar para login
+      // Em caso de erro, redirecionar para login do produto
       const url = request.nextUrl.clone()
-      url.pathname = '/'
+      url.pathname = loginRoute
       return NextResponse.redirect(url)
     }
   }

@@ -62,9 +62,15 @@ export const PRODUCT_ORDER_BUMPS_MAP: Record<string, MainProductConfig> = {
       }
       // Adicione outros order bumps do Kit Inteligencia Emocional aqui
     ]
-  }
+  },
 
-  // Adicione outros produtos principais aqui conforme necessário
+  // Resumox (produto principal - sem order bumps)
+  // TODO: Substituir RESUMOX_HOTMART_ID pelo ID real do produto na Hotmart
+  'RESUMOX_HOTMART_ID': {
+    product_id: 'RESUMOX_HOTMART_ID',
+    product_name: 'Resumox',
+    order_bumps: []
+  }
 }
 
 /**

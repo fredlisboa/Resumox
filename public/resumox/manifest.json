@@ -1,0 +1,19 @@
+{
+  "name": "Resumox — Resumos de Livros",
+  "short_name": "Resumox",
+  "description": "659 resumos de livros com áudio, mapa mental, insights e exercícios práticos",
+  "start_url": "/resumox/dashboard",
+  "scope": "/resumox/",
+  "display": "standalone",
+  "background_color": "#0A0A0F",
+  "theme_color": "#0A0A0F",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/resumox/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

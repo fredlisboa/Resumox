@@ -109,6 +109,148 @@ export type Database = {
         Insert: Omit<Database['public']['Tables']['user_products']['Row'], 'id' | 'created_at' | 'updated_at'>
         Update: Partial<Database['public']['Tables']['user_products']['Insert']>
       }
+      // ── Resumox tables ──
+      resumox_books: {
+        Row: {
+          id: string
+          slug: string
+          title: string
+          original_title: string | null
+          author: string
+          year: number | null
+          category_slug: string
+          category_label: string
+          category_emoji: string
+          reading_time_min: number
+          audio_duration_min: number | null
+          audio_r2_key: string | null
+          pdf_r2_key: string | null
+          mindmap_image_r2_key: string | null
+          cover_gradient_from: string
+          cover_gradient_to: string
+          rating_avg: number
+          rating_count: number
+          is_featured: boolean
+          is_published: boolean
+          sort_order: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['resumox_books']['Row'], 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['resumox_books']['Insert']>
+      }
+      resumox_book_content: {
+        Row: {
+          id: string
+          book_id: string
+          summary_html: string
+          mindmap_json: Record<string, any> | null
+          insights_json: Record<string, any>[] | null
+          exercises_json: Record<string, any>[] | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['resumox_book_content']['Row'], 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['resumox_book_content']['Insert']>
+      }
+      resumox_categories: {
+        Row: {
+          slug: string
+          label: string
+          emoji: string
+          sort_order: number
+          book_count: number
+          created_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['resumox_categories']['Row'], 'created_at'>
+        Update: Partial<Database['public']['Tables']['resumox_categories']['Insert']>
+      }
+      resumox_user_progress: {
+        Row: {
+          id: string
+          user_email: string
+          book_id: string
+          status: string
+          current_tab: string
+          progress_pct: number
+          rating: number | null
+          completed_at: string | null
+          xp_earned: number
+          checklist_state: Record<string, any>
+          audio_position_sec: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['resumox_user_progress']['Row'], 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['resumox_user_progress']['Insert']>
+      }
+      resumox_user_stats: {
+        Row: {
+          user_email: string
+          total_books_completed: number
+          total_xp: number
+          current_streak: number
+          longest_streak: number
+          last_activity_date: string | null
+          favorite_category: string | null
+          total_audio_minutes: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['resumox_user_stats']['Row'], 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['resumox_user_stats']['Insert']>
+      }
+      resumox_saved_insights: {
+        Row: {
+          id: string
+          user_email: string
+          book_id: string
+          insight_text: string
+          insight_source: string | null
+          saved_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['resumox_saved_insights']['Row'], 'id' | 'saved_at'>
+        Update: Partial<Database['public']['Tables']['resumox_saved_insights']['Insert']>
+      }
+      resumox_daily_activity: {
+        Row: {
+          id: string
+          user_email: string
+          activity_date: string
+          books_opened: number
+          books_completed: number
+          xp_earned: number
+          audio_minutes: number
+          created_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['resumox_daily_activity']['Row'], 'id' | 'created_at'>
+        Update: Partial<Database['public']['Tables']['resumox_daily_activity']['Insert']>
+      }
+      resumox_trails: {
+        Row: {
+          id: string
+          slug: string
+          title: string
+          description: string | null
+          emoji: string
+          cover_gradient_from: string
+          cover_gradient_to: string
+          sort_order: number
+          is_published: boolean
+          created_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['resumox_trails']['Row'], 'id' | 'created_at'>
+        Update: Partial<Database['public']['Tables']['resumox_trails']['Insert']>
+      }
+      resumox_trail_books: {
+        Row: {
+          trail_id: string
+          book_id: string
+          position: number
+        }
+        Insert: Database['public']['Tables']['resumox_trail_books']['Row']
+        Update: Partial<Database['public']['Tables']['resumox_trail_books']['Insert']>
+      }
     }
   }
 }
@@ -130,6 +272,10 @@ export const supabaseAdmin = createClient<Database>(
     }
   }
 )
+
+// Untyped admin client for resumox tables (avoids Supabase generic type inference issues)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const supabaseAdminUntyped = supabaseAdmin as any
 
 // Cliente para uso no navegador
 export function createSupabaseBrowserClient() {

@@ -532,6 +532,134 @@
   color: rgb(226 232 240); /* slate-200 - slightly lighter for emphasis in dark mode */
 }
 
+/* ===== Resumox Theme ===== */
+.resumox-theme {
+  --rx-bg: #0A0A0F;
+  --rx-surface: #13131A;
+  --rx-surface2: #1A1A24;
+  --rx-surface3: #22222E;
+  --rx-border: #2A2A3A;
+  --rx-text: #E8E8ED;
+  --rx-text-muted: #8888A0;
+  --rx-accent: #6C5CE7;
+  --rx-accent-light: #A29BFE;
+  --rx-accent-glow: rgba(108, 92, 231, 0.3);
+  --rx-gold: #F0C040;
+  --rx-gold-dim: rgba(240, 192, 64, 0.15);
+  --rx-green: #00D68F;
+  --rx-green-dim: rgba(0, 214, 143, 0.12);
+  --rx-red: #FF6B6B;
+  --rx-orange: #FFA94D;
+  --rx-blue: #4DABF7;
+  --rx-radius: 16px;
+  --rx-radius-sm: 10px;
+}
+
+/* Resumox editorial content styling */
+.resumox-content h2 {
+  font-family: var(--font-playfair, 'Playfair Display', serif);
+  font-size: 22px;
+  font-weight: 800;
+  margin: 32px 0 16px;
+  color: #fff;
+  position: relative;
+  padding-left: 16px;
+}
+
+.resumox-content h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 4px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--rx-accent), var(--rx-accent-light));
+}
+
+.resumox-content h2:first-child {
+  margin-top: 0;
+}
+
+.resumox-content h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 24px 0 10px;
+  color: var(--rx-accent-light);
+}
+
+.resumox-content p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--rx-text);
+  margin-bottom: 16px;
+}
+
+.resumox-content strong {
+  color: var(--rx-accent-light);
+}
+
+.resumox-content .highlight-box {
+  background: var(--rx-gold-dim);
+  border-left: 4px solid var(--rx-gold);
+  border-radius: 0 var(--rx-radius-sm) var(--rx-radius-sm) 0;
+  padding: 16px 20px;
+  margin: 20px 0;
+  font-size: 14px;
+  color: var(--rx-gold);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.resumox-content .key-point {
+  background: var(--rx-surface2);
+  border: 1px solid var(--rx-border);
+  border-radius: var(--rx-radius-sm);
+  padding: 14px 16px;
+  margin: 12px 0;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.resumox-content .key-point .kp-num {
+  min-width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--rx-accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.resumox-content .key-point .kp-text {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.resumox-content .key-point .kp-text strong {
+  color: var(--rx-accent-light);
+}
+
+/* Resumox scrollbar override */
+.resumox-theme ::-webkit-scrollbar-track {
+  background: var(--rx-bg);
+}
+
+.resumox-theme ::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--rx-accent) 0%, var(--rx-accent-light) 100%);
+  border: 2px solid var(--rx-bg);
+}
+
+.resumox-theme ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--rx-accent-light) 0%, var(--rx-accent) 100%);
+  box-shadow: 0 0 10px var(--rx-accent-glow);
+}
+
 /* ===== Sueno Infantil Theme - Purple/Violet Palette ===== */
 /* Cards/boxes with light backgrounds in dark theme need dark text */
 .html-content > div,

@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quem Pensa Enriquece — Summari</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap');
+
+  :root {
+    --bg: #0A0A0F;
+    --surface: #13131A;
+    --surface2: #1A1A24;
+    --surface3: #22222E;
+    --border: #2A2A3A;
+    --text: #E8E8ED;
+    --text-muted: #8888A0;
+    --accent: #6C5CE7;
+    --accent-light: #A29BFE;
+    --accent-glow: rgba(108, 92, 231, 0.3);
+    --gold: #F0C040;
+    --gold-dim: rgba(240, 192, 64, 0.15);
+    --green: #00D68F;
+    --green-dim: rgba(0, 214, 143, 0.12);
+    --red: #FF6B6B;
+    --orange: #FFA94D;
+    --blue: #4DABF7;
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV BAR ── */
+  .app-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .app-nav .back { color: var(--accent-light); font-size: 14px; text-decoration: none; display:flex; align-items:center; gap:6px; }
+  .app-nav .logo { font-weight: 800; font-size: 16px; color: var(--accent-light); letter-spacing: -0.5px; }
+  .app-nav .streak { background: var(--gold-dim); color: var(--gold); padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    padding: 32px 20px 40px;
+    background: linear-gradient(180deg, rgba(108,92,231,0.08) 0%, transparent 100%);
+    overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -60px; right: -60px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+    filter: blur(40px);
+  }
+  .hero-top { display: flex; gap: 20px; align-items: flex-start; position: relative; }
+  .book-cover {
+    width: 110px; min-width: 110px; height: 160px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border-radius: 8px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+  .book-cover::after {
+    content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 2px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+  }
+  .book-cover .title {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px; font-weight: 800; color: var(--gold);
+    text-align: center; line-height: 1.2;
+  }
+  .book-cover .author { font-size: 8px; color: var(--text-muted); margin-top: 8px; text-transform: uppercase; letter-spacing: 1px; }
+  .hero-info { flex: 1; }
+  .hero-info .category {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--accent-glow);
+    color: var(--accent-light);
+    padding: 4px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+  .hero-info h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; font-weight: 800;
+    line-height: 1.15; margin-bottom: 4px;
+    background: linear-gradient(135deg, #fff, #ccc);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero-info .subtitle { color: var(--text-muted); font-size: 13px; margin-bottom: 12px; }
+  .meta-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--surface2); border: 1px solid var(--border);
+    padding: 5px 10px; border-radius: 8px;
+    font-size: 11px; color: var(--text-muted);
+  }
+  .chip svg { width: 13px; height: 13px; }
+
+  /* ── PROGRESS BAR ── */
+  .progress-section {
+    padding: 0 20px 24px;
+  }
+  .progress-bar-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+  }
+  .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .progress-header span { font-size: 12px; color: var(--text-muted); }
+  .progress-header strong { font-size: 13px; color: var(--green); }
+  .progress-track { height: 6px; background: var(--surface3); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--green)); border-radius: 3px; transition: width 1.5s ease; }
+  .progress-steps { display: flex; justify-content: space-between; margin-top: 12px; }
+  .step {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    font-size: 10px; color: var(--text-muted);
+  }
+  .step .dot {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--surface3); border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; transition: all 0.3s;
+  }
+  .step.done .dot { background: var(--green); border-color: var(--green); color: #fff; }
+  .step.active .dot { border-color: var(--accent-light); background: var(--accent-glow); color: var(--accent-light); }
+
+  /* ── TAB NAV ── */
+  .tabs {
+    display: flex; gap: 4px; padding: 0 20px; margin-bottom: 24px;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 10px 18px; border-radius: 10px;
+    font-size: 13px; font-weight: 600;
+    white-space: nowrap; cursor: pointer;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text-muted); transition: all 0.25s;
+    user-select: none;
+  }
+  .tab:hover { border-color: var(--accent); color: var(--text); }
+  .tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  /* ── CONTENT PANELS ── */
+  .panel { display: none; padding: 0 20px; }
+  .panel.active { display: block; }
+
+  /* ── AUDIO PLAYER ── */
+  .audio-player {
+    background: linear-gradient(135deg, var(--surface), var(--surface2));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+  .audio-player .ap-label { font-size: 11px; color: var(--accent-light); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 10px; }
+  .audio-player .ap-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .audio-player .ap-sub { font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
+  .ap-controls { display: flex; align-items: center; gap: 16px; }
+  .play-btn {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--accent);
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px var(--accent-glow);
+    transition: transform 0.2s, box-shadow 0.2s;
+    flex-shrink: 0;
+  }
+  .play-btn:hover { transform: scale(1.08); }
+  .play-btn svg { fill: #fff; width: 22px; height: 22px; margin-left: 2px; }
+  .ap-wave { flex: 1; display: flex; align-items: center; gap: 2px; height: 40px; }
+  .ap-wave .bar {
+    flex: 1; max-width: 4px; border-radius: 2px;
+    background: var(--surface3); transition: background 0.3s;
+  }
+  .ap-wave .bar.played { background: var(--accent-light); }
+  .ap-time { font-size: 11px; color: var(--text-muted); min-width: 70px; text-align: right; }
+  .ap-speed {
+    display: flex; gap: 6px; margin-top: 12px;
+  }
+  .ap-speed button {
+    padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--text-muted); font-size: 11px;
+    cursor: pointer; font-weight: 600;
+  }
+  .ap-speed button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  /* ── RESUMO TEXT ── */
+  .resumo-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 800;
+    margin: 32px 0 16px;
+    color: #fff;
+    position: relative;
+    padding-left: 16px;
+  }
+  .resumo-content h2::before {
+    content: '';
+    position: absolute; left: 0; top: 4px; bottom: 4px;
+    width: 4px; border-radius: 2px;
+    background: linear-gradient(180deg, var(--accent), var(--accent-light));
+  }
+  .resumo-content h2:first-child { margin-top: 0; }
+  .resumo-content h3 {
+    font-size: 16px; font-weight: 700; margin: 24px 0 10px;
+    color: var(--accent-light);
+  }
+  .resumo-content p {
+    font-size: 15px; line-height: 1.8;
+    color: var(--text); margin-bottom: 16px;
+  }
+  .resumo-content .highlight-box {
+    background: var(--gold-dim);
+    border-left: 4px solid var(--gold);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 16px 20px; margin: 20px 0;
+    font-size: 14px; color: var(--gold);
+    font-style: italic; font-weight: 500;
+    line-height: 1.6;
+  }
+  .resumo-content .key-point {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px; margin: 12px 0;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .key-point .kp-num {
+    min-width: 28px; height: 28px; border-radius: 8px;
+    background: var(--accent); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 800;
+  }
+  .key-point .kp-text { font-size: 14px; line-height: 1.6; }
+  .key-point .kp-text strong { color: var(--accent-light); }
+
+  /* ── MIND MAP ── */
+  .mindmap-container {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+  }
+  .mindmap-title { font-size: 14px; font-weight: 700; color: var(--accent-light); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .mm-center {
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+  }
+  .mm-node-main {
+    background: linear-gradient(135deg, var(--accent), #5a4bd1);
+    color: #fff; padding: 14px 28px; border-radius: 50px;
+    font-weight: 800; font-size: 15px;
+    box-shadow: 0 4px 20px var(--accent-glow);
+    text-align: center;
+  }
+  .mm-branches {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    width: 100%;
+  }
+  .mm-branch {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    position: relative;
+  }
+  .mm-branch::before {
+    content: '';
+    position: absolute; top: -10px; left: 50%;
+    width: 2px; height: 10px;
+    background: var(--accent-glow);
+  }
+  .mm-branch .branch-title {
+    font-size: 12px; font-weight: 700; color: var(--gold);
+    margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+  }
+  .mm-branch .branch-title .icon { font-size: 14px; }
+  .mm-branch .branch-items {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .mm-branch .branch-items span {
+    font-size: 11px; color: var(--text-muted); line-height: 1.5;
+    padding-left: 10px;
+    border-left: 2px solid var(--border);
+  }
+
+  /* ── INSIGHT CARDS ── */
+  .insights-grid {
+    display: flex; flex-direction: column; gap: 14px;
+    margin-bottom: 24px;
+  }
+  .insight-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .insight-card::before {
+    content: '"'; position: absolute; top: -8px; right: 12px;
+    font-family: 'Playfair Display', serif;
+    font-size: 80px; color: var(--accent-glow); line-height: 1;
+  }
+  .insight-card .ic-text {
+    font-size: 16px; font-weight: 600; line-height: 1.5;
+    margin-bottom: 12px; position: relative;
+    color: #fff;
+  }
+  .insight-card .ic-source { font-size: 11px; color: var(--text-muted); }
+  .insight-card .ic-actions {
+    display: flex; gap: 8px; margin-top: 14px;
+  }
+  .ic-btn {
+    display: flex; align-items: center; gap: 5px;
+    padding: 6px 12px; border-radius: 8px;
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--text-muted); font-size: 11px; font-weight: 500;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .ic-btn:hover { border-color: var(--accent); color: var(--accent-light); }
+  .ic-btn svg { width: 14px; height: 14px; }
+
+  /* ── APLICAÇÃO PRÁTICA ── */
+  .practice-section {
+    margin-bottom: 24px;
+  }
+  .practice-card {
+    background: var(--green-dim);
+    border: 1px solid rgba(0, 214, 143, 0.2);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 12px;
+  }
+  .practice-card .pc-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 10px;
+  }
+  .pc-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: rgba(0, 214, 143, 0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .pc-label { font-size: 13px; font-weight: 700; color: var(--green); }
+  .practice-card p { font-size: 14px; color: var(--text); line-height: 1.7; }
+  .practice-card .checklist { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+  .checklist-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 13px; color: var(--text);
+  }
+  .checklist-item .check {
+    min-width: 20px; height: 20px; border-radius: 6px;
+    border: 2px solid var(--border); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; margin-top: 1px;
+  }
+  .checklist-item .check.checked {
+    background: var(--green); border-color: var(--green);
+  }
+  .checklist-item .check.checked::after { content: '✓'; color: #fff; font-size: 11px; font-weight: 800; }
+
+  /* ── DOWNLOAD SECTION ── */
+  .download-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+  .download-section .dl-title { font-size: 14px; font-weight: 700; margin-bottom: 14px; color: var(--text); }
+  .dl-options { display: flex; flex-direction: column; gap: 10px; }
+  .dl-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer; transition: border-color 0.2s;
+  }
+  .dl-item:hover { border-color: var(--accent); }
+  .dl-item .dl-info { display: flex; align-items: center; gap: 12px; }
+  .dl-item .dl-icon { font-size: 22px; }
+  .dl-item .dl-name { font-size: 13px; font-weight: 600; }
+  .dl-item .dl-size { font-size: 11px; color: var(--text-muted); }
+  .dl-item .dl-btn {
+    padding: 6px 14px; border-radius: 8px;
+    background: var(--accent); color: #fff;
+    font-size: 11px; font-weight: 600;
+    border: none; cursor: pointer;
+  }
+
+  /* ── RELATED BOOKS ── */
+  .related-section { padding: 0 20px 40px; }
+  .section-title {
+    font-size: 16px; font-weight: 700; margin-bottom: 16px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .section-title .see-all { font-size: 12px; color: var(--accent-light); font-weight: 500; }
+  .related-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; }
+  .related-scroll::-webkit-scrollbar { display: none; }
+  .related-card {
+    min-width: 130px; max-width: 130px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    cursor: pointer; transition: border-color 0.2s;
+  }
+  .related-card:hover { border-color: var(--accent); }
+  .related-card .rc-cover {
+    width: 100%; height: 80px; border-radius: 8px;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 10px;
+    font-size: 9px; font-weight: 800; color: var(--gold);
+    text-align: center; padding: 6px; line-height: 1.2;
+  }
+  .related-card .rc-title { font-size: 11px; font-weight: 600; line-height: 1.3; margin-bottom: 4px; }
+  .related-card .rc-time { font-size: 10px; color: var(--text-muted); }
+
+  /* ── COMPLETE BUTTON ── */
+  .complete-section { padding: 0 20px 60px; }
+  .complete-btn {
+    width: 100%; padding: 18px;
+    background: linear-gradient(135deg, var(--green), #00b377);
+    color: #fff; border: none; border-radius: var(--radius);
+    font-size: 16px; font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 4px 24px rgba(0,214,143,0.3);
+    transition: transform 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .complete-btn:hover { transform: translateY(-2px); }
+
+  /* ── RATING MODAL ── */
+  .rating-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+    display: none; align-items: center; justify-content: center;
+    z-index: 200; padding: 20px;
+  }
+  .rating-overlay.show { display: flex; }
+  .rating-box {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 32px; text-align: center;
+    max-width: 340px; width: 100%;
+  }
+  .rating-box .trophy { font-size: 48px; margin-bottom: 12px; }
+  .rating-box h3 { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+  .rating-box p { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
+  .stars { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; }
+  .stars .star { font-size: 32px; cursor: pointer; opacity: 0.3; transition: opacity 0.2s; }
+  .stars .star.lit { opacity: 1; }
+  .rating-done {
+    padding: 12px 32px; border-radius: var(--radius-sm);
+    background: var(--accent); color: #fff; font-weight: 700;
+    border: none; cursor: pointer; font-size: 14px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .anim { animation: fadeInUp 0.6s ease both; }
+  .anim-d1 { animation-delay: 0.1s; }
+  .anim-d2 { animation-delay: 0.2s; }
+  .anim-d3 { animation-delay: 0.3s; }
+
+  /* ── RESPONSIVE ── */
+  @media (min-width: 600px) {
+    body { max-width: 480px; margin: 0 auto; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ NAV ═══════ -->
+<nav class="app-nav">
+  <a href="#" class="back">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+    Biblioteca
+  </a>
+  <span class="logo">Summari</span>
+  <span class="streak">🔥 7 dias</span>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<section class="hero anim">
+  <div class="hero-top">
+    <div class="book-cover">
+      <div class="title">Quem Pensa Enriquece</div>
+      <div class="author">Napoleon Hill</div>
+    </div>
+    <div class="hero-info">
+      <span class="category">💰 Mentalidade & Riqueza</span>
+      <h1>Quem Pensa Enriquece</h1>
+      <p class="subtitle">Napoleon Hill · 1937 · Clássico</p>
+      <div class="meta-chips">
+        <span class="chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          12 min leitura
+        </span>
+        <span class="chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          18 min áudio
+        </span>
+        <span class="chip">⭐ 4.9</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PROGRESS ═══════ -->
+<section class="progress-section anim anim-d1">
+  <div class="progress-bar-wrap">
+    <div class="progress-header">
+      <span>Seu progresso</span>
+      <strong id="progress-pct">0%</strong>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-bar"></div>
+    </div>
+    <div class="progress-steps">
+      <div class="step done" data-step="0"><div class="dot">✓</div><span>Início</span></div>
+      <div class="step active" data-step="1"><div class="dot">2</div><span>Leitura</span></div>
+      <div class="step" data-step="2"><div class="dot">3</div><span>Áudio</span></div>
+      <div class="step" data-step="3"><div class="dot">4</div><span>Mind Map</span></div>
+      <div class="step" data-step="4"><div class="dot">5</div><span>Praticar</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ TABS ═══════ -->
+<div class="tabs anim anim-d2">
+  <div class="tab active" data-tab="resumo">📖 Resumo</div>
+  <div class="tab" data-tab="audio">🎧 Áudio</div>
+  <div class="tab" data-tab="mindmap">🧠 Mind Map</div>
+  <div class="tab" data-tab="insights">💡 Insights</div>
+  <div class="tab" data-tab="pratica">✅ Prática</div>
+</div>
+
+<!-- ═══════ PANEL: RESUMO ═══════ -->
+<div class="panel active" id="panel-resumo">
+  <div class="resumo-content">
+
+    <h2>A Ideia Central</h2>
+    <p>Publicado em 1937, <strong>Quem Pensa Enriquece</strong> é fruto de 25 anos de pesquisa de Napoleon Hill com mais de 500 milionários americanos — incluindo Andrew Carnegie, Henry Ford e Thomas Edison. A tese central é direta: toda riqueza e toda realização começa com um pensamento definido, alimentado por desejo ardente, fé inabalável e persistência.</p>
+
+    <div class="highlight-box">
+      "O ponto de partida de toda realização é o DESEJO. Mantenha isso em mente. Desejos fracos trazem resultados fracos, assim como uma pequena quantidade de fogo produz pouco calor."
+    </div>
+
+    <h2>Os 13 Princípios da Riqueza</h2>
+
+    <h3>1. Desejo — O Ponto de Partida</h3>
+    <p>Hill argumenta que o primeiro passo para a riqueza não é simplesmente "querer" — é transformar esse querer em uma obsessão ardente e concreta. Você precisa definir o valor exato que deseja, o prazo para conquistá-lo e o que está disposto a dar em troca. O desejo vago de "ser rico" não funciona. É preciso ter um número, uma data e um plano.</p>
+
+    <h3>2. Fé — A Visualização e a Crença na Realização</h3>
+    <p>A fé, segundo Hill, é um estado mental que pode ser induzido pela repetição de instruções ao subconsciente por meio de autosugestão. Quando você repete com convicção o que deseja alcançar, sua mente subconsciente começa a aceitar como verdade e a trabalhar para materializar essa visão.</p>
+
+    <h3>3. Autosugestão — O Meio de Influenciar o Subconsciente</h3>
+    <p>Autosugestão é a técnica de "programar" sua mente. Hill recomenda ler sua declaração de propósito em voz alta, duas vezes por dia — de manhã e antes de dormir — com emoção e convicção. Sem emoção, as palavras não penetram no subconsciente.</p>
+
+    <div class="key-point">
+      <div class="kp-num">💡</div>
+      <div class="kp-text"><strong>Ponto-chave:</strong> A autosugestão só funciona quando combinada com emoção. Ler mecanicamente não produz resultados. Você precisa sentir como se o objetivo já estivesse realizado.</div>
+    </div>
+
+    <h3>4. Conhecimento Especializado</h3>
+    <p>Hill distingue entre conhecimento geral e conhecimento especializado. Conhecimento geral, por mais vasto que seja, é praticamente inútil para acumular riqueza. O que conta é o conhecimento organizado e direcionado a um plano definido de ação. E você não precisa saber tudo — precisa saber onde encontrar o conhecimento quando precisar dele.</p>
+
+    <h3>5. Imaginação — A Oficina da Mente</h3>
+    <p>Dois tipos de imaginação são descritos: a <strong>imaginação sintética</strong> (que reorganiza conceitos existentes em novas combinações) e a <strong>imaginação criativa</strong> (que cria ideias genuinamente novas através de insights e inspiração). Toda fortuna começa com uma ideia, e ideias são produtos da imaginação.</p>
+
+    <h3>6. Planejamento Organizado</h3>
+    <p>O desejo precisa ser cristalizado em ação por meio de planos concretos. Hill enfatiza que a falha de um plano não é derrota permanente — é apenas sinal para criar um novo plano. A maioria das pessoas desiste após o primeiro fracasso. Os vencedores criam novo plano e tentam de novo.</p>
+
+    <h3>7. Decisão — A Superação da Procrastinação</h3>
+    <p>Analisando os mais de 500 milionários entrevistados, Hill descobriu que todos tinham o hábito de tomar decisões rapidamente e mudá-las lentamente. Os fracassados fazem o oposto: decidem devagar (se é que decidem) e mudam de ideia rapidamente ao primeiro sinal de dificuldade.</p>
+
+    <div class="key-point">
+      <div class="kp-num">⚡</div>
+      <div class="kp-text"><strong>Regra de ouro:</strong> Decida rápido. Mude devagar. Mantenha suas decisões para si mesmo — "diga ao mundo o que pretende fazer, mas primeiro mostre."</div>
+    </div>
+
+    <h3>8. Persistência — O Esforço Sustentado</h3>
+    <p>A persistência é o equivalente mental do carbono no aço — é o que dá força e durabilidade à vontade. Hill aponta que a falta de persistência é uma das maiores causas de fracasso. É uma habilidade que pode ser cultivada e que depende de quatro fatores: propósito definido, desejo ardente, autoconfiança e planos definidos.</p>
+
+    <h3>9. O Poder do MasterMind</h3>
+    <p>O MasterMind é definido como a "coordenação de conhecimento e esforço entre duas ou mais pessoas que trabalham em direção a um propósito definido, em espírito de harmonia." Quando duas mentes se unem, uma terceira força intangível surge — a "mente mestre" — que é maior do que a soma das partes.</p>
+
+    <h3>10. Transmutação Sexual</h3>
+    <p>Hill argumenta que a energia sexual é a mais poderosa de todas as emoções humanas e que, quando redirecionada para fins criativos e profissionais, se torna um combustível extraordinário para a realização. A maioria dos grandes líderes que ele pesquisou atingiu seu auge após os 40 anos — quando aprenderam a canalizar essa energia.</p>
+
+    <h3>11. O Subconsciente</h3>
+    <p>O subconsciente funciona 24 horas por dia e é influenciado tanto por pensamentos positivos quanto negativos. A chave é alimentá-lo deliberadamente com pensamentos de desejo, fé e propósito — usando as técnicas de autosugestão — para que ele trabalhe a seu favor, e não contra você.</p>
+
+    <h3>12. O Cérebro como Transmissor e Receptor</h3>
+    <p>Hill apresenta a ideia (avançada para 1937) de que o cérebro humano é capaz de captar vibrações de pensamento de outros cérebros. O MasterMind amplifica essa capacidade. É uma das passagens mais especulativas do livro, mas reforça a importância de se cercar de mentes alinhadas ao seu propósito.</p>
+
+    <h3>13. O Sexto Sentido</h3>
+    <p>O último princípio é o que Hill chama de "porta para o Templo da Sabedoria." É a intuição refinada que só se desenvolve após o domínio dos 12 princípios anteriores. É aquele "pressentimento" que guia decisões quando a lógica não tem dados suficientes.</p>
+
+    <h2>Os 6 Fantasmas do Medo</h2>
+    <p>Hill encerra o livro identificando seis medos fundamentais que sabotam a riqueza e o sucesso:</p>
+
+    <div class="key-point">
+      <div class="kp-num">1</div>
+      <div class="kp-text"><strong>Medo da pobreza</strong> — paralisa a iniciativa, mata a ambição e convida ao fracasso.</div>
+    </div>
+    <div class="key-point">
+      <div class="kp-num">2</div>
+      <div class="kp-text"><strong>Medo da crítica</strong> — destrói a individualidade e inibe a criatividade.</div>
+    </div>
+    <div class="key-point">
+      <div class="kp-num">3</div>
+      <div class="kp-text"><strong>Medo da doença</strong> — autosugestão negativa que frequentemente atrai a própria doença.</div>
+    </div>
+    <div class="key-point">
+      <div class="kp-num">4</div>
+      <div class="kp-text"><strong>Medo da perda do amor</strong> — leva ao ciúme e à autossabotagem nos relacionamentos.</div>
+    </div>
+    <div class="key-point">
+      <div class="kp-num">5</div>
+      <div class="kp-text"><strong>Medo da velhice</strong> — faz a pessoa desacelerar antes da hora.</div>
+    </div>
+    <div class="key-point">
+      <div class="kp-num">6</div>
+      <div class="kp-text"><strong>Medo da morte</strong> — impede de viver plenamente o presente.</div>
+    </div>
+
+    <h2>Conclusão</h2>
+    <p>A mensagem central de Hill permanece poderosa quase 90 anos depois: <strong>os pensamentos se tornam coisas.</strong> Não por magia, mas por um processo concreto de desejo definido, fé treinada, plano organizado, ação persistente e a inteligência coletiva de um grupo de apoio. A riqueza começa na mente — e o maior obstáculo não é a falta de oportunidade, mas a falta de propósito definido e a presença dos fantasmas do medo.</p>
+
+    <div class="highlight-box">
+      "Todo o que a mente do homem pode conceber e acreditar, ela pode alcançar." — Napoleon Hill
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════ PANEL: AUDIO ═══════ -->
+<div class="panel" id="panel-audio">
+  <div class="audio-player">
+    <div class="ap-label">🎧 Resumo em Áudio</div>
+    <div class="ap-title">Quem Pensa Enriquece</div>
+    <div class="ap-sub">Narração completa · 18 minutos</div>
+    <div class="ap-controls">
+      <button class="play-btn" onclick="togglePlay()">
+        <svg viewBox="0 0 24 24" id="play-icon"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </button>
+      <div class="ap-wave" id="wave">
+        <!-- bars generated by JS -->
+      </div>
+      <div class="ap-time"><span id="time-current">0:00</span> / 18:24</div>
+    </div>
+    <div class="ap-speed">
+      <button>0.75x</button>
+      <button class="active">1x</button>
+      <button>1.25x</button>
+      <button>1.5x</button>
+      <button>2x</button>
+    </div>
+  </div>
+
+  <div class="download-section">
+    <div class="dl-title">Baixar para ouvir offline</div>
+    <div class="dl-options">
+      <div class="dl-item">
+        <div class="dl-info">
+          <span class="dl-icon">🎵</span>
+          <div>
+            <div class="dl-name">Áudio MP3</div>
+            <div class="dl-size">14.2 MB · Alta qualidade</div>
+          </div>
+        </div>
+        <button class="dl-btn">Baixar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ PANEL: MIND MAP ═══════ -->
+<div class="panel" id="panel-mindmap">
+  <div class="mindmap-container">
+    <div class="mindmap-title">🧠 Mapa Mental Completo</div>
+    <div class="mm-center">
+      <div class="mm-node-main">QUEM PENSA ENRIQUECE<br><span style="font-size:11px;font-weight:400;opacity:0.8">13 Princípios da Riqueza</span></div>
+      <div class="mm-branches">
+        <div class="mm-branch">
+          <div class="branch-title"><span class="icon">🔥</span> Fundação Mental</div>
+          <div class="branch-items">
+            <span>Desejo ardente e definido</span>
+            <span>Fé treinada e induzida</span>
+            <span>Autosugestão com emoção</span>
+            <span>Subconsciente programado</span>
+          </div>
+        </div>
+        <div class="mm-branch">
+          <div class="branch-title"><span class="icon">⚡</span> Ação Estratégica</div>
+          <div class="branch-items">
+            <span>Conhecimento especializado</span>
+            <span>Imaginação (sintética + criativa)</span>
+            <span>Planejamento organizado</span>
+            <span>Decisão rápida e firme</span>
+          </div>
+        </div>
+        <div class="mm-branch">
+          <div class="branch-title"><span class="icon">💪</span> Força Propulsora</div>
+          <div class="branch-items">
+            <span>Persistência inabalável</span>
+            <span>Transmutação da energia</span>
+            <span>Sexto sentido / intuição</span>
+            <span>Cérebro como transmissor</span>
+          </div>
+        </div>
+        <div class="mm-branch">
+          <div class="branch-title"><span class="icon">🤝</span> Amplificador</div>
+          <div class="branch-items">
+            <span>MasterMind — mente coletiva</span>
+            <span>Harmonia entre membros</span>
+            <span>Força maior que a soma</span>
+            <span>Cercando-se dos melhores</span>
+          </div>
+        </div>
+        <div class="mm-branch" style="grid-column: 1 / -1;">
+          <div class="branch-title"><span class="icon">👻</span> Os 6 Fantasmas (inimigos a vencer)</div>
+          <div class="branch-items" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
+            <span>Medo da pobreza</span>
+            <span>Medo da crítica</span>
+            <span>Medo da doença</span>
+            <span>Medo da perda do amor</span>
+            <span>Medo da velhice</span>
+            <span>Medo da morte</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ PANEL: INSIGHTS ═══════ -->
+<div class="panel" id="panel-insights">
+  <div class="insights-grid">
+
+    <div class="insight-card">
+      <div class="ic-text">O ponto de partida de toda riqueza é uma ideia. Ideias são produtos da imaginação — e a imaginação pode ser treinada.</div>
+      <div class="ic-source">Quem Pensa Enriquece · Cap. 5</div>
+      <div class="ic-actions">
+        <div class="ic-btn" onclick="this.style.color='var(--red)'">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Salvar
+        </div>
+        <div class="ic-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          Compartilhar
+        </div>
+      </div>
+    </div>
+
+    <div class="insight-card">
+      <div class="ic-text">Os bem-sucedidos decidem rápido e mudam devagar. Os fracassados decidem devagar — e mudam de ideia ao primeiro obstáculo.</div>
+      <div class="ic-source">Quem Pensa Enriquece · Cap. 7</div>
+      <div class="ic-actions">
+        <div class="ic-btn" onclick="this.style.color='var(--red)'">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Salvar
+        </div>
+        <div class="ic-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          Compartilhar
+        </div>
+      </div>
+    </div>
+
+    <div class="insight-card">
+      <div class="ic-text">A persistência é para o caráter o que o carbono é para o aço. Sem ela, qualquer plano fracassa no primeiro teste.</div>
+      <div class="ic-source">Quem Pensa Enriquece · Cap. 8</div>
+      <div class="ic-actions">
+        <div class="ic-btn" onclick="this.style.color='var(--red)'">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Salvar
+        </div>
+        <div class="ic-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          Compartilhar
+        </div>
+      </div>
+    </div>
+
+    <div class="insight-card">
+      <div class="ic-text">Quando duas ou mais mentes se coordenam em harmonia, uma terceira força surge — a "mente mestre" — mais poderosa que qualquer indivíduo sozinho.</div>
+      <div class="ic-source">Quem Pensa Enriquece · Cap. 9</div>
+      <div class="ic-actions">
+        <div class="ic-btn" onclick="this.style.color='var(--red)'">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Salvar
+        </div>
+        <div class="ic-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          Compartilhar
+        </div>
+      </div>
+    </div>
+
+    <div class="insight-card">
+      <div class="ic-text">O medo da pobreza é o mais destrutivo dos seis fantasmas. Ele paralisa a razão, destrói a iniciativa e convida o fracasso.</div>
+      <div class="ic-source">Quem Pensa Enriquece · Cap. 14</div>
+      <div class="ic-actions">
+        <div class="ic-btn" onclick="this.style.color='var(--red)'">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Salvar
+        </div>
+        <div class="ic-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          Compartilhar
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════ PANEL: PRÁTICA ═══════ -->
+<div class="panel" id="panel-pratica">
+  <div class="practice-section">
+
+    <div class="practice-card" style="background: linear-gradient(135deg, rgba(108,92,231,0.1), rgba(108,92,231,0.05)); border-color: rgba(108,92,231,0.2);">
+      <div class="pc-header">
+        <div class="pc-icon" style="background: rgba(108,92,231,0.2);">🎯</div>
+        <div class="pc-label" style="color: var(--accent-light);">Exercício 1 — Declaração de Propósito</div>
+      </div>
+      <p>Escreva num papel (ou no seu celular) uma declaração seguindo este modelo de Hill:</p>
+      <p style="margin-top:10px; padding: 14px; background: var(--surface2); border-radius: 10px; font-size: 13px; color: var(--gold); font-style: italic;">
+        "Até [DATA], eu terei acumulado [VALOR EXATO]. Em troca, prestarei o seguinte serviço: [DESCREVA]. Acredito que terei esse dinheiro. Meu plano para consegui-lo é: [PLANO]."
+      </p>
+      <div class="checklist">
+        <div class="checklist-item"><div class="check" onclick="this.classList.toggle('checked')"></div><span>Escrevi minha declaração com valor e data específicos</span></div>
+        <div class="checklist-item"><div class="check" onclick="this.classList.toggle('checked')"></div><span>Li em voz alta com emoção (manhã)</span></div>
+        <div class="checklist-item"><div class="check" onclick="this.classList.toggle('checked')"></div><span>Li em voz alta com emoção (noite)</span></div>
+      </div>
+    </div>
+
+    <div class="practice-card">
+      <div class="pc-header">
+        <div class="pc-icon">🤝</div>
+        <div class="pc-label">Exercício 2 — Forme Seu MasterMind</div>
+      </div>
+      <p>Identifique de 2 a 5 pessoas que estão alinhadas ao seu objetivo. Podem ser amigos, mentores, colegas ou pessoas de um grupo online. O importante é que sejam comprometidas e que haja harmonia.</p>
+      <div class="checklist">
+        <div class="checklist-item"><div class="check" onclick="this.classList.toggle('checked')"></div><span>Listei 3-5 pessoas potenciais para meu MasterMind</span></div>
+        <div class="checklist-item"><div class="check" onclick="this.classList.toggle('checked')"></div><span>Entrei em contato com pelo menos 1 pessoa</span></div>
+        <div class="checklist-item"><div class="check" onclick="this.classList.toggle('checked')"></div><span>Marquei uma primeira reunião/conversa</span></div>
+      </div>
+    </div>
+
+    <div class="practice-card" style="background: rgba(255,169,77,0.08); border-color: rgba(255,169,77,0.2);">
+      <div class="pc-header">
+        <div class="pc-icon" style="background: rgba(255,169,77,0.2);">👻</div>
+        <div class="pc-label" style="color: var(--orange);">Exercício 3 — Confronte Seus Fantasmas</div>
+      </div>
+      <p>Dos 6 medos listados por Hill, qual domina mais sua vida hoje? Escreva-o e, ao lado, escreva uma ação concreta que você pode tomar esta semana para enfrentá-lo diretamente.</p>
+      <div class="checklist">
+        <div class="checklist-item"><div class="check" onclick="this.classList.toggle('checked')"></div><span>Identifiquei meu medo dominante</span></div>
+        <div class="checklist-item"><div class="check" onclick="this.classList.toggle('checked')"></div><span>Escrevi uma ação concreta para enfrentá-lo</span></div>
+        <div class="checklist-item"><div class="check" onclick="this.classList.toggle('checked')"></div><span>Executei a ação esta semana</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Download PDF -->
+  <div class="download-section">
+    <div class="dl-title">Materiais para download</div>
+    <div class="dl-options">
+      <div class="dl-item">
+        <div class="dl-info">
+          <span class="dl-icon">📄</span>
+          <div>
+            <div class="dl-name">Resumo em PDF</div>
+            <div class="dl-size">52 KB · 8 páginas</div>
+          </div>
+        </div>
+        <button class="dl-btn">Baixar</button>
+      </div>
+      <div class="dl-item">
+        <div class="dl-info">
+          <span class="dl-icon">🧠</span>
+          <div>
+            <div class="dl-name">Mind Map em alta resolução</div>
+            <div class="dl-size">PNG · 2.4 MB</div>
+          </div>
+        </div>
+        <button class="dl-btn">Baixar</button>
+      </div>
+      <div class="dl-item">
+        <div class="dl-info">
+          <span class="dl-icon">📝</span>
+          <div>
+            <div class="dl-name">Workbook de exercícios</div>
+            <div class="dl-size">PDF · 380 KB · 3 páginas</div>
+          </div>
+        </div>
+        <button class="dl-btn">Baixar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ RELATED BOOKS ═══════ -->
+<section class="related-section">
+  <div class="section-title">
+    Leia também
+    <span class="see-all">Ver todos →</span>
+  </div>
+  <div class="related-scroll">
+    <div class="related-card">
+      <div class="rc-cover">PAI RICO<br>PAI POBRE</div>
+      <div class="rc-title">Pai Rico, Pai Pobre</div>
+      <div class="rc-time">⏱ 14 min</div>
+    </div>
+    <div class="related-card">
+      <div class="rc-cover">O HOMEM MAIS<br>RICO DA<br>BABILÔNIA</div>
+      <div class="rc-title">O Homem Mais Rico da Babilônia</div>
+      <div class="rc-time">⏱ 10 min</div>
+    </div>
+    <div class="related-card">
+      <div class="rc-cover">OS SEGREDOS<br>DA MENTE<br>MILIONÁRIA</div>
+      <div class="rc-title">Os Segredos da Mente Milionária</div>
+      <div class="rc-time">⏱ 12 min</div>
+    </div>
+    <div class="related-card">
+      <div class="rc-cover">A SEMANA<br>DE 4 HORAS</div>
+      <div class="rc-title">The 4-Hour Workweek</div>
+      <div class="rc-time">⏱ 15 min</div>
+    </div>
+    <div class="related-card">
+      <div class="rc-cover">DESPERTE O<br>GIGANTE<br>INTERIOR</div>
+      <div class="rc-title">Awaken the Giant Within</div>
+      <div class="rc-time">⏱ 13 min</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ COMPLETE BUTTON ═══════ -->
+<section class="complete-section">
+  <button class="complete-btn" onclick="showRating()">
+    ✅ Marcar como Concluído
+  </button>
+</section>
+
+<!-- ═══════ RATING MODAL ═══════ -->
+<div class="rating-overlay" id="ratingModal">
+  <div class="rating-box">
+    <div class="trophy">🏆</div>
+    <h3>Parabéns!</h3>
+    <p>Você concluiu o resumo de<br><strong>Quem Pensa Enriquece</strong></p>
+    <p style="font-size:12px; color: var(--green); margin-bottom: 16px;">+10 XP · Livro nº 23 da sua jornada</p>
+    <p style="font-size:13px;">Como você avalia este resumo?</p>
+    <div class="stars">
+      <span class="star" onclick="rate(1)">⭐</span>
+      <span class="star" onclick="rate(2)">⭐</span>
+      <span class="star" onclick="rate(3)">⭐</span>
+      <span class="star" onclick="rate(4)">⭐</span>
+      <span class="star" onclick="rate(5)">⭐</span>
+    </div>
+    <button class="rating-done" onclick="closeRating()">Continuar lendo →</button>
+  </div>
+</div>
+
+<script>
+  // ── TAB SWITCHING ──
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.panel');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+      updateProgress(tab.dataset.tab);
+    });
+  });
+
+  // ── PROGRESS ──
+  const progressMap = { resumo: 25, audio: 50, mindmap: 70, insights: 85, pratica: 95 };
+  function updateProgress(tabName) {
+    const pct = progressMap[tabName] || 0;
+    document.getElementById('progress-bar').style.width = pct + '%';
+    document.getElementById('progress-pct').textContent = pct + '%';
+    const stepIdx = ['resumo','audio','mindmap','insights','pratica'].indexOf(tabName);
+    document.querySelectorAll('.step').forEach((s, i) => {
+      s.classList.remove('done','active');
+      if (i <= stepIdx) s.classList.add('done');
+      if (i === stepIdx + 1) s.classList.add('active');
+    });
+  }
+  setTimeout(() => updateProgress('resumo'), 500);
+
+  // ── AUDIO WAVE ──
+  const wave = document.getElementById('wave');
+  for (let i = 0; i < 50; i++) {
+    const bar = document.createElement('div');
+    bar.className = 'bar';
+    const h = Math.random() * 30 + 8;
+    bar.style.height = h + 'px';
+    if (i < 0) bar.classList.add('played');
+    wave.appendChild(bar);
+  }
+  let playing = false;
+  let playInterval;
+  let currentBar = 0;
+  function togglePlay() {
+    playing = !playing;
+    const icon = document.getElementById('play-icon');
+    if (playing) {
+      icon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+      playInterval = setInterval(() => {
+        const bars = wave.querySelectorAll('.bar');
+        if (currentBar < bars.length) {
+          bars[currentBar].classList.add('played');
+          currentBar++;
+          const secs = Math.floor(currentBar * 18 * 60 / 50);
+          const m = Math.floor(secs / 60);
+          const s = secs % 60;
+          document.getElementById('time-current').textContent = m + ':' + String(s).padStart(2,'0');
+        } else {
+          clearInterval(playInterval);
+        }
+      }, 400);
+    } else {
+      icon.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"/>';
+      clearInterval(playInterval);
+    }
+  }
+
+  // ── SPEED BUTTONS ──
+  document.querySelectorAll('.ap-speed button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.ap-speed button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  // ── RATING MODAL ──
+  function showRating() {
+    document.getElementById('ratingModal').classList.add('show');
+    document.getElementById('progress-bar').style.width = '100%';
+    document.getElementById('progress-pct').textContent = '100%';
+  }
+  function closeRating() {
+    document.getElementById('ratingModal').classList.remove('show');
+  }
+  function rate(n) {
+    document.querySelectorAll('.star').forEach((s, i) => {
+      s.classList.toggle('lit', i < n);
+    });
+  }
+</script>
+
+</body>
+</html>

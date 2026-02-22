@@ -81,6 +81,16 @@ export const PRODUCT_ROUTES_MAP: Record<string, ProductRouteConfig> = {
     dashboard_route: '/nutricha/dashboard',
     theme: 'light',
     description: 'Receita personalizada do NutriChá para emagrecimento natural (PT-BR)'
+  },
+
+  // Resumox - PT-BR (product_id placeholder, atualizar com o ID real da Hotmart)
+  'RESUMOX_HOTMART_ID': {
+    product_id: 'RESUMOX_HOTMART_ID',
+    product_name: 'Resumox',
+    login_route: '/resumox',
+    dashboard_route: '/resumox/dashboard',
+    theme: 'dark',
+    description: '659 resumos de livros com áudio, mapa mental, insights e exercícios práticos'
   }
 }
 
