@@ -7,8 +7,8 @@ export default function RootRedirect() {
   const router = useRouter()
 
   useEffect(() => {
-    // Redireciona automaticamente para /neuroreset
-    router.replace('/neuroreset')
+    // Redireciona automaticamente para /resumox
+    router.replace('/resumox')
   }, [router])
 
   // Mostra uma mensagem de carregamento enquanto redireciona
