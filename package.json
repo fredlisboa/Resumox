@@ -1,0 +1,53 @@
+{
+  "name": "lt-entregaveis",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test:r2": "tsx scripts/test-r2.ts",
+    "test:pdf": "tsx scripts/test-pdf-access.ts",
+    "upload:example": "tsx scripts/upload-example.ts",
+    "list:r2": "tsx scripts/list-r2-files.ts",
+    "verify:hotmart": "tsx scripts/verify-hotmart-setup.ts",
+    "verify:signature": "tsx scripts/verify-hotmart-signature.ts",
+    "test:hotmart": "tsx scripts/test-hotmart-webhook.ts",
+    "test:order-bump": "tsx scripts/test-order-bump-purchase.ts",
+    "test:order-bumps": "tsx scripts/test-order-bumps.ts",
+    "check:webhooks": "tsx scripts/check-webhook-results.ts",
+    "check:errors": "tsx scripts/check-webhook-errors.ts",
+    "check:user-products": "tsx scripts/check-user-products.ts",
+    "create:first-admin": "tsx scripts/create-first-admin.ts"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.954.0",
+    "@aws-sdk/s3-request-presigner": "^3.954.0",
+    "@marsidev/react-turnstile": "^1.4.0",
+    "@supabase/ssr": "^0.8.0",
+    "@supabase/supabase-js": "^2.39.0",
+    "framer-motion": "^12.23.26",
+    "jose": "^5.2.0",
+    "lucide-react": "^0.562.0",
+    "next": "^14.2.0",
+    "pdfjs-dist": "^5.4.449",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.4.0",
+    "dotenv": "^17.2.3",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^16.0.10",
+    "postcss": "^8.4.0",
+    "sharp": "^0.34.5",
+    "tailwindcss": "^3.4.0",
+    "to-ico": "^1.1.5",
+    "tsx": "^4.21.0",
+    "typescript": "^5.3.0"
+  }
+}

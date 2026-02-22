@@ -1,0 +1,26 @@
+{
+    "python.defaultInterpreterPath": "/home/fredlisboa/miniconda3/envs/lt-entregaveis/bin/python",
+    "python.terminal.activateEnvironment": true,
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.env.linux": {
+        "CONDA_DEFAULT_ENV": "lt-entregaveis"
+    },
+    "workbench.colorCustomizations": {
+        "titleBar.activeBackground": "#9a8a3d",
+        "titleBar.activeForeground": "#1e1e1e",
+        "titleBar.inactiveBackground": "#7a6d32",
+        "titleBar.inactiveForeground": "#3d3d3d",
+        "activityBar.background": "#9a8a3d",
+        "activityBar.foreground": "#1e1e1e",
+        "activityBar.inactiveForeground": "#3d3d3d80",
+        "statusBar.background": "#7a6d32",
+        "statusBar.foreground": "#1e1e1e",
+        "editor.background": "#1f1d16",
+        "editorGutter.background": "#1f1d16",
+        "sideBar.background": "#1a1814",
+        "sideBarSectionHeader.background": "#2a2620",
+        "terminal.background": "#1a1814",
+        "terminal.foreground": "#d4d4c8",
+        "panel.background": "#1a1814"
+    }
+}

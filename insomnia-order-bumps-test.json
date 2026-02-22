@@ -1,0 +1,148 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2025-12-19T00:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2023.5.0",
+  "resources": [
+    {
+      "_id": "req_main_product",
+      "parentId": "fld_order_bumps",
+      "modified": 1734614400000,
+      "created": 1734614400000,
+      "url": "{{ _.base_url }}/api/webhook/hotmart",
+      "name": "1. Main Product (Kit Inteligencia Emocional)",
+      "description": "Simula webhook do produto principal",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"id\": \"6b7f691a-55c3-407e-8333-911498d72f35\",\n  \"creation_date\": 1765758713851,\n  \"event\": \"PURCHASE_APPROVED\",\n  \"version\": \"2.0.0\",\n  \"data\": {\n    \"product\": {\n      \"id\": 6557472,\n      \"ucode\": \"93480b67-68ee-456a-afe8-b0b3f6619199\",\n      \"name\": \"Kit Inteligencia Emocional\",\n      \"warranty_date\": \"2025-12-21T00:00:00Z\",\n      \"has_co_production\": false,\n      \"is_physical_product\": false\n    },\n    \"affiliates\": [\n      {\n        \"affiliate_code\": \"\",\n        \"name\": \"\"\n      }\n    ],\n    \"buyer\": {\n      \"email\": \"psicologosunidosoficial@gmail.com\",\n      \"name\": \"Psicologos U.\",\n      \"first_name\": \"Psicologos\",\n      \"last_name\": \"U.\",\n      \"checkout_phone\": \"56976935002\",\n      \"address\": {\n        \"city\": \"Los Andes\",\n        \"country\": \"Chile\",\n        \"country_iso\": \"CL\",\n        \"state\": \"Valparaiso\",\n        \"neighborhood\": \"\",\n        \"zipcode\": \"250000\",\n        \"address\": \"Los Andes 12334\",\n        \"number\": \"\",\n        \"complement\": \"\"\n      },\n      \"document\": \"\",\n      \"document_type\": \"\"\n    },\n    \"producer\": {\n      \"name\": \"Frederique Augusto Lisboa\",\n      \"document\": \"01745473157\",\n      \"legal_nature\": \"Pessoa Física\"\n    },\n    \"commissions\": [\n      {\n        \"value\": 0.68,\n        \"source\": \"MARKETPLACE\",\n        \"currency_value\": \"USD\"\n      },\n      {\n        \"value\": 5.18,\n        \"source\": \"PRODUCER\",\n        \"currency_value\": \"USD\",\n        \"currency_conversion\": {\n          \"converted_value\": 28.07,\n          \"converted_to_currency\": \"BRL\",\n          \"conversion_rate\": 5.419698\n        }\n      }\n    ],\n    \"purchase\": {\n      \"approved_date\": 1765758703000,\n      \"full_price\": {\n        \"value\": 6694,\n        \"currency_value\": \"CLP\"\n      },\n      \"price\": {\n        \"value\": 5625.21,\n        \"currency_value\": \"CLP\"\n      },\n      \"checkout_country\": {\n        \"name\": \"Chile\",\n        \"iso\": \"CL\"\n      },\n      \"order_bump\": {\n        \"is_order_bump\": false\n      },\n      \"origin\": {\n        \"sck\": \"332n23f3l7o\",\n        \"xcod\": \"332n23f3l7o\"\n      },\n      \"original_offer_price\": {\n        \"value\": 6.18,\n        \"currency_value\": \"USD\"\n      },\n      \"order_date\": 1765758698000,\n      \"status\": \"APPROVED\",\n      \"transaction\": \"HP0630882632\",\n      \"payment\": {\n        \"installments_number\": 1,\n        \"type\": \"CREDIT_CARD\"\n      },\n      \"offer\": {\n        \"code\": \"ebp6k097\",\n        \"name\": \"Kit Inteligencia Emocional\"\n      },\n      \"invoice_by\": \"SELLER\",\n      \"subscription_anticipation_purchase\": false,\n      \"is_funnel\": false,\n      \"business_model\": \"A\"\n    }\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "x-hotmart-hottok",
+          "value": "{{ _.webhook_signature }}",
+          "description": "Assinatura HMAC-SHA256"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1734614400000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_order_bump",
+      "parentId": "fld_order_bumps",
+      "modified": 1734614400000,
+      "created": 1734614400000,
+      "url": "{{ _.base_url }}/api/webhook/hotmart",
+      "name": "2. Order Bump (Ferramentas de Regulacao)",
+      "description": "Simula webhook do order bump (enviar 5 segundos após o produto principal)",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"id\": \"df445173-824e-4024-9128-e4d45bf81580\",\n  \"creation_date\": 1765758719818,\n  \"event\": \"PURCHASE_APPROVED\",\n  \"version\": \"2.0.0\",\n  \"data\": {\n    \"product\": {\n      \"id\": 6558403,\n      \"ucode\": \"ef5b023b-6d0a-4d87-9201-40b00bcdcfac\",\n      \"name\": \"Ferramentas de Regulacao Emocional\",\n      \"warranty_date\": \"2025-12-21T00:00:00Z\",\n      \"has_co_production\": false,\n      \"is_physical_product\": false\n    },\n    \"affiliates\": [\n      {\n        \"affiliate_code\": \"\",\n        \"name\": \"\"\n      }\n    ],\n    \"buyer\": {\n      \"email\": \"psicologosunidosoficial@gmail.com\",\n      \"name\": \"Psicologos U.\",\n      \"first_name\": \"Psicologos\",\n      \"last_name\": \"U.\",\n      \"checkout_phone\": \"56976935002\",\n      \"address\": {\n        \"city\": \"Los Andes\",\n        \"country\": \"Chile\",\n        \"country_iso\": \"CL\",\n        \"state\": \"Valparaiso\",\n        \"neighborhood\": \"\",\n        \"zipcode\": \"250000\",\n        \"address\": \"Los Andes 12334\",\n        \"number\": \"\",\n        \"complement\": \"\"\n      },\n      \"document\": \"\",\n      \"document_type\": \"\"\n    },\n    \"producer\": {\n      \"name\": \"Frederique Augusto Lisboa\",\n      \"document\": \"01745473157\",\n      \"legal_nature\": \"Pessoa Física\"\n    },\n    \"commissions\": [\n      {\n        \"value\": 0.42,\n        \"source\": \"MARKETPLACE\",\n        \"currency_value\": \"USD\"\n      },\n      {\n        \"value\": 2.86,\n        \"source\": \"PRODUCER\",\n        \"currency_value\": \"USD\",\n        \"currency_conversion\": {\n          \"converted_value\": 15.5,\n          \"converted_to_currency\": \"BRL\",\n          \"conversion_rate\": 5.419698\n        }\n      }\n    ],\n    \"purchase\": {\n      \"approved_date\": 1765758709000,\n      \"full_price\": {\n        \"value\": 3747,\n        \"currency_value\": \"CLP\"\n      },\n      \"price\": {\n        \"value\": 3148.73,\n        \"currency_value\": \"CLP\"\n      },\n      \"checkout_country\": {\n        \"name\": \"Chile\",\n        \"iso\": \"CL\"\n      },\n      \"order_bump\": {\n        \"is_order_bump\": false\n      },\n      \"origin\": {\n        \"sck\": \"332n23f3l7o\",\n        \"xcod\": \"332n23f3l7o\"\n      },\n      \"original_offer_price\": {\n        \"value\": 3.46,\n        \"currency_value\": \"USD\"\n      },\n      \"order_date\": 1765758704000,\n      \"status\": \"APPROVED\",\n      \"transaction\": \"HP0635884368\",\n      \"payment\": {\n        \"installments_number\": 1,\n        \"type\": \"CREDIT_CARD\"\n      },\n      \"offer\": {\n        \"code\": \"sdo3a865\"\n      },\n      \"invoice_by\": \"SELLER\",\n      \"subscription_anticipation_purchase\": false,\n      \"is_funnel\": false,\n      \"business_model\": \"A\"\n    }\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "x-hotmart-hottok",
+          "value": "{{ _.webhook_signature }}",
+          "description": "Assinatura HMAC-SHA256"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1734614300000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_user_products",
+      "parentId": "fld_order_bumps",
+      "modified": 1734614400000,
+      "created": 1734614400000,
+      "url": "{{ _.base_url }}/api/user/products",
+      "name": "3. Get User Products (after login)",
+      "description": "Lista todos os produtos do usuário autenticado",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1734614200000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_order_bumps",
+      "parentId": "wrk_main",
+      "modified": 1734614400000,
+      "created": 1734614400000,
+      "name": "Order Bumps Tests",
+      "description": "Testes de webhooks com order bumps reais da Hotmart",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1734614400000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "wrk_main",
+      "parentId": null,
+      "modified": 1734614400000,
+      "created": 1734614400000,
+      "name": "LT Entregaveis - Order Bumps",
+      "description": "Testes de integração com Hotmart Order Bumps",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "env_main",
+      "parentId": "wrk_main",
+      "modified": 1734614400000,
+      "created": 1734614400000,
+      "name": "Base Environment",
+      "data": {
+        "base_url": "https://seu-dominio.vercel.app",
+        "webhook_secret": "SEU_WEBHOOK_SECRET_AQUI",
+        "webhook_signature": "CALCULAR_HMAC_SHA256"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "base_url",
+          "webhook_secret",
+          "webhook_signature"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1734614400000,
+      "_type": "environment"
+    }
+  ]
+}

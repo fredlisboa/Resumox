@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10B981"/>
+      <stop offset="100%" style="stop-color:#059669"/>
+    </linearGradient>
+    <linearGradient id="leaf" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF"/>
+      <stop offset="100%" style="stop-color:#D1FAE5"/>
+    </linearGradient>
+  </defs>
+  <!-- Rounded background for iOS -->
+  <rect width="180" height="180" rx="40" ry="40" fill="url(#bg)"/>
+  <!-- Tea cup body -->
+  <path d="M53 78 h59 c0 0 3 0 3 3 l-6 42 c0 6-4 10-10 10 h-33 c-6 0-10-4-10-10 l-6-42 c0-3 3-3 3-3z" fill="white" opacity="0.95"/>
+  <!-- Tea cup handle -->
+  <path d="M112 89 c10-1 17 4 17 14 c0 10-7 16-17 14" fill="none" stroke="white" stroke-width="5.5" stroke-linecap="round" opacity="0.95"/>
+  <!-- Tea liquid -->
+  <ellipse cx="83" cy="83.5" rx="25" ry="3.5" fill="#6EE7B7" opacity="0.6"/>
+  <!-- Steam lines -->
+  <path d="M70 67 c0-7 6-7 6-14" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  <path d="M83 64 c0-7 6-7 6-14" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+  <path d="M96 67 c0-7 6-7 6-14" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  <!-- Leaf accent -->
+  <path d="M105 50 c7-10 21-14 28-10 c-4 10-14 17-25 17 c4-4 5-9 5-14" fill="url(#leaf)" opacity="0.9"/>
+  <line x1="105" y1="50" x2="124" y2="44" stroke="#10B981" stroke-width="1" opacity="0.4"/>
+</svg>

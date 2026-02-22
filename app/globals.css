@@ -1,0 +1,628 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 10 23 39; /* Deep Night Blue */
+    --foreground: 255 255 255;
+  }
+
+  body {
+    @apply bg-neuro-dark;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-attachment: fixed;
+    overflow-x: hidden;
+  }
+
+  html {
+    overflow-x: hidden;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  /* Glassmorphism Effect Base */
+  .glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-dark {
+    background: rgba(10, 14, 39, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(77, 111, 216, 0.2);
+  }
+}
+
+@layer utilities {
+  .no-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .no-context-menu {
+    pointer-events: auto;
+  }
+}
+
+/* Proteção contra cópia */
+.protected-content {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Custom scrollbar - NeuroReset Style */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0e27;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #2d4a9e 0%, #8b5cf6 100%);
+  border-radius: 10px;
+  border: 2px solid #0a0e27;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #4d6fd8 0%, #a78bfa 100%);
+  box-shadow: 0 0 10px rgba(77, 111, 216, 0.5);
+}
+
+/* PWA Install prompt - NeuroReset Style */
+.pwa-install-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, #2d4a9e 0%, #8b5cf6 50%, #4d6fd8 100%);
+  padding: 1rem;
+  z-index: 9999;
+  animation: slideUp 0.6s ease-out;
+  box-shadow: 0 -4px 20px rgba(77, 111, 216, 0.4);
+}
+
+/* NeuroReset Animations */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(77, 111, 216, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(77, 111, 216, 0.6), 0 0 35px rgba(139, 92, 246, 0.4);
+  }
+}
+
+/* Bonus Badge Pulse Animation */
+@keyframes bonus-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+.animate-pulse-glow {
+  animation: bonus-pulse 2s ease-in-out infinite;
+}
+
+/* Loading spinner */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* Neuro Glow Button Effect */
+.neuro-glow-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.neuro-glow-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(77, 111, 216, 0.6), 0 0 40px rgba(139, 92, 246, 0.4);
+}
+
+.neuro-glow-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.neuro-glow-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* HTML Content Styling - Dark Theme (Default) */
+.html-content {
+  color: rgb(241 245 249); /* slate-100 - improved contrast for dark backgrounds */
+}
+
+.html-content h1,
+.html-content h2,
+.html-content h3,
+.html-content h4,
+.html-content h5,
+.html-content h6 {
+  color: rgb(255 255 255); /* white */
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* HTML Content Styling - Light Theme Override */
+.html-content-light {
+  color: rgb(55 65 81); /* text-gray-700 */
+}
+
+.html-content-light h1,
+.html-content-light h2,
+.html-content-light h3,
+.html-content-light h4,
+.html-content-light h5,
+.html-content-light h6 {
+  color: rgb(17 24 39); /* text-gray-900 */
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.html-content h1 { font-size: 1.5rem; }
+.html-content h2 { font-size: 1.25rem; }
+.html-content h3 { font-size: 1.125rem; }
+
+.html-content p {
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+}
+
+.html-content ul,
+.html-content ol {
+  margin-left: 1.5rem;
+  margin-bottom: 0.75rem;
+  padding-left: 0.5rem;
+}
+
+.html-content li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+  padding-left: 0.25rem;
+}
+
+.html-content ul li {
+  list-style-type: disc;
+}
+
+.html-content ol li {
+  list-style-type: decimal;
+}
+
+.html-content a {
+  color: rgb(34 211 238); /* cyan-400 */
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.html-content a:hover {
+  color: rgb(6 182 212); /* cyan-500 */
+}
+
+.html-content strong {
+  font-weight: 700;
+  color: rgb(255 255 255);
+}
+
+.html-content-light a {
+  color: rgb(132 204 22); /* lime-500 */
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.html-content-light a:hover {
+  color: rgb(101 163 13); /* lime-600 */
+}
+
+.html-content-light strong {
+  font-weight: 700;
+  color: rgb(17 24 39); /* text-gray-900 */
+}
+
+.html-content em {
+  font-style: italic;
+}
+
+.html-content code {
+  background: rgba(77, 111, 216, 0.2);
+  color: rgb(34 211 238); /* cyan-400 */
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.875em;
+}
+
+.html-content pre {
+  background: rgba(10, 14, 39, 0.7);
+  border: 1px solid rgba(77, 111, 216, 0.3);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin-bottom: 0.75rem;
+}
+
+.html-content pre code {
+  background: transparent;
+  padding: 0;
+}
+
+.html-content blockquote {
+  border-left: 3px solid rgb(34 211 238); /* cyan-400 */
+  padding-left: 1rem;
+  margin-left: 0;
+  margin-bottom: 0.75rem;
+  font-style: italic;
+  color: rgb(209 213 219);
+}
+
+.html-content hr {
+  border: none;
+  border-top: 1px solid rgba(77, 111, 216, 0.3);
+  margin: 1rem 0;
+}
+
+.html-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 0.75rem 0;
+  display: block;
+}
+
+/* Contrast fix for nested elements with light backgrounds in dark theme */
+.html-content div[style*="background"],
+.html-content section[style*="background"],
+.html-content article[style*="background"],
+.html-content aside[style*="background"],
+.html-content [class*="bg-"],
+.html-content [style*="background-color: #f"],
+.html-content [style*="background-color: rgb(2"],
+.html-content [style*="background-color: white"],
+.html-content [style*="background: #f"],
+.html-content [style*="background: rgb(2"],
+.html-content [style*="background: white"] {
+  color: rgb(30 41 59) !important; /* slate-800 - dark text for light backgrounds */
+}
+
+.html-content div[style*="background"] strong,
+.html-content section[style*="background"] strong,
+.html-content [class*="bg-"] strong,
+.html-content [style*="background-color: #f"] strong,
+.html-content [style*="background: white"] strong {
+  color: rgb(15 23 42) !important; /* slate-900 */
+}
+
+.html-content div[style*="background"] em,
+.html-content section[style*="background"] em,
+.html-content [class*="bg-"] em,
+.html-content [style*="background-color: #f"] em,
+.html-content [style*="background: white"] em {
+  color: rgb(51 65 85) !important; /* slate-700 */
+}
+
+/* Fix for common card/box patterns - ensure text is readable */
+.html-content [style*="border-left"],
+.html-content [style*="padding"][style*="background"],
+.html-content [style*="border-radius"][style*="background"] {
+  color: rgb(30 41 59) !important; /* slate-800 */
+}
+
+/* Special handling for purple/violet backgrounds (common in sueno-infantil theme) */
+.html-content [style*="background-color: rgb(139"],
+.html-content [style*="background-color: rgb(147"],
+.html-content [style*="background-color: rgb(168"],
+.html-content [style*="background: rgb(139"],
+.html-content [style*="background: rgb(147"],
+.html-content [style*="background: rgb(168"],
+.html-content [style*="background-color: #8b"],
+.html-content [style*="background-color: #93"],
+.html-content [style*="background-color: #a7"],
+.html-content [style*="background: #8b"],
+.html-content [style*="background: #93"],
+.html-content [style*="background: #a7"] {
+  color: rgb(255 255 255) !important; /* white text on purple backgrounds */
+}
+
+.html-content [style*="background-color: rgb(139"] strong,
+.html-content [style*="background-color: rgb(147"] strong,
+.html-content [style*="background-color: rgb(168"] strong,
+.html-content [style*="background: rgb(139"] strong,
+.html-content [style*="background: rgb(147"] strong,
+.html-content [style*="background: rgb(168"] strong {
+  color: rgb(255 255 255) !important; /* white */
+}
+
+/* Tailwind background utility classes - light backgrounds need dark text */
+.html-content .bg-white,
+.html-content .bg-gray-50,
+.html-content .bg-gray-100,
+.html-content .bg-gray-200,
+.html-content .bg-slate-50,
+.html-content .bg-slate-100,
+.html-content .bg-slate-200,
+.html-content .bg-zinc-50,
+.html-content .bg-zinc-100,
+.html-content .bg-zinc-200,
+.html-content .bg-neutral-50,
+.html-content .bg-neutral-100,
+.html-content .bg-neutral-200,
+.html-content .bg-stone-50,
+.html-content .bg-stone-100,
+.html-content .bg-stone-200,
+.html-content .bg-purple-50,
+.html-content .bg-purple-100,
+.html-content .bg-violet-50,
+.html-content .bg-violet-100,
+.html-content .bg-indigo-50,
+.html-content .bg-indigo-100,
+.html-content .bg-blue-50,
+.html-content .bg-blue-100,
+.html-content .bg-pink-50,
+.html-content .bg-pink-100,
+.html-content .bg-fuchsia-50,
+.html-content .bg-fuchsia-100,
+.html-content .bg-amber-50,
+.html-content .bg-amber-100,
+.html-content .bg-yellow-50,
+.html-content .bg-yellow-100,
+.html-content .bg-orange-50,
+.html-content .bg-orange-100 {
+  color: rgb(30 41 59) !important; /* slate-800 - readable on light backgrounds */
+}
+
+.html-content .bg-white strong,
+.html-content .bg-gray-50 strong,
+.html-content .bg-gray-100 strong,
+.html-content .bg-gray-200 strong,
+.html-content .bg-slate-50 strong,
+.html-content .bg-slate-100 strong,
+.html-content .bg-slate-200 strong,
+.html-content .bg-purple-50 strong,
+.html-content .bg-purple-100 strong,
+.html-content .bg-violet-50 strong,
+.html-content .bg-violet-100 strong,
+.html-content .bg-indigo-50 strong,
+.html-content .bg-indigo-100 strong {
+  color: rgb(15 23 42) !important; /* slate-900 */
+}
+
+.html-content .bg-white em,
+.html-content .bg-gray-50 em,
+.html-content .bg-gray-100 em,
+.html-content .bg-gray-200 em,
+.html-content .bg-slate-50 em,
+.html-content .bg-slate-100 em,
+.html-content .bg-slate-200 em,
+.html-content .bg-purple-50 em,
+.html-content .bg-purple-100 em,
+.html-content .bg-violet-50 em,
+.html-content .bg-violet-100 em {
+  color: rgb(51 65 85) !important; /* slate-700 */
+}
+
+/* Tailwind background utility classes - dark backgrounds need light text */
+.html-content .bg-purple-500,
+.html-content .bg-purple-600,
+.html-content .bg-purple-700,
+.html-content .bg-purple-800,
+.html-content .bg-purple-900,
+.html-content .bg-violet-500,
+.html-content .bg-violet-600,
+.html-content .bg-violet-700,
+.html-content .bg-violet-800,
+.html-content .bg-violet-900,
+.html-content .bg-indigo-500,
+.html-content .bg-indigo-600,
+.html-content .bg-indigo-700,
+.html-content .bg-indigo-800,
+.html-content .bg-indigo-900,
+.html-content .bg-gray-700,
+.html-content .bg-gray-800,
+.html-content .bg-gray-900,
+.html-content .bg-slate-700,
+.html-content .bg-slate-800,
+.html-content .bg-slate-900,
+.html-content .bg-fuchsia-500,
+.html-content .bg-fuchsia-600,
+.html-content .bg-fuchsia-700,
+.html-content .bg-fuchsia-800,
+.html-content .bg-pink-500,
+.html-content .bg-pink-600,
+.html-content .bg-pink-700,
+.html-content .bg-pink-800 {
+  color: rgb(255 255 255) !important; /* white - readable on dark backgrounds */
+}
+
+.html-content .bg-purple-500 strong,
+.html-content .bg-purple-600 strong,
+.html-content .bg-purple-700 strong,
+.html-content .bg-violet-500 strong,
+.html-content .bg-violet-600 strong,
+.html-content .bg-violet-700 strong,
+.html-content .bg-indigo-500 strong,
+.html-content .bg-indigo-600 strong,
+.html-content .bg-indigo-700 strong,
+.html-content .bg-fuchsia-500 strong,
+.html-content .bg-fuchsia-600 strong,
+.html-content .bg-pink-500 strong,
+.html-content .bg-pink-600 strong {
+  color: rgb(255 255 255) !important; /* white */
+}
+
+/* Semi-transparent backgrounds with opacity */
+.html-content [class*="bg-purple-"][class*="/"],
+.html-content [class*="bg-violet-"][class*="/"],
+.html-content [class*="bg-indigo-"][class*="/"],
+.html-content [class*="bg-white/"],
+.html-content [class*="bg-gray-"][class*="/"] {
+  color: rgb(30 41 59) !important; /* slate-800 for semi-transparent light */
+}
+
+/* Specific fix for card-like elements with padding and borders */
+.html-content div[class*="rounded"],
+.html-content div[class*="border"],
+.html-content section[class*="rounded"],
+.html-content article[class*="rounded"] {
+  /* Inherit proper colors from background context */
+}
+
+/* Important: ensure em/italic text has good contrast too */
+.html-content em,
+.html-content i {
+  color: rgb(226 232 240); /* slate-200 - slightly lighter for emphasis in dark mode */
+}
+
+/* ===== Sueno Infantil Theme - Purple/Violet Palette ===== */
+/* Cards/boxes with light backgrounds in dark theme need dark text */
+.html-content > div,
+.html-content > section,
+.html-content > article {
+  /* Direct child containers that likely have backgrounds */
+}
+
+/* Fix for elements using purple/violet gradient or semi-transparent backgrounds */
+.html-content [style*="linear-gradient"],
+.html-content [style*="rgba(139"],
+.html-content [style*="rgba(147"],
+.html-content [style*="rgba(168"],
+.html-content [style*="rgba(192"],
+.html-content [style*="rgba(129"] {
+  color: rgb(255 255 255) !important; /* white text on purple gradients/semi-transparent */
+}
+
+/* Ensure links inside colored backgrounds maintain readability */
+.html-content .bg-white a,
+.html-content .bg-gray-100 a,
+.html-content .bg-purple-50 a,
+.html-content .bg-violet-50 a,
+.html-content [style*="background: white"] a,
+.html-content [style*="background-color: white"] a {
+  color: rgb(99 102 241) !important; /* indigo-500 - visible on light backgrounds */
+}
+
+.html-content .bg-purple-500 a,
+.html-content .bg-violet-500 a,
+.html-content .bg-indigo-500 a,
+.html-content .bg-purple-600 a,
+.html-content .bg-violet-600 a {
+  color: rgb(199 210 254) !important; /* indigo-200 - visible on dark purple backgrounds */
+}
+
+/* ===== Universal Contrast Rules ===== */
+/* Target any element with inline background that appears light (white, light gray, light colors) */
+.html-content [style*="background"][style*="#fff"],
+.html-content [style*="background"][style*="#FFF"],
+.html-content [style*="background"][style*="255, 255, 255"],
+.html-content [style*="background"][style*="248, 250, 252"],
+.html-content [style*="background"][style*="241, 245, 249"],
+.html-content [style*="background"][style*="226, 232, 240"] {
+  color: rgb(30 41 59) !important; /* slate-800 */
+}
+
+/* Improved readability for nested list items */
+.html-content li {
+  color: inherit;
+}
+
+.html-content ul li::marker,
+.html-content ol li::marker {
+  color: rgb(167 139 250); /* violet-400 - matches sueno-infantil theme */
+}
+
+/* Ensure italic/emphasized text has proper contrast on light backgrounds */
+.html-content .bg-white em,
+.html-content .bg-white i,
+.html-content .bg-gray-50 em,
+.html-content .bg-gray-50 i,
+.html-content .bg-gray-100 em,
+.html-content .bg-gray-100 i,
+.html-content .bg-purple-50 em,
+.html-content .bg-purple-50 i,
+.html-content .bg-violet-50 em,
+.html-content .bg-violet-50 i,
+.html-content [style*="background: white"] em,
+.html-content [style*="background: white"] i,
+.html-content [style*="background-color: white"] em,
+.html-content [style*="background-color: white"] i,
+.html-content [style*="background-color: #fff"] em,
+.html-content [style*="background-color: #fff"] i,
+.html-content [style*="background: #fff"] em,
+.html-content [style*="background: #fff"] i {
+  color: rgb(71 85 105) !important; /* slate-600 - darker for readability on light bg */
+}
+
+/* Ensure italic/emphasized text remains visible on dark/purple backgrounds */
+.html-content .bg-purple-500 em,
+.html-content .bg-purple-500 i,
+.html-content .bg-purple-600 em,
+.html-content .bg-purple-600 i,
+.html-content .bg-violet-500 em,
+.html-content .bg-violet-500 i,
+.html-content .bg-violet-600 em,
+.html-content .bg-violet-600 i,
+.html-content .bg-indigo-500 em,
+.html-content .bg-indigo-500 i,
+.html-content .bg-indigo-600 em,
+.html-content .bg-indigo-600 i {
+  color: rgb(233 213 255) !important; /* purple-200 - light for visibility on dark purple */
+}

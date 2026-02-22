@@ -1,0 +1,34 @@
+{
+  "id": "/sueno-infantil/",
+  "name": "Plan de Sueño Infantil - Guía Personalizada",
+  "short_name": "Sueño Infantil",
+  "description": "Descubre el plan personalizado con acciones prácticas para establecer rutinas de sueño saludables para tu bebé.",
+  "start_url": "/sueno-infantil/",
+  "scope": "/sueno-infantil/",
+  "display": "standalone",
+  "background_color": "#0F172A",
+  "theme_color": "#0F172A",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/sueno-infantil/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/sueno-infantil/icon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/sueno-infantil/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["health", "education", "lifestyle"],
+  "prefer_related_applications": false
+}
