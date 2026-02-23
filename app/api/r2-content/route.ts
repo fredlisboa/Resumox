@@ -58,14 +58,12 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    // Decode the key since it comes URL-encoded from the frontend
-    const decodedKey = decodeURIComponent(key)
-
+    // searchParams.get() already decodes the URL-encoded value
     // Extrair a chave do arquivo (strip r2:// prefix se presente)
-    let fileKey = decodedKey
+    let fileKey = key
     let bucket = R2_BUCKET_NAME
-    if (decodedKey.startsWith('r2://')) {
-      const parsed = parseR2Url(decodedKey)
+    if (key.startsWith('r2://')) {
+      const parsed = parseR2Url(key)
       fileKey = parsed.key
       bucket = parsed.bucket
     }

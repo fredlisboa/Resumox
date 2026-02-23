@@ -31,8 +31,8 @@ export function parseR2Url(url: string): { bucket: string; key: string } {
   // Verifica se há um bucket explícito (r2://bucket-name/path/file.ext)
   const parts = path.split('/')
 
-  // Lista de nomes de pastas conhecidas (não são nomes de bucket)
-  const knownFolders = ['pdfs', 'audios', 'videos', 'images', 'thumbnails']
+  // Lista de nomes de pastas/prefixos conhecidos (não são nomes de bucket)
+  const knownFolders = ['pdfs', 'audios', 'videos', 'images', 'thumbnails', 'resumox']
 
   // Se o primeiro segmento não é uma pasta conhecida e não contém extensão de arquivo,
   // trata como bucket explícito
