@@ -12,13 +12,12 @@ interface AudioPlayerProps {
 }
 
 const SPEED_OPTIONS = [0.75, 1, 1.25, 1.5, 2]
-const BARS_COUNT = 50
 
 // Gera alturas pseudo-aleatórias estáveis baseadas no índice
+// Aceita qualquer count para ser responsivo
 function generateBarHeights(count: number): number[] {
   const heights: number[] = []
   for (let i = 0; i < count; i++) {
-    // Combinação de seno + variação determinística para visual de waveform
     const base = 25 + Math.sin(i * 0.7) * 18
     const variation = Math.sin(i * 2.3 + 1.7) * 15 + Math.cos(i * 1.1 + 0.3) * 10
     heights.push(Math.max(12, Math.min(95, base + variation)))
@@ -43,12 +42,27 @@ export default function AudioPlayer({
   const [isDragging, setIsDragging] = useState(false)
   const [hoverProgress, setHoverProgress] = useState<number | null>(null)
   const isDraggingRef = useRef(false)
+  const [barsCount, setBarsCount] = useState(50)
 
   const audioUrl = audioR2Key
     ? `/api/r2-content?key=${encodeURIComponent(audioR2Key)}`
     : null
 
-  const barHeights = useMemo(() => generateBarHeights(BARS_COUNT), [])
+  // Responsivamente calcula quantas barras cabem no container
+  useEffect(() => {
+    const waveform = waveformRef.current
+    if (!waveform) return
+    const observer = new ResizeObserver((entries) => {
+      const width = entries[0]?.contentRect.width ?? 300
+      // Cada barra ocupa ~5px (3px bar + 2px gap)
+      const count = Math.max(20, Math.min(120, Math.floor(width / 5)))
+      setBarsCount(count)
+    })
+    observer.observe(waveform)
+    return () => observer.disconnect()
+  }, [])
+
+  const barHeights = useMemo(() => generateBarHeights(barsCount), [barsCount])
 
   // Set initial position and capture duration once audio loads
   useEffect(() => {
@@ -205,9 +219,9 @@ export default function AudioPlayer({
   }, [])
 
   const progress = totalDuration > 0 ? currentTime / totalDuration : 0
-  const playedBars = Math.floor(progress * BARS_COUNT)
+  const playedBars = Math.floor(progress * barsCount)
   const hoverBar =
-    hoverProgress !== null ? Math.floor(hoverProgress * BARS_COUNT) : null
+    hoverProgress !== null ? Math.floor(hoverProgress * barsCount) : null
 
   if (!audioR2Key) {
     return (
@@ -285,9 +299,10 @@ export default function AudioPlayer({
             </div>
           )}
 
-          <div className="flex items-center gap-[2px] h-10">
+          <div className="flex items-center gap-[2px] h-12 relative">
             {barHeights.map((h, i) => {
               const isPlayed = i < playedBars
+              const isCurrentBar = i === playedBars
               const isHovered =
                 hoverBar !== null && i <= hoverBar && i >= playedBars
               const isHoverPast =
@@ -307,26 +322,42 @@ export default function AudioPlayer({
               return (
                 <div
                   key={i}
-                  className="flex-1 rounded-sm transition-all duration-150"
+                  className="flex-1 rounded-sm transition-all duration-150 relative"
                   style={{
                     maxWidth: '4px',
                     height: `${h}%`,
                     background: bg,
                     transform:
-                      isDragging && i === Math.floor(progress * BARS_COUNT)
+                      isDragging && isCurrentBar
                         ? 'scaleY(1.3)'
                         : hoverBar === i
                           ? 'scaleY(1.15)'
                           : 'scaleY(1)',
                   }}
-                />
+                >
+                  {/* Circle indicator at current playback position */}
+                  {isCurrentBar && totalDuration > 0 && (
+                    <div
+                      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-10"
+                      style={{
+                        width: isDragging ? '14px' : '12px',
+                        height: isDragging ? '14px' : '12px',
+                        borderRadius: '50%',
+                        background: '#A29BFE',
+                        boxShadow: '0 0 8px rgba(162,155,254,0.7), 0 0 16px rgba(162,155,254,0.3)',
+                        transition: 'width 0.15s, height 0.15s, box-shadow 0.15s',
+                      }}
+                    />
+                  )}
+                </div>
               )
             })}
           </div>
         </div>
 
-        <span className="text-[11px] text-resumox-muted min-w-[70px] text-right tabular-nums">
-          {formatTime(currentTime)} / {formatTime(totalDuration)}
+        <span className="min-w-[90px] text-right tabular-nums flex-shrink-0">
+          <span className="text-sm font-bold text-resumox-accent-light">{formatTime(currentTime)}</span>
+          <span className="text-xs text-resumox-muted font-medium"> / {formatTime(totalDuration)}</span>
         </span>
       </div>
 
