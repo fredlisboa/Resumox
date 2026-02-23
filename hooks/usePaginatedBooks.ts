@@ -92,11 +92,12 @@ export function usePaginatedBooks({
     if (hasMore) {
       fetchPage(page + 1, true)
     } else {
-      // Loop back to the beginning
+      // Loop back to the beginning and scroll to top
       setBooks([])
       setPage(1)
       setHasMore(false)
       fetchPage(1, false)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }, [fetchPage, page, loadingMore, hasMore])
 
