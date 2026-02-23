@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 interface ExerciseCardProps {
   title: string
@@ -30,6 +30,9 @@ export default function ExerciseCard({
   onChecklistChange,
 }: ExerciseCardProps) {
   const [localState, setLocalState] = useState(checklistState)
+  const [xpPopIdx, setXpPopIdx] = useState<number | null>(null)
+  const [allDone, setAllDone] = useState(false)
+  const popTimer = useRef<NodeJS.Timeout>()
   const colors = themeColors[colorTheme]
 
   useEffect(() => {
@@ -38,17 +41,32 @@ export default function ExerciseCard({
 
   const toggleItem = (idx: number) => {
     const newState = [...localState]
+    const wasChecked = newState[idx]
     newState[idx] = !newState[idx]
     setLocalState(newState)
     onChecklistChange(newState)
+
+    // Show "+2 XP" pop when checking (not unchecking)
+    if (!wasChecked) {
+      setXpPopIdx(idx)
+      if (popTimer.current) clearTimeout(popTimer.current)
+      popTimer.current = setTimeout(() => setXpPopIdx(null), 1200)
+
+      // Check if all items are now completed
+      if (newState.every(Boolean)) {
+        setAllDone(true)
+        setTimeout(() => setAllDone(false), 2000)
+      }
+    }
   }
 
   const completedCount = localState.filter(Boolean).length
+  const xpEarned = completedCount * 2
 
   return (
     <div
-      className="rounded-2xl p-4 border mb-4"
-      style={{ background: colors.bg, borderColor: colors.border }}
+      className={`rounded-2xl p-4 border mb-4 transition-all ${allDone ? 'ring-2 ring-resumox-green/50' : ''}`}
+      style={{ background: colors.bg, borderColor: allDone ? '#00D68F' : colors.border }}
     >
       <div className="flex items-center gap-2 mb-2">
         <span className="text-lg">{icon}</span>
@@ -68,12 +86,13 @@ export default function ExerciseCard({
         {checklist.map((item, idx) => (
           <label
             key={idx}
-            className="flex items-start gap-3 cursor-pointer group"
+            className="flex items-start gap-3 cursor-pointer group relative"
           >
             <div
+              onClick={() => toggleItem(idx)}
               className={`w-5 h-5 rounded-md border-2 flex-shrink-0 flex items-center justify-center mt-0.5 transition-all ${
                 localState[idx]
-                  ? 'border-transparent'
+                  ? 'border-transparent scale-110'
                   : 'border-resumox-border group-hover:border-resumox-accent/40'
               }`}
               style={localState[idx] ? { background: colors.check, borderColor: colors.check } : undefined}
@@ -89,13 +108,38 @@ export default function ExerciseCard({
             }`}>
               {item}
             </span>
+            {/* +2 XP pop animation */}
+            {xpPopIdx === idx && (
+              <span
+                className="absolute -top-1 left-6 text-[11px] font-bold pointer-events-none animate-xp-pop"
+                style={{ color: '#00D68F' }}
+              >
+                +2 XP
+              </span>
+            )}
           </label>
         ))}
       </div>
 
-      {completedCount > 0 && (
-        <div className="mt-3 text-[10px] font-semibold" style={{ color: colors.text }}>
+      {/* Footer: progress count + XP earned */}
+      <div className="mt-3 flex items-center justify-between">
+        <div className="text-[10px] font-semibold" style={{ color: colors.text }}>
           {completedCount}/{checklist.length} concluídos
+        </div>
+        {xpEarned > 0 && (
+          <div
+            className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+            style={{ background: 'rgba(0,214,143,0.12)', color: '#00D68F' }}
+          >
+            +{xpEarned} XP
+          </div>
+        )}
+      </div>
+
+      {/* All done celebration */}
+      {allDone && (
+        <div className="mt-2 text-center text-xs font-bold text-resumox-green animate-pulse">
+          Exercício completo!
         </div>
       )}
     </div>

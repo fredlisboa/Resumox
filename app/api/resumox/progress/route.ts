@@ -82,9 +82,47 @@ export async function POST(request: NextRequest) {
       updates.audio_position_sec = audio_position_sec
     }
 
-    // Update checklist state
+    // Update checklist state and award XP per checkbox (+2 XP each)
+    let checklistXpDelta = 0
     if (checklist_state !== undefined) {
       updates.checklist_state = checklist_state
+
+      // Count total checked items across all exercises
+      let totalChecked = 0
+      let totalItems = 0
+      for (const key of Object.keys(checklist_state)) {
+        const items = checklist_state[key] as boolean[]
+        if (Array.isArray(items)) {
+          totalItems += items.length
+          totalChecked += items.filter(Boolean).length
+        }
+      }
+
+      // Count previously checked items
+      let prevChecked = 0
+      if (existing?.checklist_state) {
+        for (const key of Object.keys(existing.checklist_state)) {
+          const items = existing.checklist_state[key] as boolean[]
+          if (Array.isArray(items)) {
+            prevChecked += items.filter(Boolean).length
+          }
+        }
+      }
+
+      // XP = 2 per checked item (absolute, not incremental)
+      const newChecklistXp = totalChecked * 2
+      const prevChecklistXp = prevChecked * 2
+      checklistXpDelta = newChecklistXp - prevChecklistXp
+
+      // Base XP = completion XP (10 if completed) + checklist XP
+      const completionXp = existing?.status === 'completed' ? 10 : 0
+      updates.xp_earned = completionXp + newChecklistXp
+
+      // Update progress_pct: if user has reached pratica tab (>=95%), scale 95→100 by checklist ratio
+      const currentProgress = existing?.progress_pct || 0
+      if (currentProgress >= 95 && totalItems > 0 && !mark_complete) {
+        updates.progress_pct = Math.round(95 + (totalChecked / totalItems) * 5)
+      }
     }
 
     // Mark as complete
@@ -92,7 +130,9 @@ export async function POST(request: NextRequest) {
       updates.status = 'completed'
       updates.progress_pct = 100
       updates.completed_at = new Date().toISOString()
-      updates.xp_earned = (existing?.xp_earned || 0) + 10
+      // Completion awards +10 XP on top of any checklist XP
+      const currentChecklistXp = updates.xp_earned ?? (existing?.xp_earned || 0)
+      updates.xp_earned = currentChecklistXp + 10
     }
 
     // Upsert progress
@@ -164,6 +204,60 @@ export async function POST(request: NextRequest) {
             activity_date: today,
             books_completed: 1,
             xp_earned: 10,
+          })
+      }
+    }
+
+    // Update stats/activity for checklist XP changes
+    if (checklistXpDelta !== 0 && !mark_complete) {
+      const today = new Date().toISOString().split('T')[0]
+
+      const { data: stats } = await supabase
+        .from('resumox_user_stats')
+        .select('*')
+        .eq('user_email', userEmail)
+        .single()
+
+      if (stats) {
+        await supabase
+          .from('resumox_user_stats')
+          .update({
+            total_xp: Math.max(0, stats.total_xp + checklistXpDelta),
+            last_activity_date: today,
+          })
+          .eq('user_email', userEmail)
+      } else {
+        await supabase
+          .from('resumox_user_stats')
+          .insert({
+            user_email: userEmail,
+            total_xp: Math.max(0, checklistXpDelta),
+            last_activity_date: today,
+          })
+      }
+
+      // Update daily activity XP
+      const { data: dailyActivity } = await supabase
+        .from('resumox_daily_activity')
+        .select('*')
+        .eq('user_email', userEmail)
+        .eq('activity_date', today)
+        .single()
+
+      if (dailyActivity) {
+        await supabase
+          .from('resumox_daily_activity')
+          .update({
+            xp_earned: Math.max(0, dailyActivity.xp_earned + checklistXpDelta),
+          })
+          .eq('id', dailyActivity.id)
+      } else {
+        await supabase
+          .from('resumox_daily_activity')
+          .insert({
+            user_email: userEmail,
+            activity_date: today,
+            xp_earned: Math.max(0, checklistXpDelta),
           })
       }
     }

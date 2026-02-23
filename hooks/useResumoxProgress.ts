@@ -33,13 +33,14 @@ export function useResumoxProgress() {
     }
   }, [])
 
-  const debouncedUpdate = useCallback((key: string, update: ProgressUpdate, delayMs = 2000) => {
+  const debouncedUpdate = useCallback((key: string, update: ProgressUpdate, delayMs = 2000, onResult?: (progress: any) => void) => {
     if (debounceTimers.current[key]) {
       clearTimeout(debounceTimers.current[key])
     }
-    debounceTimers.current[key] = setTimeout(() => {
-      updateProgress(update)
+    debounceTimers.current[key] = setTimeout(async () => {
+      const result = await updateProgress(update)
       delete debounceTimers.current[key]
+      if (onResult && result) onResult(result)
     }, delayMs)
   }, [updateProgress])
 
@@ -51,8 +52,8 @@ export function useResumoxProgress() {
     debouncedUpdate(`audio-${bookId}`, { book_id: bookId, audio_position_sec: position }, 10000)
   }, [debouncedUpdate])
 
-  const updateChecklist = useCallback((bookId: string, state: ChecklistState) => {
-    debouncedUpdate(`checklist-${bookId}`, { book_id: bookId, checklist_state: state }, 2000)
+  const updateChecklist = useCallback((bookId: string, state: ChecklistState, onResult?: (progress: any) => void) => {
+    debouncedUpdate(`checklist-${bookId}`, { book_id: bookId, checklist_state: state }, 2000, onResult)
   }, [debouncedUpdate])
 
   const markComplete = useCallback((bookId: string) => {

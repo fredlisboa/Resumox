@@ -94,6 +94,7 @@ const config: Config = {
         'mega-glow': 'megaGlow 2.5s ease-in-out infinite',
         'orbit-glow': 'orbitGlow 8s linear infinite',
         'spin': 'spin 1s linear infinite',
+        'xp-pop': 'xpPop 1.2s ease-out forwards',
       },
       keyframes: {
         fadeIn: {
@@ -172,6 +173,11 @@ const config: Config = {
         bounceSlow: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-20px)' },
+        },
+        xpPop: {
+          '0%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+          '50%': { opacity: '1', transform: 'translateY(-12px) scale(1.15)' },
+          '100%': { opacity: '0', transform: 'translateY(-24px) scale(0.9)' },
         },
       },
     },

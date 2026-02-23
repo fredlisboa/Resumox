@@ -121,7 +121,11 @@ export default function BookDetailPage() {
 
   const handleChecklistChange = useCallback((state: ChecklistState) => {
     setChecklistState(state)
-    if (book) updateChecklist(book.id, state)
+    if (book) {
+      updateChecklist(book.id, state, (updatedProgress) => {
+        if (updatedProgress) setProgress(updatedProgress)
+      })
+    }
   }, [book, updateChecklist])
 
   const handleToggleInsight = useCallback(async (text: string, sourceChapter: string) => {
