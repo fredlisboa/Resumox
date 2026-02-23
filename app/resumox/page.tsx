@@ -163,7 +163,7 @@ export default function ResumoxLoginPage() {
             Seu acesso está pronto!
           </h1>
           <p className="text-lg text-[#A29BFE] mb-3 font-semibold">Parabéns pela sua compra!</p>
-          <p className="text-base text-[#8888A0] mb-6">659 livros. Pagamento único. Zero mensalidade.</p>
+          <p className="text-base text-[#8888A0] mb-6">Pagamento único. Zero mensalidade.</p>
           <div className="inline-block px-6 py-2 bg-[#13131A]/80 border border-[#6C5CE7]/30 rounded-full mb-4">
             <p className="text-3xl font-bold text-[#E8E8ED] tracking-tight">ResumoX</p>
           </div>

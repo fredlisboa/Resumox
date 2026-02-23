@@ -33,7 +33,7 @@ export default function ResumoxDashboardPage() {
         {/* Hero */}
         <div className="text-center mb-6">
           <h1 className="text-2xl font-extrabold text-resumox-text mb-1">Sua Biblioteca</h1>
-          <p className="text-sm text-resumox-muted">659 livros. Pagamento único. Zero mensalidade.</p>
+          <p className="text-sm text-resumox-muted">Pagamento único. Zero mensalidade.</p>
         </div>
 
         {/* Quick Stats */}

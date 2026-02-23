@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 
 interface AudioPlayerProps {
   title: string
@@ -12,6 +12,19 @@ interface AudioPlayerProps {
 }
 
 const SPEED_OPTIONS = [0.75, 1, 1.25, 1.5, 2]
+const BARS_COUNT = 50
+
+// Gera alturas pseudo-aleatórias estáveis baseadas no índice
+function generateBarHeights(count: number): number[] {
+  const heights: number[] = []
+  for (let i = 0; i < count; i++) {
+    // Combinação de seno + variação determinística para visual de waveform
+    const base = 25 + Math.sin(i * 0.7) * 18
+    const variation = Math.sin(i * 2.3 + 1.7) * 15 + Math.cos(i * 1.1 + 0.3) * 10
+    heights.push(Math.max(12, Math.min(95, base + variation)))
+  }
+  return heights
+}
 
 export default function AudioPlayer({
   title,
@@ -22,15 +35,20 @@ export default function AudioPlayer({
   onPositionChange,
 }: AudioPlayerProps) {
   const audioRef = useRef<HTMLAudioElement>(null)
+  const waveformRef = useRef<HTMLDivElement>(null)
   const [playing, setPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(initialPosition)
   const [totalDuration, setTotalDuration] = useState(duration ? duration * 60 : 0)
   const [speed, setSpeed] = useState(1)
-  // Usar proxy endpoint diretamente como src do audio (evita CORS com R2)
+  const [isDragging, setIsDragging] = useState(false)
+  const [hoverProgress, setHoverProgress] = useState<number | null>(null)
+  const isDraggingRef = useRef(false)
+
   const audioUrl = audioR2Key
     ? `/api/r2-content?key=${encodeURIComponent(audioR2Key)}`
     : null
-  const barsCount = 40
+
+  const barHeights = useMemo(() => generateBarHeights(BARS_COUNT), [])
 
   // Set initial position and capture duration once audio loads
   useEffect(() => {
@@ -67,6 +85,7 @@ export default function AudioPlayer({
   }, [playing])
 
   const handleTimeUpdate = useCallback(() => {
+    if (isDraggingRef.current) return
     const audio = audioRef.current
     if (!audio) return
     setCurrentTime(audio.currentTime)
@@ -88,8 +107,114 @@ export default function AudioPlayer({
     return `${m}:${sec.toString().padStart(2, '0')}`
   }
 
+  // Calcula a fração de progresso a partir de um evento de ponteiro
+  const getProgressFromEvent = useCallback((clientX: number): number => {
+    const waveform = waveformRef.current
+    if (!waveform) return 0
+    const rect = waveform.getBoundingClientRect()
+    const x = clientX - rect.left
+    return Math.max(0, Math.min(1, x / rect.width))
+  }, [])
+
+  const seekToProgress = useCallback(
+    (fraction: number) => {
+      const audio = audioRef.current
+      if (!audio || totalDuration <= 0) return
+      const newTime = fraction * totalDuration
+      audio.currentTime = newTime
+      setCurrentTime(newTime)
+      onPositionChange?.(Math.floor(newTime))
+    },
+    [totalDuration, onPositionChange],
+  )
+
+  // --- Mouse events ---
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      if (totalDuration <= 0) return
+      e.preventDefault()
+      isDraggingRef.current = true
+      setIsDragging(true)
+      const fraction = getProgressFromEvent(e.clientX)
+      seekToProgress(fraction)
+    },
+    [getProgressFromEvent, seekToProgress, totalDuration],
+  )
+
+  useEffect(() => {
+    if (!isDragging) return
+    const handleMouseMove = (e: MouseEvent) => {
+      const fraction = getProgressFromEvent(e.clientX)
+      seekToProgress(fraction)
+      setHoverProgress(fraction)
+    }
+    const handleMouseUp = () => {
+      isDraggingRef.current = false
+      setIsDragging(false)
+      setHoverProgress(null)
+    }
+    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mouseup', handleMouseUp)
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseup', handleMouseUp)
+    }
+  }, [isDragging, getProgressFromEvent, seekToProgress])
+
+  // --- Touch events ---
+  const handleTouchStart = useCallback(
+    (e: React.TouchEvent) => {
+      if (totalDuration <= 0) return
+      isDraggingRef.current = true
+      setIsDragging(true)
+      const touch = e.touches[0]
+      const fraction = getProgressFromEvent(touch.clientX)
+      seekToProgress(fraction)
+    },
+    [getProgressFromEvent, seekToProgress, totalDuration],
+  )
+
+  useEffect(() => {
+    if (!isDragging) return
+    const handleTouchMove = (e: TouchEvent) => {
+      const touch = e.touches[0]
+      if (!touch) return
+      const fraction = getProgressFromEvent(touch.clientX)
+      seekToProgress(fraction)
+      setHoverProgress(fraction)
+    }
+    const handleTouchEnd = () => {
+      isDraggingRef.current = false
+      setIsDragging(false)
+      setHoverProgress(null)
+    }
+    window.addEventListener('touchmove', handleTouchMove, { passive: true })
+    window.addEventListener('touchend', handleTouchEnd)
+    window.addEventListener('touchcancel', handleTouchEnd)
+    return () => {
+      window.removeEventListener('touchmove', handleTouchMove)
+      window.removeEventListener('touchend', handleTouchEnd)
+      window.removeEventListener('touchcancel', handleTouchEnd)
+    }
+  }, [isDragging, getProgressFromEvent, seekToProgress])
+
+  // --- Hover tooltip ---
+  const handleMouseMoveHover = useCallback(
+    (e: React.MouseEvent) => {
+      if (isDraggingRef.current || totalDuration <= 0) return
+      setHoverProgress(getProgressFromEvent(e.clientX))
+    },
+    [getProgressFromEvent, totalDuration],
+  )
+
+  const handleMouseLeave = useCallback(() => {
+    if (!isDraggingRef.current) setHoverProgress(null)
+  }, [])
+
   const progress = totalDuration > 0 ? currentTime / totalDuration : 0
-  const playedBars = Math.floor(progress * barsCount)
+  const playedBars = Math.floor(progress * BARS_COUNT)
+  const hoverBar =
+    hoverProgress !== null ? Math.floor(hoverProgress * BARS_COUNT) : null
 
   if (!audioR2Key) {
     return (
@@ -140,22 +265,72 @@ export default function AudioPlayer({
           )}
         </button>
 
-        {/* Waveform bars */}
-        <div className="flex-1 flex items-center gap-[2px] h-10">
-          {Array.from({ length: barsCount }).map((_, i) => (
+        {/* Waveform bars — seekable */}
+        <div
+          ref={waveformRef}
+          className="flex-1 relative select-none"
+          style={{ cursor: totalDuration > 0 ? 'pointer' : 'default' }}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMoveHover}
+          onMouseLeave={handleMouseLeave}
+          onTouchStart={handleTouchStart}
+        >
+          {/* Hover time tooltip */}
+          {hoverProgress !== null && totalDuration > 0 && (
             <div
-              key={i}
-              className="flex-1 rounded-sm transition-colors duration-200"
+              className="absolute -top-8 pointer-events-none z-10 px-2 py-0.5 rounded-md text-[10px] font-semibold text-white whitespace-nowrap"
               style={{
-                maxWidth: '4px',
-                height: `${20 + Math.sin(i * 0.5) * 20 + Math.random() * 10}%`,
-                background: i < playedBars ? '#A29BFE' : '#22222E',
+                left: `${hoverProgress * 100}%`,
+                transform: 'translateX(-50%)',
+                background: 'rgba(108,92,231,0.9)',
+                boxShadow: '0 2px 8px rgba(108,92,231,0.4)',
               }}
-            />
-          ))}
+            >
+              {formatTime(hoverProgress * totalDuration)}
+            </div>
+          )}
+
+          <div className="flex items-center gap-[2px] h-10">
+            {barHeights.map((h, i) => {
+              const isPlayed = i < playedBars
+              const isHovered =
+                hoverBar !== null && i <= hoverBar && i >= playedBars
+              const isHoverPast =
+                hoverBar !== null && hoverBar < playedBars && i > hoverBar && i < playedBars
+
+              let bg: string
+              if (isPlayed && !isHoverPast) {
+                bg = '#A29BFE'
+              } else if (isHoverPast) {
+                bg = 'rgba(162,155,254,0.35)'
+              } else if (isHovered) {
+                bg = 'rgba(162,155,254,0.55)'
+              } else {
+                bg = '#22222E'
+              }
+
+              return (
+                <div
+                  key={i}
+                  className="flex-1 rounded-sm transition-all duration-150"
+                  style={{
+                    maxWidth: '4px',
+                    height: `${h}%`,
+                    background: bg,
+                    transform:
+                      isDragging && i === Math.floor(progress * BARS_COUNT)
+                        ? 'scaleY(1.3)'
+                        : hoverBar === i
+                          ? 'scaleY(1.15)'
+                          : 'scaleY(1)',
+                  }}
+                />
+              )
+            })}
+          </div>
         </div>
 
-        <span className="text-[11px] text-resumox-muted min-w-[70px] text-right">
+        <span className="text-[11px] text-resumox-muted min-w-[70px] text-right tabular-nums">
           {formatTime(currentTime)} / {formatTime(totalDuration)}
         </span>
       </div>
