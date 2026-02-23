@@ -20,7 +20,8 @@
     "check:errors": "tsx scripts/check-webhook-errors.ts",
     "check:user-products": "tsx scripts/check-user-products.ts",
     "create:first-admin": "tsx scripts/create-first-admin.ts",
-    "import:generated": "tsx scripts/import-generated-summaries.ts"
+    "import:generated": "tsx scripts/import-generated-summaries.ts",
+    "generate:audio": "tsx scripts/resumox-generate-audio.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.78.0",
