@@ -12,9 +12,9 @@ interface AudioPlayerProps {
 }
 
 const SPEED_OPTIONS = [0.75, 1, 1.25, 1.5, 2]
+const LOAD_TIMEOUT_MS = 12000
 
 // Gera alturas pseudo-aleatórias estáveis baseadas no índice
-// Aceita qualquer count para ser responsivo
 function generateBarHeights(count: number): number[] {
   const heights: number[] = []
   for (let i = 0; i < count; i++) {
@@ -44,18 +44,24 @@ export default function AudioPlayer({
   const isDraggingRef = useRef(false)
   const [barsCount, setBarsCount] = useState(50)
 
+  // Loading/buffering state
+  const [isBuffering, setIsBuffering] = useState(false)
+  const [loadError, setLoadError] = useState(false)
+  const loadTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const playRequestedRef = useRef(false)
+
   const audioUrl = audioR2Key
     ? `/api/r2-content?key=${encodeURIComponent(audioR2Key)}`
     : null
 
   // Responsivamente calcula quantas barras cabem no container
+  // Cada barra ocupa ~5px (largura + gap), sem limite máximo artificial
   useEffect(() => {
     const waveform = waveformRef.current
     if (!waveform) return
     const observer = new ResizeObserver((entries) => {
       const width = entries[0]?.contentRect.width ?? 300
-      // Cada barra ocupa ~5px (3px bar + 2px gap)
-      const count = Math.max(20, Math.min(120, Math.floor(width / 5)))
+      const count = Math.max(20, Math.floor(width / 5))
       setBarsCount(count)
     })
     observer.observe(waveform)
@@ -63,6 +69,13 @@ export default function AudioPlayer({
   }, [])
 
   const barHeights = useMemo(() => generateBarHeights(barsCount), [barsCount])
+
+  // Cleanup load timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (loadTimeoutRef.current) clearTimeout(loadTimeoutRef.current)
+    }
+  }, [])
 
   // Set initial position and capture duration once audio loads
   useEffect(() => {
@@ -87,17 +100,83 @@ export default function AudioPlayer({
     }
   }, [initialPosition])
 
+  // Track buffering: when user hits play, detect if audio is actually progressing
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    const handleWaiting = () => {
+      if (playRequestedRef.current) setIsBuffering(true)
+    }
+    const handlePlaying = () => {
+      // Audio actually started — clear buffering and timeout
+      setIsBuffering(false)
+      setLoadError(false)
+      playRequestedRef.current = false
+      if (loadTimeoutRef.current) {
+        clearTimeout(loadTimeoutRef.current)
+        loadTimeoutRef.current = null
+      }
+    }
+    const handleError = () => {
+      setIsBuffering(false)
+      setLoadError(true)
+      playRequestedRef.current = false
+      if (loadTimeoutRef.current) {
+        clearTimeout(loadTimeoutRef.current)
+        loadTimeoutRef.current = null
+      }
+    }
+
+    audio.addEventListener('waiting', handleWaiting)
+    audio.addEventListener('playing', handlePlaying)
+    audio.addEventListener('error', handleError)
+    return () => {
+      audio.removeEventListener('waiting', handleWaiting)
+      audio.removeEventListener('playing', handlePlaying)
+      audio.removeEventListener('error', handleError)
+    }
+  }, [])
+
   const togglePlay = useCallback(() => {
     const audio = audioRef.current
     if (!audio) return
     if (playing) {
       audio.pause()
+      setIsBuffering(false)
+      playRequestedRef.current = false
+      if (loadTimeoutRef.current) {
+        clearTimeout(loadTimeoutRef.current)
+        loadTimeoutRef.current = null
+      }
     } else {
+      // User requested play — start buffering indicator
+      setIsBuffering(true)
+      setLoadError(false)
+      playRequestedRef.current = true
+
+      // Start 12s timeout
+      if (loadTimeoutRef.current) clearTimeout(loadTimeoutRef.current)
+      loadTimeoutRef.current = setTimeout(() => {
+        if (playRequestedRef.current) {
+          setIsBuffering(false)
+          setLoadError(true)
+          playRequestedRef.current = false
+          audio.pause()
+        }
+      }, LOAD_TIMEOUT_MS)
+
       audio.play().catch((err) => {
         console.warn('[AudioPlayer] play() failed:', err)
+        setIsBuffering(false)
+        setLoadError(true)
+        playRequestedRef.current = false
+        if (loadTimeoutRef.current) {
+          clearTimeout(loadTimeoutRef.current)
+          loadTimeoutRef.current = null
+        }
       })
     }
-    // State is driven by onPlay/onPause events on the <audio> element
   }, [playing])
 
   const handleTimeUpdate = useCallback(() => {
@@ -154,7 +233,6 @@ export default function AudioPlayer({
       const fraction = getProgressFromEvent(e.clientX)
       seekToProgress(fraction)
 
-      // Register move/up directly so a quick click can't miss mouseup
       const onMove = (ev: MouseEvent) => {
         const f = getProgressFromEvent(ev.clientX)
         seekToProgress(f)
@@ -243,7 +321,11 @@ export default function AudioPlayer({
           onTimeUpdate={handleTimeUpdate}
           onPlay={() => setPlaying(true)}
           onPause={() => setPlaying(false)}
-          onEnded={() => setPlaying(false)}
+          onEnded={() => {
+            setPlaying(false)
+            setIsBuffering(false)
+            playRequestedRef.current = false
+          }}
           preload="metadata"
         />
       )}
@@ -256,34 +338,61 @@ export default function AudioPlayer({
 
       {/* Controls */}
       <div className="flex items-center gap-4">
-        <button
-          onClick={togglePlay}
-          disabled={!audioUrl}
-          className="w-[52px] h-[52px] rounded-full bg-resumox-accent flex items-center justify-center flex-shrink-0 shadow-lg hover:scale-105 active:scale-95 transition-transform disabled:opacity-50"
-          style={{ boxShadow: '0 4px 20px rgba(108,92,231,0.3)' }}
-        >
-          {playing ? (
-            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <rect x="6" y="4" width="4" height="16" rx="1" />
-              <rect x="14" y="4" width="4" height="16" rx="1" />
-            </svg>
-          ) : (
-            <svg className="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z" />
-            </svg>
+        {/* Play/Pause button with loading spinner overlay */}
+        <div className="relative flex-shrink-0">
+          <button
+            onClick={togglePlay}
+            disabled={!audioUrl}
+            className="w-[52px] h-[52px] rounded-full bg-resumox-accent flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-transform disabled:opacity-50"
+            style={{ boxShadow: '0 4px 20px rgba(108,92,231,0.3)' }}
+          >
+            {playing ? (
+              <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <rect x="6" y="4" width="4" height="16" rx="1" />
+                <rect x="14" y="4" width="4" height="16" rx="1" />
+              </svg>
+            ) : (
+              <svg className="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            )}
+          </button>
+          {/* Spinner ring around play button when buffering */}
+          {isBuffering && (
+            <div
+              className="absolute inset-[-3px] rounded-full pointer-events-none"
+              style={{
+                border: '3px solid transparent',
+                borderTopColor: '#A29BFE',
+                borderRightColor: '#A29BFE',
+                animation: 'audioplayer-spin 0.8s linear infinite',
+              }}
+            />
           )}
-        </button>
+        </div>
 
-        {/* Waveform bars — seekable */}
+        {/* Waveform bars — seekable, fills full width */}
         <div
           ref={waveformRef}
-          className="flex-1 relative select-none"
+          className="flex-1 relative select-none min-w-0"
           style={{ cursor: totalDuration > 0 ? 'pointer' : 'default' }}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMoveHover}
           onMouseLeave={handleMouseLeave}
           onTouchStart={handleTouchStart}
         >
+          {/* Buffering shimmer overlay on waveform */}
+          {isBuffering && (
+            <div
+              className="absolute inset-0 z-20 pointer-events-none rounded-md overflow-hidden"
+              style={{
+                background: 'linear-gradient(90deg, transparent 0%, rgba(162,155,254,0.15) 50%, transparent 100%)',
+                backgroundSize: '200% 100%',
+                animation: 'audioplayer-shimmer 1.5s ease-in-out infinite',
+              }}
+            />
+          )}
+
           {/* Hover time tooltip */}
           {hoverProgress !== null && totalDuration > 0 && (
             <div
@@ -309,7 +418,10 @@ export default function AudioPlayer({
                 hoverBar !== null && hoverBar < playedBars && i > hoverBar && i < playedBars
 
               let bg: string
-              if (isPlayed && !isHoverPast) {
+              if (isBuffering && !isPlayed) {
+                // Subtle pulse on unplayed bars while buffering
+                bg = '#1A1A28'
+              } else if (isPlayed && !isHoverPast) {
                 bg = '#A29BFE'
               } else if (isHoverPast) {
                 bg = 'rgba(162,155,254,0.35)'
@@ -324,7 +436,6 @@ export default function AudioPlayer({
                   key={i}
                   className="flex-1 rounded-sm transition-all duration-150 relative"
                   style={{
-                    maxWidth: '4px',
                     height: `${h}%`,
                     background: bg,
                     transform:
@@ -361,6 +472,27 @@ export default function AudioPlayer({
         </span>
       </div>
 
+      {/* Load error alert */}
+      {loadError && (
+        <div className="mt-3 p-3 rounded-xl border border-[#FF6B6B]/40 bg-[#FF6B6B]/10 flex items-center gap-3">
+          <svg className="w-5 h-5 text-[#FF6B6B] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M12 3a9 9 0 100 18 9 9 0 000-18z" />
+          </svg>
+          <p className="text-xs text-[#FF6B6B] font-medium flex-1">
+            Nao foi possivel carregar o audio. Verifique sua conexao com a internet e recarregue a pagina.
+          </p>
+          <button
+            onClick={() => {
+              setLoadError(false)
+              window.location.reload()
+            }}
+            className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#FF6B6B]/20 text-[#FF6B6B] hover:bg-[#FF6B6B]/30 transition-colors flex-shrink-0"
+          >
+            Recarregar
+          </button>
+        </div>
+      )}
+
       {/* Speed controls */}
       <div className="flex gap-1.5 mt-3">
         {SPEED_OPTIONS.map((s) => (
@@ -377,6 +509,7 @@ export default function AudioPlayer({
           </button>
         ))}
       </div>
+
     </div>
   )
 }
