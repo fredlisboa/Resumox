@@ -23,7 +23,7 @@ export default function SuenoInfantilLoginPage() {
     setRemainingAttempts(null)
 
     if (!email) {
-      setError('Por favor, ingresa tu e-mail')
+      setError('Por favor, digite seu e-mail')
       return
     }
 
@@ -33,7 +33,7 @@ export default function SuenoInfantilLoginPage() {
     }
 
     if (!turnstileToken) {
-      setError('Por favor, completa la verificación de seguridad')
+      setError('Por favor, complete a verificação de segurança')
       return
     }
 
@@ -56,7 +56,7 @@ export default function SuenoInfantilLoginPage() {
       if (response.ok) {
         router.push(data.redirectTo || '/sueno-infantil/dashboard')
       } else {
-        setError(data.error || 'Error al iniciar sesión')
+        setError(data.error || 'Erro ao fazer login')
 
         if (data.remainingAttempts !== undefined) {
           setRemainingAttempts(data.remainingAttempts)
@@ -64,12 +64,12 @@ export default function SuenoInfantilLoginPage() {
 
         if (response.status === 429) {
           const blockedUntil = new Date(data.blockedUntil)
-          setError(`Muchos intentos. Bloqueado hasta ${blockedUntil.toLocaleTimeString('es-419')}`)
+          setError(`Muitas tentativas. Bloqueado até ${blockedUntil.toLocaleTimeString('pt-BR')}`)
         }
       }
     } catch (err) {
       console.error('Login error:', err)
-      setError('Error de conexión. Verifica tu internet.')
+      setError('Erro de conexão. Verifique sua internet.')
     } finally {
       setLoading(false)
     }
@@ -141,17 +141,17 @@ export default function SuenoInfantilLoginPage() {
           </div>
 
           <h1 className="text-4xl sm:text-5xl font-bold mb-4 tracking-tight bg-gradient-to-r from-[#A5B4FC] via-[#C084FC] to-[#818CF8] bg-clip-text text-transparent animate-shimmer" style={{backgroundSize: '200% auto'}}>
-            ¡Tu acceso está listo!
+            Seu acesso está pronto!
           </h1>
           <p className="text-lg sm:text-xl text-[#A5B4FC] mb-3 font-semibold">
-            ¡Felicidades por tu compra!
+            Parabéns pela sua compra!
           </p>
           <p className="text-base sm:text-lg text-[#94A3B8] mb-6">
-            Ingresa para transformar las noches de tu familia.
+            Acesse para transformar as noites da sua família.
           </p>
           <div className="inline-block px-6 py-2 bg-[#1E1B4B]/50 border border-[#818CF8]/30 rounded-full mb-4">
             <p className="text-4xl font-bold text-[#F1F5F9] tracking-tight">
-              Sueño Infantil
+              Sono Infantil
             </p>
           </div>
         </div>
@@ -177,13 +177,13 @@ export default function SuenoInfantilLoginPage() {
                 htmlFor="email"
                 className="block text-sm font-semibold text-[#A5B4FC] mb-2"
               >
-                Tu E-mail de Compra
+                Seu E-mail de Compra
               </label>
               <p className="text-xs text-[#818CF8] mb-3 flex items-center gap-1">
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                 </svg>
-                Usa el mismo email que registraste en Hotmart.
+                Use o mesmo email que você cadastrou na Hotmart.
               </p>
               <input
                 id="email"
@@ -194,7 +194,7 @@ export default function SuenoInfantilLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-5 py-4 bg-[#0F172A]/50 border border-[#818CF8]/30 rounded-2xl focus:ring-2 focus:ring-[#818CF8] focus:border-[#818CF8] focus:shadow-[0_0_20px_rgba(129,140,248,0.4)] outline-none text-lg transition-all text-[#F1F5F9] placeholder-[#94A3B8]/50 backdrop-blur-sm"
-                placeholder="ejemplo@correo.com"
+                placeholder="exemplo@email.com"
                 disabled={loading}
               />
             </div>
@@ -218,7 +218,7 @@ export default function SuenoInfantilLoginPage() {
                     <p className="font-medium">{error}</p>
                     {remainingAttempts !== null && remainingAttempts > 0 && (
                       <p className="text-xs mt-1 text-red-300">
-                        Tienes {remainingAttempts} intentos restantes
+                        Você tem {remainingAttempts} tentativas restantes
                       </p>
                     )}
                   </div>
@@ -263,7 +263,7 @@ export default function SuenoInfantilLoginPage() {
                   Validando...
                 </span>
               ) : (
-                <span className="relative z-10">Entrar al Contenido</span>
+                <span className="relative z-10">Acessar Conteúdo</span>
               )}
               <div className="absolute inset-0 bg-gradient-to-r from-[#A5B4FC] to-[#C084FC] opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
             </button>
@@ -282,7 +282,7 @@ export default function SuenoInfantilLoginPage() {
                 </svg>
                 <div className="flex-1">
                   <p className="text-sm text-[#A5B4FC] leading-relaxed">
-                    Enviamos una copia de seguridad de tus archivos a tu email. Si no ves el acceso aquí, revisa tu bandeja de entrada o spam.
+                    Enviamos uma cópia de segurança dos seus arquivos para seu email. Se não encontrar o acesso aqui, verifique sua caixa de entrada ou spam.
                   </p>
                 </div>
               </div>
@@ -306,7 +306,7 @@ export default function SuenoInfantilLoginPage() {
                   d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                 />
               </svg>
-              ¿No puedes acceder? Contáctanos
+              Não consegue acessar? Fale conosco
             </button>
           </div>
         </div>
@@ -315,8 +315,8 @@ export default function SuenoInfantilLoginPage() {
         <EmailSupportModal
           isOpen={showEmailModal}
           onClose={() => setShowEmailModal(false)}
-          subject="Soporte de Acceso - Sueño Infantil"
-          body="Hola, necesito ayuda para acceder a mi contenido del Kit Sueño Infantil"
+          subject="Suporte de Acesso - Sono Infantil"
+          body="Olá, preciso de ajuda para acessar meu conteúdo do Kit Sono Infantil"
         />
 
         {/* Footer */}
@@ -326,11 +326,11 @@ export default function SuenoInfantilLoginPage() {
               <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
             </svg>
             <p className="text-sm font-semibold">
-              Acceso Protegido
+              Acesso Protegido
             </p>
           </div>
           <p className="text-xs text-[#94A3B8]">
-            Contenido Original Sueño Infantil - Protegido por Criptografía
+            Conteúdo Original Sono Infantil - Protegido por Criptografia
           </p>
         </div>
       </div>

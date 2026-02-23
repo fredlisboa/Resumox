@@ -23,7 +23,7 @@ export default function IEmocionalLoginPage() {
     setRemainingAttempts(null)
 
     if (!email) {
-      setError('Por favor, ingresa tu e-mail')
+      setError('Por favor, digite seu e-mail')
       return
     }
 
@@ -33,7 +33,7 @@ export default function IEmocionalLoginPage() {
     }
 
     if (!turnstileToken) {
-      setError('Por favor, completa la verificación de seguridad')
+      setError('Por favor, complete a verificação de segurança')
       return
     }
 
@@ -56,7 +56,7 @@ export default function IEmocionalLoginPage() {
       if (response.ok) {
         router.push(data.redirectTo || '/iemocional/dashboard')
       } else {
-        setError(data.error || 'Error al iniciar sesión')
+        setError(data.error || 'Erro ao fazer login')
 
         if (data.remainingAttempts !== undefined) {
           setRemainingAttempts(data.remainingAttempts)
@@ -64,12 +64,12 @@ export default function IEmocionalLoginPage() {
 
         if (response.status === 429) {
           const blockedUntil = new Date(data.blockedUntil)
-          setError(`Muchos intentos. Bloqueado hasta ${blockedUntil.toLocaleTimeString('es-419')}`)
+          setError(`Muitas tentativas. Bloqueado até ${blockedUntil.toLocaleTimeString('pt-BR')}`)
         }
       }
     } catch (err) {
       console.error('Login error:', err)
-      setError('Error de conexión. Verifica tu internet.')
+      setError('Erro de conexão. Verifique sua internet.')
     } finally {
       setLoading(false)
     }
@@ -103,36 +103,36 @@ export default function IEmocionalLoginPage() {
           <div className="flex justify-center items-center gap-3 mb-6">
             <img
               src="/logo-iemocional.png"
-              alt="Kit Inteligencia Emocional Logo"
+              alt="Kit Inteligência Emocional Logo"
               className="w-16 h-16 sm:w-20 sm:h-20"
             />
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-indigo-900 leading-tight">
-              Kit Inteligencia Emocional
+              Kit Inteligência Emocional
             </h1>
           </div>
 
           {/* Welcome Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-full mb-6">
             <Sparkles className="w-5 h-5 text-orange-500" />
-            <span className="text-sm font-bold text-orange-600">¡Acceso Exclusivo!</span>
+            <span className="text-sm font-bold text-orange-600">Acesso Exclusivo!</span>
             <Sparkles className="w-5 h-5 text-orange-500" />
           </div>
 
           <h2 className="text-3xl sm:text-4xl font-black text-indigo-900 mb-4 leading-tight">
-            ¡Tu acceso está{' '}
+            Seu acesso está{' '}
             <span className="relative inline-block">
               <span className="relative z-10 bg-gradient-to-r from-lime-500 to-lime-600 bg-clip-text text-transparent">
-                listo!
+                pronto!
               </span>
               <span className="absolute bottom-2 left-0 w-full h-3 bg-yellow-300 -z-10 transform -rotate-1"></span>
             </span>
           </h2>
 
           <p className="text-lg text-gray-700 mb-2 font-semibold">
-            ¡Felicidades por tu compra!
+            Parabéns pela sua compra!
           </p>
           <p className="text-base text-gray-600">
-            Ingresa abajo para acceder a tus 13 recursos ahora mismo.
+            Acesse abaixo para ver seus 13 recursos agora mesmo.
           </p>
         </div>
 
@@ -150,11 +150,11 @@ export default function IEmocionalLoginPage() {
                 htmlFor="email"
                 className="block text-sm font-bold text-gray-800 mb-2"
               >
-                Tu E-mail de Compra
+                Seu E-mail de Compra
               </label>
               <p className="text-xs text-pink-600 mb-3 flex items-center gap-1">
                 <Sparkles className="w-3.5 h-3.5" />
-                Usa el mismo email que registraste en Hotmart.
+                Use o mesmo email que você cadastrou na Hotmart.
               </p>
               <input
                 id="email"
@@ -165,7 +165,7 @@ export default function IEmocionalLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-5 py-4 bg-gray-50 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-lime-500 focus:border-lime-500 outline-none text-lg transition-all text-gray-900 placeholder-gray-400"
-                placeholder="ejemplo@correo.com"
+                placeholder="exemplo@email.com"
                 disabled={loading}
               />
             </div>
@@ -189,7 +189,7 @@ export default function IEmocionalLoginPage() {
                     <p className="font-semibold">{error}</p>
                     {remainingAttempts !== null && remainingAttempts > 0 && (
                       <p className="text-xs mt-1">
-                        Tienes {remainingAttempts} intentos restantes
+                        Você tem {remainingAttempts} tentativas restantes
                       </p>
                     )}
                   </div>
@@ -238,7 +238,7 @@ export default function IEmocionalLoginPage() {
                 ) : (
                   <span className="relative z-10 flex items-center justify-center gap-2 whitespace-nowrap">
                     <Zap className="w-5 h-5 animate-pulse" fill="white" />
-                    Entrar al Contenido
+                    Acessar Conteúdo
                     <Zap className="w-5 h-5 animate-pulse" fill="white" />
                   </span>
                 )}
@@ -252,7 +252,7 @@ export default function IEmocionalLoginPage() {
                   <circle cx="12" cy="12" r="10" strokeWidth="2"></circle>
                   <path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="m9 12 2 2 4-4"></path>
                 </svg>
-                <span className="font-medium">Acceso Inmediato</span>
+                <span className="font-medium">Acesso Imediato</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <svg className="w-5 h-5 text-lime-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -278,7 +278,7 @@ export default function IEmocionalLoginPage() {
                 <Gift className="w-6 h-6 text-pink-600 flex-shrink-0 mt-0.5" />
                 <div className="flex-1">
                   <p className="text-sm text-gray-700 leading-relaxed">
-                    <span className="font-bold text-pink-700">¡Bienvenido a tu Kit!</span> Accede a 13 herramientas visuales para gestionar las emociones.
+                    <span className="font-bold text-pink-700">Bem-vindo ao seu Kit!</span> Acesse 13 ferramentas visuais para gerenciar emoções.
                   </p>
                 </div>
               </div>
@@ -302,7 +302,7 @@ export default function IEmocionalLoginPage() {
                   d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                 />
               </svg>
-              ¿No puedes acceder? Contáctanos
+              Não consegue acessar? Fale conosco
             </button>
           </div>
         </div>
@@ -311,8 +311,8 @@ export default function IEmocionalLoginPage() {
         <EmailSupportModal
           isOpen={showEmailModal}
           onClose={() => setShowEmailModal(false)}
-          subject="Soporte de Acceso - Kit Inteligencia Emocional"
-          body="Hola, necesito ayuda para acceder a mi Kit de Inteligencia Emocional"
+          subject="Suporte de Acesso - Kit Inteligência Emocional"
+          body="Olá, preciso de ajuda para acessar meu Kit de Inteligência Emocional"
         />
 
         {/* Footer */}
@@ -322,11 +322,11 @@ export default function IEmocionalLoginPage() {
               <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
             </svg>
             <p className="text-sm font-bold">
-              Acceso Protegido
+              Acesso Protegido
             </p>
           </div>
           <p className="text-xs text-gray-600">
-            Kit Inteligencia Emocional - 13 Recursos Visuales Exclusivos
+            Kit Inteligência Emocional - 13 Recursos Visuais Exclusivos
           </p>
         </div>
       </div>

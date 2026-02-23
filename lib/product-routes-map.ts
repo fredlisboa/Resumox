@@ -33,24 +33,24 @@ export const PRODUCT_ROUTES_MAP: Record<string, ProductRouteConfig> = {
     description: 'Reprogramação mental com neurociência acústica'
   },
 
-  // Kit Inteligencia Emocional
+  // Kit Inteligência Emocional
   '6557472': {
     product_id: '6557472',
-    product_name: 'Kit Inteligencia Emocional',
+    product_name: 'Kit Inteligência Emocional',
     login_route: '/iemocional',
     dashboard_route: '/iemocional/dashboard',
     theme: 'light',
     description: '13 recursos visuais para gestão emocional'
   },
 
-  // Kit Sueño Infantil - Spanish version
+  // Kit Sono Infantil - Hotmart
   '7065534': {
     product_id: '7065534',
-    product_name: 'Kit Sueño Infantil',
+    product_name: 'Kit Sono Infantil',
     login_route: '/sueno-infantil',
     dashboard_route: '/sueno-infantil/dashboard',
     theme: 'dark',
-    description: 'Guías y audios para el sueño del bebé'
+    description: 'Guias e áudios para o sono do bebê'
   },
 
   // Kit Sono Infantil - PT-BR version (Cakto - Produção)

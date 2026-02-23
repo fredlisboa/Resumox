@@ -21,7 +21,7 @@ const translations = {
   }
 }
 
-export default function PWAInstallPrompt({ locale = 'es' }: PWAInstallPromptProps) {
+export default function PWAInstallPrompt({ locale = 'pt-BR' }: PWAInstallPromptProps) {
   const t = translations[locale]
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null)
   const [showInstallPrompt, setShowInstallPrompt] = useState(false)

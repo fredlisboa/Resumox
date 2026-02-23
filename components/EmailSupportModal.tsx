@@ -35,7 +35,7 @@ const translations = {
   }
 }
 
-export default function EmailSupportModal({ isOpen, onClose, subject = 'Soporte NeuroReset', body = 'Hola, necesito ayuda', locale = 'es' }: EmailSupportModalProps) {
+export default function EmailSupportModal({ isOpen, onClose, subject = 'Suporte NeuroReset', body = 'Olá, preciso de ajuda', locale = 'pt-BR' }: EmailSupportModalProps) {
   if (!isOpen) return null
 
   const t = translations[locale]

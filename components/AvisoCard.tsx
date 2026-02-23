@@ -74,7 +74,7 @@ const translations = {
   }
 }
 
-export default function AvisoCard({ aviso, onClick, getNotificationIcon, getPriorityColor, locale = 'es', theme = 'dark' }: AvisoCardProps) {
+export default function AvisoCard({ aviso, onClick, getNotificationIcon, getPriorityColor, locale = 'pt-BR', theme = 'dark' }: AvisoCardProps) {
   const t = translations[locale]
   const isLight = theme === 'light'
 

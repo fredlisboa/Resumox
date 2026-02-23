@@ -103,7 +103,7 @@ export default function DashboardPage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-neuro-500 border-t-transparent shadow-neuro-glow"></div>
-          <p className="mt-4 text-neuro-100 font-medium">Cargando tu contenido...</p>
+          <p className="mt-4 text-neuro-100 font-medium">Carregando seu conteúdo...</p>
         </div>
       </div>
     )
@@ -150,10 +150,10 @@ export default function DashboardPage() {
         {/* Hero Section */}
         <div className="text-center mb-8 animate-fade-in">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
-            Reprograma tu mente y apaga la ansiedad en 5 minutos con el poder de la neurociencia acústica.
+            Reprograme sua mente e desligue a ansiedade em 5 minutos com o poder da neurociência acústica.
           </h1>
           <p className="text-neuro-200">
-            Tu proceso de transformación comienza aquí
+            Seu processo de transformação começa aqui
           </p>
         </div>
 
@@ -167,8 +167,8 @@ export default function DashboardPage() {
                 : 'glass text-neuro-100 hover:bg-white/10'
             }`}
           >
-            <span className="hidden sm:inline">Archivos de Reprogramación</span>
-            <span className="sm:hidden">Archivos</span>
+            <span className="hidden sm:inline">Arquivos de Reprogramação</span>
+            <span className="sm:hidden">Arquivos</span>
           </button>
           <button
             onClick={() => setActiveTab('avisos')}
@@ -214,7 +214,7 @@ export default function DashboardPage() {
         <button
           onClick={() => setShowEmailModal(true)}
           className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-cyan-400 hover:from-cyan-400 hover:to-cyan-300 text-white rounded-full shadow-lg shadow-cyan-500/50 hover:shadow-xl hover:shadow-cyan-400/60 flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 group relative overflow-hidden"
-          aria-label="Soporte por E-mail"
+          aria-label="Suporte por E-mail"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           <svg className="w-8 h-8 relative z-10 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -232,8 +232,8 @@ export default function DashboardPage() {
       <EmailSupportModal
         isOpen={showEmailModal}
         onClose={() => setShowEmailModal(false)}
-        subject="Soporte NeuroReset"
-        body="Hola, necesito ayuda"
+        subject="Suporte NeuroReset"
+        body="Olá, preciso de ajuda"
       />
     </div>
   )

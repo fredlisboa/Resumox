@@ -55,7 +55,7 @@ const themeStyles = {
   },
 }
 
-export default function PWAInstallButton({ variant = 'widget', className = '', locale = 'es', theme = 'purple' }: PWAInstallButtonProps) {
+export default function PWAInstallButton({ variant = 'widget', className = '', locale = 'pt-BR', theme = 'purple' }: PWAInstallButtonProps) {
   const t = translations[locale]
   const s = themeStyles[theme]
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null)

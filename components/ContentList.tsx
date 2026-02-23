@@ -76,10 +76,10 @@ const contentTypeColors = {
 
 const contentTypeLabels = {
   video: 'Video',
-  audio: 'Audio de Reprogramación',
+  audio: 'Áudio de Reprogramação',
   pdf: 'Material PDF',
   text: 'Texto',
-  image: 'Imagen'
+  image: 'Imagem'
 }
 
 export default function ContentList({
@@ -202,7 +202,7 @@ export default function ContentList({
     { value: 'video', label: 'Video' },
     { value: 'pdf', label: 'PDF' },
     { value: 'text', label: 'Texto' },
-    { value: 'image', label: 'Imagen' }
+    { value: 'image', label: 'Imagem' }
   ]
 
   // Toggle filter selection
@@ -283,10 +283,10 @@ export default function ContentList({
           </svg>
         </div>
         <h3 className={`text-2xl font-bold ${themeClasses.emptyTitle} mb-3`}>
-          Contenido en camino
+          Conteúdo a caminho
         </h3>
         <p className={themeClasses.emptyText}>
-          Tus archivos de reprogramación serán agregados pronto.
+          Seus arquivos de reprogramação serão adicionados em breve.
         </p>
       </div>
     )
@@ -299,7 +299,7 @@ export default function ContentList({
           <svg className={`w-4 h-4 sm:w-6 sm:h-6 ${themeClasses.icon} flex-shrink-0`} fill="currentColor" viewBox="0 0 20 20">
             <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
           </svg>
-          <span className="truncate">Tu Biblioteca</span>
+          <span className="truncate">Sua Biblioteca</span>
         </h2>
         <span className={`${themeClasses.badge} whitespace-nowrap flex-shrink-0`}>
           {filteredContents.length} {filteredContents.length === 1 ? 'item' : 'Itens'}
@@ -314,7 +314,7 @@ export default function ContentList({
           <div className="flex-1 relative">
             <input
               type="text"
-              placeholder="Buscar por nombre o descripción..."
+              placeholder="Buscar por nome ou descrição..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className={themeClasses.searchInput}
@@ -381,7 +381,7 @@ export default function ContentList({
                 onClick={() => setSelectedTypes([])}
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium ${themeClasses.clearFilters} transition-all ml-auto`}
               >
-                Limpiar filtros
+                Limpar filtros
               </button>
             )}
           </div>
@@ -391,10 +391,10 @@ export default function ContentList({
         {(searchTerm || selectedTypes.length > 0) && (
           <div className={`text-sm ${themeClasses.resultsText} px-2`}>
             {filteredContents.length === 0 ? (
-              <span className={themeClasses.noResults}>No se encontraron resultados</span>
+              <span className={themeClasses.noResults}>Nenhum resultado encontrado</span>
             ) : (
               <span>
-                Mostrando {filteredContents.length} de {contents.length} {contents.length === 1 ? 'item' : 'items'}
+                Mostrando {filteredContents.length} de {contents.length} {contents.length === 1 ? 'item' : 'itens'}
               </span>
             )}
           </div>
@@ -409,8 +409,8 @@ export default function ContentList({
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </div>
-            <h3 className={`text-lg font-semibold ${themeClasses.emptyTitle} mb-2`}>No se encontraron resultados</h3>
-            <p className={`${themeClasses.emptyText} text-sm`}>Intenta con otros términos de búsqueda o filtros</p>
+            <h3 className={`text-lg font-semibold ${themeClasses.emptyTitle} mb-2`}>Nenhum resultado encontrado</h3>
+            <p className={`${themeClasses.emptyText} text-sm`}>Tente com outros termos de busca ou filtros</p>
           </div>
         ) : (
           filteredContents.map((content, index) => {

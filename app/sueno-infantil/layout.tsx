@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Plan de Sueño Infantil - Guía Personalizada para tu Bebé',
-  description: 'Descubre el plan personalizado con acciones prácticas que realmente funcionan para establecer rutinas de sueño saludables para tu bebé.',
+  title: 'Kit Sono Infantil - Guia Personalizado para seu Bebê',
+  description: 'Descubra o guia personalizado com ações práticas que realmente funcionam para estabelecer rotinas de sono saudáveis para seu bebê.',
   manifest: '/sueno-infantil/manifest.json',
   icons: {
     icon: [
@@ -15,36 +15,36 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'Sueño Infantil'
+    title: 'Sono Infantil'
   },
   formatDetection: {
     telephone: false
   },
   keywords: [
-    'sueño infantil',
-    'rutina de sueño bebé',
-    'cómo hacer dormir al bebé',
-    'plan de sueño',
+    'sono infantil',
+    'rotina de sono bebê',
+    'como fazer o bebê dormir',
+    'guia do sono',
     'descanso infantil',
-    'bebé dormir',
-    'noches tranquilas',
-    'guía del sueño'
+    'bebê dormir',
+    'noites tranquilas',
+    'guia do sono'
   ],
-  authors: [{ name: 'Plan Sueño Infantil' }],
-  creator: 'Plan Sueño Infantil',
-  publisher: 'Plan Sueño Infantil',
+  authors: [{ name: 'Kit Sono Infantil' }],
+  creator: 'Kit Sono Infantil',
+  publisher: 'Kit Sono Infantil',
   robots: 'index, follow',
   openGraph: {
-    title: 'Plan de Sueño Infantil - Guía Personalizada para tu Bebé',
-    description: 'Descubre el plan personalizado con acciones prácticas que realmente funcionan para establecer rutinas de sueño saludables para tu bebé.',
-    siteName: 'Plan Sueño Infantil',
-    locale: 'es_LA',
+    title: 'Kit Sono Infantil - Guia Personalizado para seu Bebê',
+    description: 'Descubra o guia personalizado com ações práticas que realmente funcionam para estabelecer rotinas de sono saudáveis para seu bebê.',
+    siteName: 'Kit Sono Infantil',
+    locale: 'pt_BR',
     type: 'website'
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Plan de Sueño Infantil - Guía Personalizada para tu Bebé',
-    description: 'Descubre el plan personalizado con acciones prácticas que realmente funcionan para establecer rutinas de sueño saludables para tu bebé.'
+    title: 'Kit Sono Infantil - Guia Personalizado para seu Bebê',
+    description: 'Descubra o guia personalizado com ações práticas que realmente funcionam para estabelecer rotinas de sono saudáveis para seu bebê.'
   }
 }
 

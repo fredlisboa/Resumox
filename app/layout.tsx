@@ -3,8 +3,8 @@ import './globals.css'
 import SecurityProvider from '@/components/SecurityProvider'
 
 export const metadata: Metadata = {
-  title: 'NeuroReset - Tu Proceso de Transformación',
-  description: 'Accede a tus archivos de reprogramación mental y materiales exclusivos. Contenido original protegido por criptografía.',
+  title: 'NeuroReset - Seu Processo de Transformação',
+  description: 'Acesse seus arquivos de reprogramação mental e materiais exclusivos. Conteúdo original protegido por criptografia.',
   manifest: '/manifest.json',
   icons: {
     icon: [
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   formatDetection: {
     telephone: false
   },
-  keywords: ['NeuroReset', 'Reprogramación Mental', 'Transformación', 'Audio Terapéutico'],
+  keywords: ['NeuroReset', 'Reprogramação Mental', 'Transformação', 'Áudio Terapêutico'],
   authors: [{ name: 'NeuroReset' }],
   creator: 'NeuroReset',
   publisher: 'NeuroReset',
@@ -46,7 +46,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es-419">
+    <html lang="pt-BR">
       <head>
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />

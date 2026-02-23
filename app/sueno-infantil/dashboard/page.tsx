@@ -90,7 +90,7 @@ export default function SuenoInfantilDashboard() {
       <div className="min-h-screen flex items-center justify-center bg-[#0F172A]">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-[#818CF8] border-t-transparent"></div>
-          <p className="mt-4 text-[#A5B4FC] font-semibold">Cargando tus recursos...</p>
+          <p className="mt-4 text-[#A5B4FC] font-semibold">Carregando seus recursos...</p>
         </div>
       </div>
     )
@@ -150,22 +150,22 @@ export default function SuenoInfantilDashboard() {
         <div className="text-center mb-8 animate-fade-in">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#1E1B4B] border border-[#818CF8]/30 rounded-full mb-4">
             <Moon className="w-5 h-5 text-[#C084FC]" />
-            <span className="text-sm font-bold text-[#A5B4FC]">Kit Sueño Infantil</span>
+            <span className="text-sm font-bold text-[#A5B4FC]">Kit Sono Infantil</span>
             <Stars className="w-5 h-5 text-[#C084FC]" />
           </div>
 
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-[#F1F5F9] mb-3 leading-tight">
-            Tus{' '}
+            Seus{' '}
             <span className="relative inline-block">
               <span className="relative z-10 bg-gradient-to-r from-[#818CF8] to-[#C084FC] bg-clip-text text-transparent">
                 Recursos
               </span>
               <span className="absolute bottom-2 left-0 w-full h-3 bg-[#818CF8]/30 -z-10 transform -rotate-1 rounded"></span>
             </span>
-            {' '}para el Sueño
+            {' '}para o Sono
           </h1>
           <p className="text-lg text-[#94A3B8] font-medium">
-            Herramientas para noches tranquilas
+            Ferramentas para noites tranquilas
           </p>
         </div>
 
@@ -186,7 +186,7 @@ export default function SuenoInfantilDashboard() {
                 : 'bg-[#1E1B4B] text-[#94A3B8] hover:bg-[#1E1B4B]/80 hover:text-[#A5B4FC]'
             }`}
           >
-            <span className="hidden sm:inline">Recursos del Sueño</span>
+            <span className="hidden sm:inline">Recursos do Sono</span>
             <span className="sm:hidden">Recursos</span>
           </button>
           <button
@@ -234,7 +234,7 @@ export default function SuenoInfantilDashboard() {
         <button
           onClick={() => setShowEmailModal(true)}
           className="w-16 h-16 bg-gradient-to-r from-[#818CF8] to-[#C084FC] hover:from-[#A5B4FC] hover:to-[#C084FC] text-white rounded-full shadow-2xl shadow-[#818CF8]/50 hover:shadow-[#C084FC]/60 flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 group relative overflow-hidden"
-          aria-label="Soporte por E-mail"
+          aria-label="Suporte por E-mail"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           <svg className="w-8 h-8 relative z-10 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -252,8 +252,8 @@ export default function SuenoInfantilDashboard() {
       <EmailSupportModal
         isOpen={showEmailModal}
         onClose={() => setShowEmailModal(false)}
-        subject="Soporte - Kit Sueño Infantil"
-        body="Hola, necesito ayuda con mis recursos del Kit Sueño Infantil"
+        subject="Suporte - Kit Sono Infantil"
+        body="Olá, preciso de ajuda com meus recursos do Kit Sono Infantil"
       />
     </div>
   )

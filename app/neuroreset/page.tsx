@@ -22,7 +22,7 @@ export default function LoginPage() {
     setRemainingAttempts(null)
 
     if (!email) {
-      setError('Por favor, ingresa tu e-mail')
+      setError('Por favor, digite seu e-mail')
       return
     }
 
@@ -32,7 +32,7 @@ export default function LoginPage() {
     }
 
     if (!turnstileToken) {
-      setError('Por favor, completa la verificación de seguridad')
+      setError('Por favor, complete a verificação de segurança')
       return
     }
 
@@ -55,7 +55,7 @@ export default function LoginPage() {
       if (response.ok) {
         router.push(data.redirectTo || '/dashboard')
       } else {
-        setError(data.error || 'Error al iniciar sesión')
+        setError(data.error || 'Erro ao fazer login')
 
         if (data.remainingAttempts !== undefined) {
           setRemainingAttempts(data.remainingAttempts)
@@ -63,12 +63,12 @@ export default function LoginPage() {
 
         if (response.status === 429) {
           const blockedUntil = new Date(data.blockedUntil)
-          setError(`Muchos intentos. Bloqueado hasta ${blockedUntil.toLocaleTimeString('es-419')}`)
+          setError(`Muitas tentativas. Bloqueado até ${blockedUntil.toLocaleTimeString('pt-BR')}`)
         }
       }
     } catch (err) {
       console.error('Login error:', err)
-      setError('Error de conexión. Verifica tu internet.')
+      setError('Erro de conexão. Verifique sua internet.')
     } finally {
       setLoading(false)
     }
@@ -124,13 +124,13 @@ export default function LoginPage() {
             </div>
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4 tracking-tight bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-shimmer" style={{backgroundSize: '200% auto'}}>
-            ¡Tu acceso está listo!
+            Seu acesso está pronto!
           </h1>
           <p className="text-lg sm:text-xl text-neuro-100 mb-3 font-semibold">
-            ¡Felicidades por tu compra!
+            Parabéns pela sua compra!
           </p>
           <p className="text-base sm:text-lg text-neuro-200 mb-6">
-            Ingresa abajo para comenzar ahora mismo.
+            Acesse abaixo para começar agora mesmo.
           </p>
           <div className="inline-block px-6 py-2 bg-neuro-gradient/10 border border-neuro-400/30 rounded-full mb-4">
             <p className="text-4xl font-bold text-white tracking-tight">
@@ -153,13 +153,13 @@ export default function LoginPage() {
                 htmlFor="email"
                 className="block text-sm font-semibold text-neuro-100 mb-2"
               >
-                Tu E-mail de Compra
+                Seu E-mail de Compra
               </label>
               <p className="text-xs text-cyan-300 mb-3 flex items-center gap-1">
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                 </svg>
-                Usa el mismo email que registraste en Hotmart.
+                Use o mesmo email que você cadastrou na Hotmart.
               </p>
               <input
                 id="email"
@@ -170,7 +170,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-5 py-4 bg-neuro-800/50 border border-neuro-500/30 rounded-2xl focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 focus:shadow-[0_0_20px_rgba(34,211,238,0.4)] outline-none text-lg transition-all text-white placeholder-neuro-300/50 backdrop-blur-sm"
-                placeholder="ejemplo@correo.com"
+                placeholder="exemplo@email.com"
                 disabled={loading}
               />
             </div>
@@ -194,7 +194,7 @@ export default function LoginPage() {
                     <p className="font-medium">{error}</p>
                     {remainingAttempts !== null && remainingAttempts > 0 && (
                       <p className="text-xs mt-1 text-red-300">
-                        Tienes {remainingAttempts} intentos restantes
+                        Você tem {remainingAttempts} tentativas restantes
                       </p>
                     )}
                   </div>
@@ -239,7 +239,7 @@ export default function LoginPage() {
                   Validando...
                 </span>
               ) : (
-                <span className="relative z-10">Entrar al Contenido</span>
+                <span className="relative z-10">Acessar Conteúdo</span>
               )}
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
             </button>
@@ -255,7 +255,7 @@ export default function LoginPage() {
                 </svg>
                 <div className="flex-1">
                   <p className="text-sm text-cyan-100 leading-relaxed">
-                    Enviamos una copia de seguridad de tus audios y PDFs a tu email. Si no ves el acceso aquí, revisa tu bandeja de entrada o spam.
+                    Enviamos uma cópia de segurança dos seus áudios e PDFs para seu email. Se não encontrar o acesso aqui, verifique sua caixa de entrada ou spam.
                   </p>
                 </div>
               </div>
@@ -279,7 +279,7 @@ export default function LoginPage() {
                   d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                 />
               </svg>
-              ¿No puedes acceder? Contáctanos
+              Não consegue acessar? Fale conosco
             </button>
           </div>
         </div>
@@ -288,8 +288,8 @@ export default function LoginPage() {
         <EmailSupportModal
           isOpen={showEmailModal}
           onClose={() => setShowEmailModal(false)}
-          subject="Soporte de Acceso"
-          body="Hola, necesito ayuda para acceder a mi contenido"
+          subject="Suporte de Acesso"
+          body="Olá, preciso de ajuda para acessar meu conteúdo"
         />
 
         {/* Footer */}
@@ -299,11 +299,11 @@ export default function LoginPage() {
               <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
             </svg>
             <p className="text-sm font-semibold">
-              Acceso Protegido
+              Acesso Protegido
             </p>
           </div>
           <p className="text-xs text-neuro-300">
-            Contenido Original NeuroReset - Protegido por Criptografía
+            Conteúdo Original NeuroReset - Protegido por Criptografia
           </p>
         </div>
       </div>

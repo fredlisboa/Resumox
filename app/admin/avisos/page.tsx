@@ -31,7 +31,7 @@ export default function AdminAvisosPage() {
 
         setHasPermission(true)
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Error desconocido')
+        setError(err instanceof Error ? err.message : 'Erro desconhecido')
         setHasPermission(false)
       }
     }
@@ -89,10 +89,10 @@ export default function AdminAvisosPage() {
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.error || 'Error al crear aviso')
+        throw new Error(data.error || 'Erro ao criar aviso')
       }
 
-      setSuccess(data.message || 'Aviso creado exitosamente')
+      setSuccess(data.message || 'Aviso criado com sucesso')
 
       // Reset form
       setFormData({
@@ -114,7 +114,7 @@ export default function AdminAvisosPage() {
       // Scroll to top to show success message
       window.scrollTo({ top: 0, behavior: 'smooth' })
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error desconocido')
+      setError(err instanceof Error ? err.message : 'Erro desconhecido')
     } finally {
       setLoading(false)
     }
@@ -172,10 +172,10 @@ export default function AdminAvisosPage() {
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            Volver al Dashboard
+            Voltar ao Dashboard
           </button>
-          <h1 className="text-4xl font-bold text-white mb-2">Administrar Avisos</h1>
-          <p className="text-neuro-200">Crear y enviar notificaciones a los usuarios</p>
+          <h1 className="text-4xl font-bold text-white mb-2">Gerenciar Avisos</h1>
+          <p className="text-neuro-200">Criar e enviar notificações aos usuários</p>
         </div>
 
         {/* Success/Error Messages */}
@@ -206,7 +206,7 @@ export default function AdminAvisosPage() {
               value={formData.title}
               onChange={handleChange}
               className="w-full px-4 py-3 bg-neuro-800 border border-neuro-500/30 rounded-xl text-white placeholder-neuro-400 focus:outline-none focus:border-cyan-400 transition-colors"
-              placeholder="Ej: Nueva actualización disponible"
+              placeholder="Ex: Nova atualização disponível"
             />
           </div>
 
@@ -214,7 +214,7 @@ export default function AdminAvisosPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label htmlFor="notification_type" className="block text-white font-semibold mb-2">
-                Tipo de Notificación
+                Tipo de Notificação
               </label>
               <select
                 id="notification_type"
@@ -223,18 +223,18 @@ export default function AdminAvisosPage() {
                 onChange={handleChange}
                 className="w-full px-4 py-3 bg-neuro-800 border border-neuro-500/30 rounded-xl text-white focus:outline-none focus:border-cyan-400 transition-colors"
               >
-                <option value="general">General</option>
-                <option value="announcement">Anuncio</option>
-                <option value="update">Actualización</option>
+                <option value="general">Geral</option>
+                <option value="announcement">Anúncio</option>
+                <option value="update">Atualização</option>
                 <option value="urgent">Urgente</option>
                 <option value="event">Evento</option>
-                <option value="promocion">Promoción</option>
+                <option value="promocion">Promoção</option>
               </select>
             </div>
 
             <div>
               <label htmlFor="priority" className="block text-white font-semibold mb-2">
-                Prioridad
+                Prioridade
               </label>
               <select
                 id="priority"
@@ -243,7 +243,7 @@ export default function AdminAvisosPage() {
                 onChange={handleChange}
                 className="w-full px-4 py-3 bg-neuro-800 border border-neuro-500/30 rounded-xl text-white focus:outline-none focus:border-cyan-400 transition-colors"
               >
-                <option value="low">Baja</option>
+                <option value="low">Baixa</option>
                 <option value="normal">Normal</option>
                 <option value="high">Alta</option>
                 <option value="urgent">Urgente</option>
@@ -254,7 +254,7 @@ export default function AdminAvisosPage() {
           {/* Short Notification */}
           <div>
             <label htmlFor="short_notification" className="block text-white font-semibold mb-2">
-              Notificación Corta (para push) *
+              Notificação Curta (para push) *
             </label>
             <textarea
               id="short_notification"
@@ -264,7 +264,7 @@ export default function AdminAvisosPage() {
               value={formData.short_notification}
               onChange={handleChange}
               className="w-full px-4 py-3 bg-neuro-800 border border-neuro-500/30 rounded-xl text-white placeholder-neuro-400 focus:outline-none focus:border-cyan-400 transition-colors"
-              placeholder="Texto corto para la notificación push (máx 150 caracteres). Puede incluir HTML básico."
+              placeholder="Texto curto para a notificação push (máx 150 caracteres). Pode incluir HTML básico."
               maxLength={150}
             />
             <p className="text-xs text-neuro-400 mt-1">{formData.short_notification.length}/150 caracteres</p>
@@ -273,7 +273,7 @@ export default function AdminAvisosPage() {
           {/* Full Content */}
           <div>
             <label htmlFor="full_content" className="block text-white font-semibold mb-2">
-              Contenido Completo (HTML) *
+              Conteúdo Completo (HTML) *
             </label>
             <textarea
               id="full_content"
@@ -283,16 +283,16 @@ export default function AdminAvisosPage() {
               value={formData.full_content}
               onChange={handleChange}
               className="w-full px-4 py-3 bg-neuro-800 border border-neuro-500/30 rounded-xl text-white placeholder-neuro-400 focus:outline-none focus:border-cyan-400 transition-colors font-mono text-sm"
-              placeholder="<p>Contenido completo de la notificación en HTML</p>"
+              placeholder="<p>Conteúdo completo da notificação em HTML</p>"
             />
-            <p className="text-xs text-neuro-400 mt-1">Puedes usar HTML para formatear el contenido</p>
+            <p className="text-xs text-neuro-400 mt-1">Você pode usar HTML para formatar o conteúdo</p>
           </div>
 
           {/* Images */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label htmlFor="thumbnail_url" className="block text-white font-semibold mb-2">
-                URL de Miniatura
+                URL da Miniatura
               </label>
               <input
                 type="url"
@@ -301,13 +301,13 @@ export default function AdminAvisosPage() {
                 value={formData.thumbnail_url}
                 onChange={handleChange}
                 className="w-full px-4 py-3 bg-neuro-800 border border-neuro-500/30 rounded-xl text-white placeholder-neuro-400 focus:outline-none focus:border-cyan-400 transition-colors"
-                placeholder="https://ejemplo.com/thumbnail.jpg"
+                placeholder="https://exemplo.com/thumbnail.jpg"
               />
             </div>
 
             <div>
               <label htmlFor="image_url" className="block text-white font-semibold mb-2">
-                URL de Imagen Completa
+                URL da Imagem Completa
               </label>
               <input
                 type="url"
@@ -316,7 +316,7 @@ export default function AdminAvisosPage() {
                 value={formData.image_url}
                 onChange={handleChange}
                 className="w-full px-4 py-3 bg-neuro-800 border border-neuro-500/30 rounded-xl text-white placeholder-neuro-400 focus:outline-none focus:border-cyan-400 transition-colors"
-                placeholder="https://ejemplo.com/image.jpg"
+                placeholder="https://exemplo.com/image.jpg"
               />
             </div>
           </div>
@@ -325,7 +325,7 @@ export default function AdminAvisosPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label htmlFor="cta_text" className="block text-white font-semibold mb-2">
-                Texto del Botón (CTA)
+                Texto do Botão (CTA)
               </label>
               <input
                 type="text"
@@ -334,14 +334,14 @@ export default function AdminAvisosPage() {
                 value={formData.cta_text}
                 onChange={handleChange}
                 className="w-full px-4 py-3 bg-neuro-800 border border-neuro-500/30 rounded-xl text-white placeholder-neuro-400 focus:outline-none focus:border-cyan-400 transition-colors"
-                placeholder="Ej: Ver más, Descargar ahora"
+                placeholder="Ex: Ver mais, Baixar agora"
                 maxLength={100}
               />
             </div>
 
             <div>
               <label htmlFor="cta_url" className="block text-white font-semibold mb-2">
-                URL del Botón (CTA)
+                URL do Botão (CTA)
               </label>
               <input
                 type="url"
@@ -350,22 +350,22 @@ export default function AdminAvisosPage() {
                 value={formData.cta_url}
                 onChange={handleChange}
                 className="w-full px-4 py-3 bg-neuro-800 border border-neuro-500/30 rounded-xl text-white placeholder-neuro-400 focus:outline-none focus:border-cyan-400 transition-colors"
-                placeholder="https://ejemplo.com/accion"
+                placeholder="https://exemplo.com/acao"
               />
             </div>
           </div>
 
           {/* Targeting */}
           <div className="border-t border-neuro-500/20 pt-6">
-            <h3 className="text-white font-semibold mb-4">Segmentación (opcional)</h3>
+            <h3 className="text-white font-semibold mb-4">Segmentação (opcional)</h3>
             <p className="text-sm text-neuro-300 mb-4">
-              Deja ambos campos vacíos para enviar a todos los usuarios
+              Deixe ambos os campos vazios para enviar a todos os usuários
             </p>
 
             <div className="space-y-4">
               <div>
                 <label htmlFor="target_user_ids" className="block text-white font-semibold mb-2">
-                  IDs de Usuarios (separados por coma)
+                  IDs de Usuários (separados por vírgula)
                 </label>
                 <input
                   type="text"
@@ -380,7 +380,7 @@ export default function AdminAvisosPage() {
 
               <div>
                 <label htmlFor="target_product_ids" className="block text-white font-semibold mb-2">
-                  IDs de Productos (separados por coma)
+                  IDs de Produtos (separados por vírgula)
                 </label>
                 <input
                   type="text"
@@ -397,11 +397,11 @@ export default function AdminAvisosPage() {
 
           {/* Scheduling */}
           <div className="border-t border-neuro-500/20 pt-6">
-            <h3 className="text-white font-semibold mb-4">Programación</h3>
+            <h3 className="text-white font-semibold mb-4">Agendamento</h3>
 
             <div>
               <label htmlFor="scheduled_for" className="block text-white font-semibold mb-2">
-                Fecha y Hora de Envío (opcional)
+                Data e Hora de Envio (opcional)
               </label>
               <input
                 type="datetime-local"
@@ -412,7 +412,7 @@ export default function AdminAvisosPage() {
                 className="w-full px-4 py-3 bg-neuro-800 border border-neuro-500/30 rounded-xl text-white focus:outline-none focus:border-cyan-400 transition-colors"
               />
               <p className="text-xs text-neuro-400 mt-1">
-                Deja vacío para enviar inmediatamente
+                Deixe vazio para enviar imediatamente
               </p>
             </div>
           </div>
@@ -428,11 +428,11 @@ export default function AdminAvisosPage() {
                 className="w-5 h-5 rounded bg-neuro-800 border-neuro-500/30 text-cyan-400 focus:ring-cyan-400"
               />
               <span className="text-white font-semibold">
-                Enviar notificación push a dispositivos móviles
+                Enviar notificação push para dispositivos móveis
               </span>
             </label>
             <p className="text-xs text-neuro-400 mt-2 ml-8">
-              Requiere configuración de Firebase Cloud Messaging
+              Requer configuração do Firebase Cloud Messaging
             </p>
           </div>
 
@@ -449,10 +449,10 @@ export default function AdminAvisosPage() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
-                  Creando aviso...
+                  Criando aviso...
                 </span>
               ) : (
-                'Crear y Enviar Aviso'
+                'Criar e Enviar Aviso'
               )}
             </button>
           </div>

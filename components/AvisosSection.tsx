@@ -45,7 +45,7 @@ const translations = {
   }
 }
 
-export default function AvisosSection({ locale = 'es', theme = 'dark' }: AvisosSectionProps) {
+export default function AvisosSection({ locale = 'pt-BR', theme = 'dark' }: AvisosSectionProps) {
   const t = translations[locale]
   const isLight = theme === 'light'
   const [avisos, setAvisos] = useState<Aviso[]>([])
@@ -63,13 +63,13 @@ export default function AvisosSection({ locale = 'es', theme = 'dark' }: AvisosS
       const response = await fetch('/api/avisos')
 
       if (!response.ok) {
-        throw new Error('Error al cargar los avisos')
+        throw new Error('Erro ao carregar os avisos')
       }
 
       const data = await response.json()
       setAvisos(data.avisos || [])
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error desconocido')
+      setError(err instanceof Error ? err.message : 'Erro desconhecido')
       console.error('Error fetching avisos:', err)
     } finally {
       setLoading(false)

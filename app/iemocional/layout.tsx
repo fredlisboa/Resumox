@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Super Kit Inteligencia Emocional | Cría Niños Felices y Resilientes',
-  description: 'El Kit de Herramientas Definitivo con 13 recursos basados en neurociencia para criar niños felices, valientes y que entienden lo que sienten. Transforma berrinches en conexión.',
+  title: 'Super Kit Inteligência Emocional | Crie Crianças Felizes e Resilientes',
+  description: 'O Kit de Ferramentas Definitivo com 13 recursos baseados em neurociência para criar crianças felizes, corajosas e que entendem o que sentem. Transforme birras em conexão.',
   manifest: '/manifest.json',
   icons: {
     icon: [
@@ -16,49 +16,49 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'Kit Inteligencia Emocional'
+    title: 'Kit Inteligência Emocional'
   },
   formatDetection: {
     telephone: false
   },
   keywords: [
-    'inteligencia emocional para niños',
-    'educación emocional infantil',
-    'herramientas inteligencia emocional',
-    'juegos de emociones para niños',
-    'manejo de berrinches',
-    'control de impulsos infantil',
-    'desarrollo socioemocional',
-    'crianza respetuosa',
-    'neurociencia para padres',
-    'actividades para regular emociones',
+    'inteligência emocional para crianças',
+    'educação emocional infantil',
+    'ferramentas inteligência emocional',
+    'jogos de emoções para crianças',
+    'manejo de birras',
+    'controle de impulsos infantil',
+    'desenvolvimento socioemocional',
+    'criação respeitosa',
+    'neurociência para pais',
+    'atividades para regular emoções',
     'autoestima infantil',
-    'resiliencia en niños'
+    'resiliência em crianças'
   ],
   authors: [{ name: 'Iemocional', url: 'https://iemocional.1sd.online' }],
   creator: 'Iemocional',
   publisher: 'Iemocional',
   robots: 'index, follow',
   openGraph: {
-    title: 'Super Kit Inteligencia Emocional | El Regalo que Durará Toda la Vida',
-    description: 'El kit definitivo con 13 recursos basados en neurociencia para criar niños felices, resilientes y emocionalmente sanos.',
+    title: 'Super Kit Inteligência Emocional | O Presente que Durará a Vida Toda',
+    description: 'O kit definitivo com 13 recursos baseados em neurociência para criar crianças felizes, resilientes e emocionalmente saudáveis.',
     url: 'https://iemocional.1sd.online',
-    siteName: 'Kit Inteligencia Emocional',
-    locale: 'es_LA',
+    siteName: 'Kit Inteligência Emocional',
+    locale: 'pt_BR',
     type: 'website',
     images: [
       {
         url: 'https://iemocional.1sd.online/images/banner/banner-hero-lp.png',
         width: 1200,
         height: 630,
-        alt: 'Kit completo de herramientas de inteligencia emocional para niños'
+        alt: 'Kit completo de ferramentas de inteligência emocional para crianças'
       }
     ]
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Transforma Berrinches en Conexión | Super Kit Inteligencia Emocional',
-    description: '13 herramientas prácticas basadas en neurociencia para padres. Ayuda a tu hijo a desarrollar autoestima, resiliencia y autocontrol de forma divertida.',
+    title: 'Transforme Birras em Conexão | Super Kit Inteligência Emocional',
+    description: '13 ferramentas práticas baseadas em neurociência para pais. Ajude seu filho a desenvolver autoestima, resiliência e autocontrole de forma divertida.',
     images: ['https://iemocional.1sd.online/images/banner/banner-hero-lp.png']
   }
 }
