@@ -62,21 +62,21 @@ export async function GET(request: NextRequest) {
       wantsSigned
     })
 
-    // Reconstruir URL completa: se não começar com r2://, adicionar
-    // O frontend remove r2:// antes de enviar, então precisamos adicionar de volta
-    const fullKey = decodedKey.startsWith('r2://') ? decodedKey : `r2://${decodedKey}`
+    // Extrair a chave do arquivo (strip r2:// prefix se presente)
+    // O DB armazena como "r2://resumox/audios/file.mp3" — precisamos apenas da key "resumox/audios/file.mp3"
+    const fileKey = decodedKey.startsWith('r2://') ? decodedKey.replace('r2://', '') : decodedKey
 
-    console.log('[R2-CONTENT] Full R2 URL:', fullKey)
+    console.log('[R2-CONTENT] File key:', fileKey)
 
     // Se quiser URL assinada, retornar apenas a URL
     if (wantsSigned) {
-      const signedUrl = await getSignedFileUrl({ key: fullKey, expiresIn: 3600 })
+      const signedUrl = await getSignedFileUrl({ key: fileKey, expiresIn: 3600 })
       return NextResponse.json({ url: signedUrl })
     }
 
     // Caso contrário, fazer proxy do arquivo
-    console.log('[R2-CONTENT] Fetching file:', fullKey)
-    const fileBuffer = await getFileFromR2(fullKey)
+    console.log('[R2-CONTENT] Fetching file:', fileKey)
+    const fileBuffer = await getFileFromR2(fileKey)
     console.log('[R2-CONTENT] File loaded successfully:', fileBuffer.length, 'bytes')
 
     // Detectar content type baseado na extensão
