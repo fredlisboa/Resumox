@@ -26,29 +26,11 @@ export default function AudioPlayer({
   const [currentTime, setCurrentTime] = useState(initialPosition)
   const [totalDuration, setTotalDuration] = useState(duration ? duration * 60 : 0)
   const [speed, setSpeed] = useState(1)
-  const [audioUrl, setAudioUrl] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
+  // Usar proxy endpoint diretamente como src do audio (evita CORS com R2)
+  const audioUrl = audioR2Key
+    ? `/api/r2-content?key=${encodeURIComponent(audioR2Key)}`
+    : null
   const barsCount = 40
-
-  // Fetch audio URL from R2
-  useEffect(() => {
-    if (!audioR2Key) return
-    const fetchUrl = async () => {
-      setLoading(true)
-      try {
-        const res = await fetch(`/api/r2-content?key=${encodeURIComponent(audioR2Key)}&signed=true`)
-        if (res.ok) {
-          const data = await res.json()
-          setAudioUrl(data.url)
-        }
-      } catch (err) {
-        console.error('Error fetching audio URL:', err)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchUrl()
-  }, [audioR2Key])
 
   // Set initial position once audio loads
   useEffect(() => {
@@ -127,13 +109,11 @@ export default function AudioPlayer({
       <div className="flex items-center gap-4">
         <button
           onClick={togglePlay}
-          disabled={loading || !audioUrl}
+          disabled={!audioUrl}
           className="w-[52px] h-[52px] rounded-full bg-resumox-accent flex items-center justify-center flex-shrink-0 shadow-lg hover:scale-105 active:scale-95 transition-transform disabled:opacity-50"
           style={{ boxShadow: '0 4px 20px rgba(108,92,231,0.3)' }}
         >
-          {loading ? (
-            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-          ) : playing ? (
+          {playing ? (
             <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
               <rect x="6" y="4" width="4" height="16" rx="1" />
               <rect x="14" y="4" width="4" height="16" rx="1" />
