@@ -125,7 +125,8 @@ export async function generateAudioWithEdgeTTS(
  */
 export async function getAudioDurationMinutes(mp3Path: string): Promise<number> {
   try {
-    const { stdout } = await execFileAsync('ffprobe', [
+    const ffprobeBin = process.env.FFPROBE_PATH || '/home/fredlisboa/miniconda3/envs/resumox/bin/ffprobe'
+    const { stdout } = await execFileAsync(ffprobeBin, [
       '-v', 'error',
       '-show_entries', 'format=duration',
       '-of', 'csv=p=0',
@@ -138,11 +139,11 @@ export async function getAudioDurationMinutes(mp3Path: string): Promise<number> 
     }
     return Math.round(seconds / 60) // inteiro (coluna DB é integer)
   } catch (err) {
-    // Fallback: estimar pelo tamanho do arquivo (edge-tts usa ~192kbps)
+    // Fallback: estimar pelo tamanho do arquivo (edge-tts usa ~24kbps para pt-BR)
     console.warn('  [TTS] ffprobe não disponível, estimando duração pelo tamanho do arquivo')
     const stats = readFileSync(mp3Path)
     const fileSizeBytes = stats.length
-    const estimatedSeconds = (fileSizeBytes * 8) / (192 * 1000)
+    const estimatedSeconds = (fileSizeBytes * 8) / (24 * 1000)
     return Math.max(1, Math.round(estimatedSeconds / 60)) // mínimo 1 min
   }
 }
@@ -275,7 +276,8 @@ export async function checkTTSPrerequisites(): Promise<string[]> {
 
   // Verificar ffprobe (opcional - tem fallback)
   try {
-    await execFileAsync('ffprobe', ['-version'], { timeout: 5_000 })
+    const ffprobeBin = process.env.FFPROBE_PATH || '/home/fredlisboa/miniconda3/envs/resumox/bin/ffprobe'
+    await execFileAsync(ffprobeBin, ['-version'], { timeout: 5_000 })
   } catch {
     errors.push('ffprobe não encontrado (opcional). Instale com: sudo apt install ffmpeg')
   }
