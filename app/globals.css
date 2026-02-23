@@ -626,6 +626,13 @@
   line-height: 1.8;
   color: var(--rx-text);
   margin-bottom: 16px;
+  text-indent: 1.5em;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .resumox-content strong {
@@ -643,6 +650,9 @@
   font-style: italic;
   font-weight: 500;
   line-height: 1.6;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
 .resumox-content .key-point {
@@ -672,6 +682,9 @@
 .resumox-content .key-point .kp-text {
   font-size: 14px;
   line-height: 1.6;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
 .resumox-content .key-point .kp-text strong {
