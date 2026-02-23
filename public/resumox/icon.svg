@@ -1,17 +1,50 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
-  <rect width="512" height="512" rx="128" fill="#0A0A0F"/>
-  <rect x="24" y="24" width="464" height="464" rx="108" stroke="#6C5CE7" stroke-width="4" stroke-opacity="0.3"/>
-  <circle cx="256" cy="240" r="120" fill="#13131A" stroke="#6C5CE7" stroke-width="3" stroke-opacity="0.4"/>
-  <circle cx="256" cy="240" r="80" fill="url(#glow)" fill-opacity="0.15"/>
-  <path d="M220 200v80l28-16V216l-28-16z" fill="#A29BFE"/>
-  <path d="M248 184v112h8V184h-8z" fill="#A29BFE"/>
-  <path d="M256 184v112h8V184h-8z" fill="#8B7FE8"/>
-  <path d="M264 200v80l28-16V216l-28-16z" fill="#A29BFE" transform="scale(-1,1) translate(-556,0)"/>
-  <text x="256" y="410" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="56" fill="#A29BFE" letter-spacing="-2">Resumox</text>
   <defs>
-    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0%" stop-color="#6C5CE7" stop-opacity="0.6"/>
+    <radialGradient id="bgGlow" cx="0.5" cy="0.45" r="0.55">
+      <stop offset="0%" stop-color="#1a1a2e" />
+      <stop offset="100%" stop-color="#0A0A0F" />
+    </radialGradient>
+    <radialGradient id="iconGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#6C5CE7" stop-opacity="0.4"/>
+      <stop offset="70%" stop-color="#6C5CE7" stop-opacity="0.1"/>
       <stop offset="100%" stop-color="#6C5CE7" stop-opacity="0"/>
     </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
   </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGlow)"/>
+
+  <!-- Outer border -->
+  <rect x="16" y="16" width="480" height="480" rx="96" stroke="#6C5CE7" stroke-width="2" stroke-opacity="0.25" fill="none"/>
+
+  <!-- Circular container glow -->
+  <circle cx="256" cy="256" r="140" fill="url(#iconGlow)"/>
+
+  <!-- Circular container -->
+  <circle cx="256" cy="256" r="120" fill="#13131A" stroke="#6C5CE7" stroke-width="2.5" stroke-opacity="0.35"/>
+
+  <!-- Inner glow -->
+  <circle cx="256" cy="256" r="90" fill="#6C5CE7" fill-opacity="0.06"/>
+
+  <!-- Book icon (BookOpen style) -->
+  <g filter="url(#glow)" transform="translate(256, 256) scale(1.1) translate(-256, -256)">
+    <!-- Left page -->
+    <path d="M256 210 L256 310 L196 295 L196 195 Z" fill="#A29BFE" fill-opacity="0.9"/>
+    <!-- Right page -->
+    <path d="M256 210 L256 310 L316 295 L316 195 Z" fill="#8B7FE8" fill-opacity="0.9"/>
+    <!-- Spine highlight -->
+    <line x1="256" y1="206" x2="256" y2="314" stroke="#E8E8ED" stroke-width="2" stroke-opacity="0.5"/>
+    <!-- Left page lines -->
+    <line x1="215" y1="230" x2="248" y2="237" stroke="#E8E8ED" stroke-width="1.5" stroke-opacity="0.3"/>
+    <line x1="215" y1="248" x2="248" y2="255" stroke="#E8E8ED" stroke-width="1.5" stroke-opacity="0.3"/>
+    <line x1="215" y1="266" x2="248" y2="273" stroke="#E8E8ED" stroke-width="1.5" stroke-opacity="0.3"/>
+    <!-- Right page lines -->
+    <line x1="264" y1="237" x2="297" y2="230" stroke="#E8E8ED" stroke-width="1.5" stroke-opacity="0.3"/>
+    <line x1="264" y1="255" x2="297" y2="248" stroke="#E8E8ED" stroke-width="1.5" stroke-opacity="0.3"/>
+    <line x1="264" y1="273" x2="297" y2="266" stroke="#E8E8ED" stroke-width="1.5" stroke-opacity="0.3"/>
+  </g>
 </svg>

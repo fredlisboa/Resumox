@@ -1,12 +1,55 @@
 'use client'
 
-import { useState, FormEvent } from 'react'
+import { useState, useEffect, FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { isValidEmail } from '@/lib/utils'
 import PWAInstallButton from '@/components/PWAInstallButton'
+import PWAInstallPrompt from '@/components/PWAInstallPrompt'
 import EmailSupportModal from '@/components/EmailSupportModal'
 import TurnstileWidget from '@/components/TurnstileWidget'
 import { BookOpen } from 'lucide-react'
+
+function FloatingParticles() {
+  const [particles, setParticles] = useState<Array<{
+    id: number; x: number; y: number; size: number; duration: number; delay: number; opacity: number
+  }>>([])
+
+  useEffect(() => {
+    const generated = Array.from({ length: 20 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 4 + 2,
+      duration: Math.random() * 15 + 10,
+      delay: Math.random() * -20,
+      opacity: Math.random() * 0.5 + 0.2,
+    }))
+    setParticles(generated)
+  }, [])
+
+  if (particles.length === 0) return null
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {particles.map((p) => (
+        <div
+          key={p.id}
+          className="absolute rounded-full animate-particle"
+          style={{
+            left: `${p.x}%`,
+            top: `${p.y}%`,
+            width: `${p.size}px`,
+            height: `${p.size}px`,
+            background: `radial-gradient(circle, rgba(162, 155, 254, ${p.opacity}) 0%, transparent 70%)`,
+            boxShadow: `0 0 ${p.size * 3}px rgba(108, 92, 231, ${p.opacity * 0.6})`,
+            animationDuration: `${p.duration}s`,
+            animationDelay: `${p.delay}s`,
+          }}
+        />
+      ))}
+    </div>
+  )
+}
 
 export default function ResumoxLoginPage() {
   const router = useRouter()
@@ -64,6 +107,8 @@ export default function ResumoxLoginPage() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden" style={{ background: '#0A0A0F' }}>
+      <PWAInstallPrompt locale="pt-BR" />
+
       {/* Floating accent circles */}
       <div
         className="absolute top-20 left-10 w-96 h-96 rounded-full mix-blend-screen filter blur-3xl animate-float-slow"
@@ -77,6 +122,13 @@ export default function ResumoxLoginPage() {
         className="absolute top-1/2 left-1/4 w-64 h-64 rounded-full mix-blend-screen filter blur-2xl animate-float-medium"
         style={{ background: 'radial-gradient(circle, rgba(108, 92, 231, 0.15) 0%, transparent 70%)' }}
       />
+      <div
+        className="absolute bottom-1/3 right-1/4 w-72 h-72 rounded-full mix-blend-screen filter blur-3xl animate-float-slow-reverse"
+        style={{ background: 'radial-gradient(circle, rgba(162, 155, 254, 0.18) 0%, transparent 70%)' }}
+      />
+
+      {/* Floating particles */}
+      <FloatingParticles />
 
       <div className="w-full max-w-md relative z-10 animate-fade-in">
         {/* Logo */}

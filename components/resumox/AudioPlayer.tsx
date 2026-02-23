@@ -32,15 +32,27 @@ export default function AudioPlayer({
     : null
   const barsCount = 40
 
-  // Set initial position once audio loads
+  // Set initial position and capture duration once audio loads
   useEffect(() => {
     const audio = audioRef.current
-    if (!audio || !initialPosition) return
+    if (!audio) return
     const handleLoaded = () => {
-      audio.currentTime = initialPosition
+      if (initialPosition) audio.currentTime = initialPosition
+      if (isFinite(audio.duration) && audio.duration > 0) {
+        setTotalDuration(audio.duration)
+      }
+    }
+    const handleDurationChange = () => {
+      if (isFinite(audio.duration) && audio.duration > 0) {
+        setTotalDuration(audio.duration)
+      }
     }
     audio.addEventListener('loadedmetadata', handleLoaded)
-    return () => audio.removeEventListener('loadedmetadata', handleLoaded)
+    audio.addEventListener('durationchange', handleDurationChange)
+    return () => {
+      audio.removeEventListener('loadedmetadata', handleLoaded)
+      audio.removeEventListener('durationchange', handleDurationChange)
+    }
   }, [initialPosition])
 
   const togglePlay = useCallback(() => {
@@ -58,9 +70,11 @@ export default function AudioPlayer({
     const audio = audioRef.current
     if (!audio) return
     setCurrentTime(audio.currentTime)
-    setTotalDuration(audio.duration || totalDuration)
+    if (isFinite(audio.duration) && audio.duration > 0) {
+      setTotalDuration(audio.duration)
+    }
     onPositionChange?.(Math.floor(audio.currentTime))
-  }, [onPositionChange, totalDuration])
+  }, [onPositionChange])
 
   const handleSpeedChange = useCallback((s: number) => {
     setSpeed(s)
@@ -68,6 +82,7 @@ export default function AudioPlayer({
   }, [])
 
   const formatTime = (s: number) => {
+    if (!isFinite(s) || s < 0) return '0:00'
     const m = Math.floor(s / 60)
     const sec = Math.floor(s % 60)
     return `${m}:${sec.toString().padStart(2, '0')}`

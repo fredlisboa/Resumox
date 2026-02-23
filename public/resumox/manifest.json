@@ -1,19 +1,40 @@
 {
+  "id": "/resumox/",
   "name": "Resumox — Resumos de Livros",
   "short_name": "Resumox",
-  "description": "659 resumos de livros com áudio, mapa mental, insights e exercícios práticos",
+  "description": "659 resumos de livros com áudio, mapa mental, insights e exercícios práticos. Pagamento único. Zero mensalidade.",
   "start_url": "/resumox/dashboard",
   "scope": "/resumox/",
   "display": "standalone",
   "background_color": "#0A0A0F",
-  "theme_color": "#0A0A0F",
+  "theme_color": "#6C5CE7",
   "orientation": "portrait-primary",
+  "categories": ["education", "books"],
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/resumox/icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/resumox/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
       "purpose": "any maskable"
+    },
+    {
+      "src": "/resumox/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/resumox/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }

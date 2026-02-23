@@ -3,36 +3,36 @@ import './globals.css'
 import SecurityProvider from '@/components/SecurityProvider'
 
 export const metadata: Metadata = {
-  title: 'NeuroReset - Seu Processo de Transformação',
-  description: 'Acesse seus arquivos de reprogramação mental e materiais exclusivos. Conteúdo original protegido por criptografia.',
-  manifest: '/manifest.json',
+  title: 'Resumox — Resumos de Livros que Transformam',
+  description: '659 resumos de livros com áudio, mapa mental, insights e exercícios práticos. Pagamento único. Zero mensalidade.',
+  manifest: '/resumox/manifest.json',
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' }
+      { url: '/resumox/icon.svg', type: 'image/svg+xml' },
+      { url: '/resumox/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/resumox/favicon-32x32.png', sizes: '32x32', type: 'image/png' }
     ],
     apple: [
-      { url: '/apple-touch-icon.png' }
+      { url: '/resumox/apple-touch-icon.png', sizes: '180x180' }
     ]
   },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'NeuroReset'
+    title: 'Resumox'
   },
   formatDetection: {
     telephone: false
   },
-  keywords: ['NeuroReset', 'Reprogramação Mental', 'Transformação', 'Áudio Terapêutico'],
-  authors: [{ name: 'NeuroReset' }],
-  creator: 'NeuroReset',
-  publisher: 'NeuroReset',
+  keywords: ['Resumox', 'resumos de livros', 'desenvolvimento pessoal', 'livros de negócios'],
+  authors: [{ name: 'Resumox' }],
+  creator: 'Resumox',
+  publisher: 'Resumox',
   robots: 'noindex, nofollow',
 }
 
 export const viewport: Viewport = {
-  themeColor: '#0a0e27',
+  themeColor: '#0A0A0F',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
@@ -50,7 +50,9 @@ export default function RootLayout({
       <head>
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Resumox" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="apple-touch-icon" href="/resumox/apple-touch-icon.png" />
         {/* Preconnect to Cloudflare Turnstile for better performance */}
         <link rel="preconnect" href="https://challenges.cloudflare.com" />
         <link rel="dns-prefetch" href="https://challenges.cloudflare.com" />
