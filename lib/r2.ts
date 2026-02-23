@@ -130,8 +130,7 @@ export async function getFileFromR2(keyOrUrl: string, bucket?: string): Promise<
 
   // Converter stream para buffer
   const chunks: Uint8Array[] = []
-  // @ts-expect-error - Body pode ser um stream
-  for await (const chunk of response.Body) {
+  for await (const chunk of response.Body as AsyncIterable<Uint8Array>) {
     chunks.push(chunk)
   }
 
