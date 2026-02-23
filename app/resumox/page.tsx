@@ -151,6 +151,11 @@ export default function ResumoxLoginPage() {
                   style={{ filter: 'drop-shadow(0 0 20px rgba(162, 155, 254, 0.8))' }}
                 />
               </div>
+              {/* Orbiting dot */}
+              <div
+                className="absolute top-1/2 left-1/2 w-3 h-3 sm:w-4 sm:h-4 -ml-1.5 -mt-1.5 sm:-ml-2 sm:-mt-2 bg-[#A29BFE] rounded-full animate-orbit-resumox"
+                style={{ boxShadow: '0 0 14px rgba(162, 155, 254, 0.9), 0 0 28px rgba(108, 92, 231, 0.5)' }}
+              />
             </div>
           </div>
 

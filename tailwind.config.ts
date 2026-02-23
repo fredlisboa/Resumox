@@ -93,6 +93,7 @@ const config: Config = {
         'shadow-pulse': 'shadowPulse 2s ease-in-out infinite',
         'mega-glow': 'megaGlow 2.5s ease-in-out infinite',
         'orbit-glow': 'orbitGlow 8s linear infinite',
+        'orbit-resumox': 'orbitResumox 8s linear infinite',
         'spin': 'spin 1s linear infinite',
         'xp-pop': 'xpPop 1.2s ease-out forwards',
       },
@@ -169,6 +170,10 @@ const config: Config = {
         orbitGlow: {
           '0%': { transform: 'rotate(0deg) translateX(120px) rotate(0deg)' },
           '100%': { transform: 'rotate(360deg) translateX(120px) rotate(-360deg)' },
+        },
+        orbitResumox: {
+          '0%': { transform: 'rotate(0deg) translateX(88px) rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg) translateX(88px) rotate(-360deg)' },
         },
         bounceSlow: {
           '0%, 100%': { transform: 'translateY(0)' },

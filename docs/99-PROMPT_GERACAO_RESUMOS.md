@@ -15,6 +15,32 @@ Você receberá um **PDF com o resumo detalhado de um livro**. Sua tarefa é int
 
 ---
 
+## 0. Verificação de Duplicidade (OBRIGATÓRIO — executar antes de qualquer geração)
+
+Antes de iniciar a geração do resumo, **é obrigatório verificar se o livro já existe no banco de dados**. Execute a consulta abaixo substituindo os valores conforme o livro solicitado:
+
+```sql
+SELECT id, slug, title, original_title, status
+FROM resumox_books
+WHERE slug = '<slug-do-livro>'
+   OR LOWER(title) = LOWER('<título-em-português>')
+   OR LOWER(original_title) = LOWER('<título-original>');
+```
+
+### Se o livro já existir
+
+1. **Informe o usuário** com clareza: indique o título, slug e status atual do registro encontrado.
+2. **Não gere nenhuma das 4 saídas** (summary_html, mindmap_json, insights_json, exercises_json) nem os metadados.
+3. **Desconsidere a solicitação** de inclusão deste livro e **passe para o próximo livro da lista**, caso haja mais de um na fila.
+4. Exemplo de aviso ao usuário:
+   > ⚠️ O livro **"Título do Livro"** já existe no app (slug: `nome-do-livro`, status: `published`). Pulando para o próximo livro da lista.
+
+### Se o livro NÃO existir
+
+Prossiga normalmente com a geração das 4 saídas e dos metadados conforme descrito nas seções a seguir.
+
+---
+
 ## 1. `summary_html` — O Resumo Editorial
 
 ### O que é
