@@ -353,6 +353,136 @@ Consulte o arquivo `summari-01.html` do projeto para um exemplo completo do livr
 
 ---
 
+## Geração e Inserção do Áudio no App
+
+Após a produção e inserção do resumo no banco de dados, o próximo passo é gerar o áudio narrado a partir do `summary_html` e disponibilizá-lo no app. O áudio é gerado automaticamente via TTS (Text-to-Speech) usando o Microsoft Edge TTS.
+
+### Pré-requisitos
+
+| Ferramenta | Caminho padrão | Instalação |
+|---|---|---|
+| `edge-tts` (Python) | `~/miniconda3/envs/resumox/bin/edge-tts` | `conda activate resumox && pip install edge-tts` |
+| `ffprobe` (ffmpeg) | `~/miniconda3/envs/resumox/bin/ffprobe` | `conda activate resumox && conda install ffmpeg` |
+| Variáveis de ambiente R2 | `.env.local` | `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET_NAME` |
+
+### Pipeline de geração do áudio
+
+O processo completo é executado pela biblioteca `lib/tts.ts` → função `generateAudioForBook()`:
+
+```
+summary_html
+    │
+    ▼
+htmlToPlainText()          → Remove tags HTML, insere pausas naturais em quebras de seção
+    │
+    ▼
+edge-tts (pt-BR-AntonioNeural)  → Gera arquivo MP3 temporário em /tmp/tts-<slug>.mp3
+    │
+    ▼
+ffprobe                    → Calcula a duração em minutos (fallback: estimativa por tamanho do arquivo)
+    │
+    ▼
+uploadFileToR2()           → Upload para R2: resumox/audios/<slug>.mp3
+    │
+    ▼
+UPDATE resumox_books       → Grava audio_r2_key = 'r2://resumox/audios/<slug>.mp3'
+                              e audio_duration_min = N
+```
+
+### Como executar a geração
+
+#### Opção 1 — Script em lote (recomendado para múltiplos livros)
+
+```bash
+conda activate resumox
+
+# Gerar áudio para TODOS os livros publicados que ainda não têm áudio
+npx tsx scripts/resumox-generate-audio.ts
+
+# Testar sem gerar (dry-run)
+npx tsx scripts/resumox-generate-audio.ts --dry-run
+
+# Gerar para um livro específico
+npx tsx scripts/resumox-generate-audio.ts --slug "nome-do-livro"
+
+# Forçar regeneração (mesmo que já tenha áudio)
+npx tsx scripts/resumox-generate-audio.ts --slug "nome-do-livro" --force
+
+# Usar voz diferente (padrão: pt-BR-AntonioNeural)
+npx tsx scripts/resumox-generate-audio.ts --voice "pt-BR-FabioNeural"
+```
+
+O script registra logs em `logs/resumox-audio-YYYY-MM-DD.jsonl`.
+
+#### Opção 2 — API admin (livro individual, sob demanda)
+
+```
+POST /api/resumox/generate-audio
+Content-Type: application/json
+Authorization: Bearer <admin-token>
+
+{
+  "slug": "nome-do-livro",
+  "force": false
+}
+```
+
+Resposta:
+```json
+{
+  "success": true,
+  "slug": "nome-do-livro",
+  "title": "Título do Livro",
+  "r2Key": "resumox/audios/nome-do-livro.mp3",
+  "durationMin": 14,
+  "fileSizeBytes": 8523776,
+  "textLength": 12450
+}
+```
+
+> **Atenção**: O endpoint tem timeout de 5 minutos (Vercel). Para resumos muito longos, prefira o script local.
+
+### O que acontece no banco de dados
+
+Após a geração, a tabela `resumox_books` é atualizada:
+
+| Campo | Valor |
+|---|---|
+| `audio_r2_key` | `r2://resumox/audios/<slug>.mp3` |
+| `audio_duration_min` | Duração em minutos (inteiro, calculado via ffprobe) |
+
+### Como o áudio fica disponível no app
+
+1. **Servir o arquivo**: O endpoint `/api/r2-content?key=<r2-key>` funciona como proxy — recebe a key R2, verifica a autenticação do usuário via cookie de sessão e faz streaming dos bytes do MP3 diretamente do R2 com header `Content-Type: audio/mpeg`.
+
+2. **Player no app**: O componente `AudioPlayer` (`components/resumox/AudioPlayer.tsx`) monta a URL:
+   ```
+   /api/r2-content?key=r2%3A%2F%2Fresumox%2Faudios%2F<slug>.mp3
+   ```
+   E renderiza um player com visualização de forma de onda, controle de velocidade (0.75x a 2x) e barra de progresso.
+
+3. **Persistência de posição**: O hook `useResumoxProgress` salva `audio_position_sec` na tabela `resumox_user_progress` a cada 10 segundos (debounced). Quando o usuário retorna, o áudio retoma do ponto onde parou.
+
+4. **Estado sem áudio**: Se `audio_r2_key` for `null`, o player exibe o placeholder "Áudio em breve" automaticamente.
+
+### Orientações para a narração (TTS)
+
+- A voz padrão é **`pt-BR-AntonioNeural`** — voz masculina brasileira, natural e clara
+- O `htmlToPlainText()` já insere pausas adequadas em títulos (`<h2>`, `<h3>`), parágrafos e blocos especiais (`.highlight-box`, `.key-point`)
+- **Não é necessário** adicionar marcações especiais no `summary_html` para TTS — a conversão é automática
+- Se o resumo estiver bem escrito com frases claras e pontuação correta, o áudio será fluido e natural
+- Duração típica do áudio: **10-20 minutos** para resumos de 2.000-4.000 palavras
+
+### Verificação pós-geração
+
+Após gerar o áudio, verifique:
+
+1. **No banco**: `SELECT slug, audio_r2_key, audio_duration_min FROM resumox_books WHERE slug = '<slug>'` — confirme que os campos foram preenchidos
+2. **No R2**: Verifique que o arquivo existe em `resumox/audios/<slug>.mp3` (use `npx tsx scripts/list-r2-files.ts audios`)
+3. **No app**: Acesse `/resumox/dashboard/livro/<slug>`, vá para a aba "Áudio" e confirme que o player carrega e reproduz corretamente
+
+---
+
 ## Checklist Final de Validação
 
 Antes de entregar, valide:
@@ -369,3 +499,13 @@ Antes de entregar, valide:
 - [ ] JSON é válido e parseable
 - [ ] Texto em Português do Brasil
 - [ ] Extensão do resumo: 2.000-4.000 palavras
+
+### Checklist do Áudio (pós-geração)
+
+- [ ] Script/API executou sem erros para o livro
+- [ ] `audio_r2_key` preenchido no banco (`r2://resumox/audios/<slug>.mp3`)
+- [ ] `audio_duration_min` preenchido com valor coerente (10-20 min para resumos típicos)
+- [ ] Arquivo MP3 existe no R2 em `resumox/audios/<slug>.mp3`
+- [ ] Player carrega e reproduz o áudio na aba "Áudio" do app
+- [ ] Narração está fluida, sem cortes ou artefatos perceptíveis
+- [ ] Posição do áudio é salva e restaurada ao recarregar a página

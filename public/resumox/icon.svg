@@ -1,50 +1,49 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
   <defs>
-    <radialGradient id="bgGlow" cx="0.5" cy="0.45" r="0.55">
-      <stop offset="0%" stop-color="#1a1a2e" />
-      <stop offset="100%" stop-color="#0A0A0F" />
-    </radialGradient>
-    <radialGradient id="iconGlow" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0%" stop-color="#6C5CE7" stop-opacity="0.4"/>
-      <stop offset="70%" stop-color="#6C5CE7" stop-opacity="0.1"/>
-      <stop offset="100%" stop-color="#6C5CE7" stop-opacity="0"/>
-    </radialGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="8" result="blur"/>
-      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-    </filter>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#6C5CE7"/>
+    </linearGradient>
+    <linearGradient id="pageShadow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+    </linearGradient>
   </defs>
 
-  <!-- Background -->
-  <rect width="512" height="512" rx="112" fill="url(#bgGlow)"/>
+  <!-- Vibrant purple gradient background -->
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
 
-  <!-- Outer border -->
-  <rect x="16" y="16" width="480" height="480" rx="96" stroke="#6C5CE7" stroke-width="2" stroke-opacity="0.25" fill="none"/>
+  <!-- Subtle top shine -->
+  <path d="M96 0 H416 Q512 0 512 96 V200 Q256 260 0 200 V96 Q0 0 96 0Z" fill="white" fill-opacity="0.07"/>
 
-  <!-- Circular container glow -->
-  <circle cx="256" cy="256" r="140" fill="url(#iconGlow)"/>
-
-  <!-- Circular container -->
-  <circle cx="256" cy="256" r="120" fill="#13131A" stroke="#6C5CE7" stroke-width="2.5" stroke-opacity="0.35"/>
-
-  <!-- Inner glow -->
-  <circle cx="256" cy="256" r="90" fill="#6C5CE7" fill-opacity="0.06"/>
-
-  <!-- Book icon (BookOpen style) -->
-  <g filter="url(#glow)" transform="translate(256, 256) scale(1.1) translate(-256, -256)">
+  <!-- Large open book - fills most of the icon -->
+  <g transform="translate(256, 236)">
     <!-- Left page -->
-    <path d="M256 210 L256 310 L196 295 L196 195 Z" fill="#A29BFE" fill-opacity="0.9"/>
+    <path d="M-16 -130 L-16 130 L-175 95 L-175 -95 Z" fill="white" fill-opacity="0.95" stroke="white" stroke-width="2" stroke-opacity="0.3"/>
     <!-- Right page -->
-    <path d="M256 210 L256 310 L316 295 L316 195 Z" fill="#8B7FE8" fill-opacity="0.9"/>
-    <!-- Spine highlight -->
-    <line x1="256" y1="206" x2="256" y2="314" stroke="#E8E8ED" stroke-width="2" stroke-opacity="0.5"/>
-    <!-- Left page lines -->
-    <line x1="215" y1="230" x2="248" y2="237" stroke="#E8E8ED" stroke-width="1.5" stroke-opacity="0.3"/>
-    <line x1="215" y1="248" x2="248" y2="255" stroke="#E8E8ED" stroke-width="1.5" stroke-opacity="0.3"/>
-    <line x1="215" y1="266" x2="248" y2="273" stroke="#E8E8ED" stroke-width="1.5" stroke-opacity="0.3"/>
+    <path d="M16 -130 L16 130 L175 95 L175 -95 Z" fill="url(#pageShadow)" stroke="white" stroke-width="2" stroke-opacity="0.3"/>
+
+    <!-- Spine curve -->
+    <path d="M-16 -130 Q0 -142 16 -130 L16 130 Q0 142 -16 130 Z" fill="white" fill-opacity="0.6"/>
+
+    <!-- Left page lines (thick for visibility at small sizes) -->
+    <line x1="-148" y1="-60" x2="-40" y2="-47" stroke="#8B5CF6" stroke-width="10" stroke-linecap="round" stroke-opacity="0.45"/>
+    <line x1="-148" y1="-20" x2="-40" y2="-7" stroke="#8B5CF6" stroke-width="10" stroke-linecap="round" stroke-opacity="0.35"/>
+    <line x1="-148" y1="20" x2="-40" y2="33" stroke="#8B5CE7" stroke-width="10" stroke-linecap="round" stroke-opacity="0.25"/>
+
     <!-- Right page lines -->
-    <line x1="264" y1="237" x2="297" y2="230" stroke="#E8E8ED" stroke-width="1.5" stroke-opacity="0.3"/>
-    <line x1="264" y1="255" x2="297" y2="248" stroke="#E8E8ED" stroke-width="1.5" stroke-opacity="0.3"/>
-    <line x1="264" y1="273" x2="297" y2="266" stroke="#E8E8ED" stroke-width="1.5" stroke-opacity="0.3"/>
+    <line x1="40" y1="-47" x2="148" y2="-60" stroke="#6C5CE7" stroke-width="10" stroke-linecap="round" stroke-opacity="0.45"/>
+    <line x1="40" y1="-7" x2="148" y2="-20" stroke="#6C5CE7" stroke-width="10" stroke-linecap="round" stroke-opacity="0.35"/>
+    <line x1="40" y1="33" x2="148" y2="20" stroke="#6C5CE7" stroke-width="10" stroke-linecap="round" stroke-opacity="0.25"/>
+
+    <!-- Sparkle/star top-right to suggest "summary/insight" -->
+    <g transform="translate(130, -110)">
+      <path d="M0 -20 L5 -5 L20 0 L5 5 L0 20 L-5 5 L-20 0 L-5 -5 Z" fill="white" fill-opacity="0.9"/>
+    </g>
+
+    <!-- Small sparkle bottom-left -->
+    <g transform="translate(-140, 85)">
+      <path d="M0 -12 L3 -3 L12 0 L3 3 L0 12 L-3 3 L-12 0 L-3 -3 Z" fill="white" fill-opacity="0.7"/>
+    </g>
   </g>
 </svg>

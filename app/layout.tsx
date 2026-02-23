@@ -8,12 +8,12 @@ export const metadata: Metadata = {
   manifest: '/resumox/manifest.json',
   icons: {
     icon: [
-      { url: '/resumox/icon.svg', type: 'image/svg+xml' },
-      { url: '/resumox/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/resumox/favicon-32x32.png', sizes: '32x32', type: 'image/png' }
+      { url: '/resumox/icon.svg?v=2', type: 'image/svg+xml' },
+      { url: '/resumox/favicon-16x16.png?v=2', sizes: '16x16', type: 'image/png' },
+      { url: '/resumox/favicon-32x32.png?v=2', sizes: '32x32', type: 'image/png' }
     ],
     apple: [
-      { url: '/resumox/apple-touch-icon.png', sizes: '180x180' }
+      { url: '/resumox/apple-touch-icon.png?v=2', sizes: '180x180' }
     ]
   },
   appleWebApp: {
@@ -52,7 +52,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="Resumox" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <link rel="apple-touch-icon" href="/resumox/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" href="/resumox/apple-touch-icon.png?v=2" />
         {/* Preconnect to Cloudflare Turnstile for better performance */}
         <link rel="preconnect" href="https://challenges.cloudflare.com" />
         <link rel="dns-prefetch" href="https://challenges.cloudflare.com" />

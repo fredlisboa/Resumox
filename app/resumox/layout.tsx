@@ -17,12 +17,12 @@ export const metadata: Metadata = {
   publisher: 'Resumox',
   icons: {
     icon: [
-      { url: '/resumox/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/resumox/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/resumox/icon.svg', type: 'image/svg+xml' },
+      { url: '/resumox/favicon-32x32.png?v=2', sizes: '32x32', type: 'image/png' },
+      { url: '/resumox/favicon-16x16.png?v=2', sizes: '16x16', type: 'image/png' },
+      { url: '/resumox/icon.svg?v=2', type: 'image/svg+xml' },
     ],
     apple: [
-      { url: '/resumox/apple-touch-icon.png', sizes: '180x180' },
+      { url: '/resumox/apple-touch-icon.png?v=2', sizes: '180x180' },
     ],
   },
   manifest: '/resumox/manifest.json',
