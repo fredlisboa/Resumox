@@ -96,8 +96,7 @@ export async function GET(request: NextRequest) {
 
     // Ler o body como buffer
     const chunks: Uint8Array[] = []
-    // @ts-expect-error - Body é um stream
-    for await (const chunk of response.Body) {
+    for await (const chunk of response.Body as AsyncIterable<Uint8Array>) {
       chunks.push(chunk)
     }
     const body = Buffer.concat(chunks)

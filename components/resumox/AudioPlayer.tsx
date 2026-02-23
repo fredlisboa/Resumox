@@ -79,9 +79,11 @@ export default function AudioPlayer({
     if (playing) {
       audio.pause()
     } else {
-      audio.play()
+      audio.play().catch((err) => {
+        console.warn('[AudioPlayer] play() failed:', err)
+      })
     }
-    setPlaying(!playing)
+    // State is driven by onPlay/onPause events on the <audio> element
   }, [playing])
 
   const handleTimeUpdate = useCallback(() => {
@@ -137,29 +139,25 @@ export default function AudioPlayer({
       setIsDragging(true)
       const fraction = getProgressFromEvent(e.clientX)
       seekToProgress(fraction)
+
+      // Register move/up directly so a quick click can't miss mouseup
+      const onMove = (ev: MouseEvent) => {
+        const f = getProgressFromEvent(ev.clientX)
+        seekToProgress(f)
+        setHoverProgress(f)
+      }
+      const onUp = () => {
+        isDraggingRef.current = false
+        setIsDragging(false)
+        setHoverProgress(null)
+        window.removeEventListener('mousemove', onMove)
+        window.removeEventListener('mouseup', onUp)
+      }
+      window.addEventListener('mousemove', onMove)
+      window.addEventListener('mouseup', onUp)
     },
     [getProgressFromEvent, seekToProgress, totalDuration],
   )
-
-  useEffect(() => {
-    if (!isDragging) return
-    const handleMouseMove = (e: MouseEvent) => {
-      const fraction = getProgressFromEvent(e.clientX)
-      seekToProgress(fraction)
-      setHoverProgress(fraction)
-    }
-    const handleMouseUp = () => {
-      isDraggingRef.current = false
-      setIsDragging(false)
-      setHoverProgress(null)
-    }
-    window.addEventListener('mousemove', handleMouseMove)
-    window.addEventListener('mouseup', handleMouseUp)
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove)
-      window.removeEventListener('mouseup', handleMouseUp)
-    }
-  }, [isDragging, getProgressFromEvent, seekToProgress])
 
   // --- Touch events ---
   const handleTouchStart = useCallback(
@@ -170,33 +168,28 @@ export default function AudioPlayer({
       const touch = e.touches[0]
       const fraction = getProgressFromEvent(touch.clientX)
       seekToProgress(fraction)
+
+      const onMove = (ev: TouchEvent) => {
+        const t = ev.touches[0]
+        if (!t) return
+        const f = getProgressFromEvent(t.clientX)
+        seekToProgress(f)
+        setHoverProgress(f)
+      }
+      const onEnd = () => {
+        isDraggingRef.current = false
+        setIsDragging(false)
+        setHoverProgress(null)
+        window.removeEventListener('touchmove', onMove)
+        window.removeEventListener('touchend', onEnd)
+        window.removeEventListener('touchcancel', onEnd)
+      }
+      window.addEventListener('touchmove', onMove, { passive: true })
+      window.addEventListener('touchend', onEnd)
+      window.addEventListener('touchcancel', onEnd)
     },
     [getProgressFromEvent, seekToProgress, totalDuration],
   )
-
-  useEffect(() => {
-    if (!isDragging) return
-    const handleTouchMove = (e: TouchEvent) => {
-      const touch = e.touches[0]
-      if (!touch) return
-      const fraction = getProgressFromEvent(touch.clientX)
-      seekToProgress(fraction)
-      setHoverProgress(fraction)
-    }
-    const handleTouchEnd = () => {
-      isDraggingRef.current = false
-      setIsDragging(false)
-      setHoverProgress(null)
-    }
-    window.addEventListener('touchmove', handleTouchMove, { passive: true })
-    window.addEventListener('touchend', handleTouchEnd)
-    window.addEventListener('touchcancel', handleTouchEnd)
-    return () => {
-      window.removeEventListener('touchmove', handleTouchMove)
-      window.removeEventListener('touchend', handleTouchEnd)
-      window.removeEventListener('touchcancel', handleTouchEnd)
-    }
-  }, [isDragging, getProgressFromEvent, seekToProgress])
 
   // --- Hover tooltip ---
   const handleMouseMoveHover = useCallback(
@@ -234,6 +227,8 @@ export default function AudioPlayer({
           ref={audioRef}
           src={audioUrl}
           onTimeUpdate={handleTimeUpdate}
+          onPlay={() => setPlaying(true)}
+          onPause={() => setPlaying(false)}
           onEnded={() => setPlaying(false)}
           preload="metadata"
         />
