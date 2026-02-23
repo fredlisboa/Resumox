@@ -36,7 +36,7 @@ export default function AudioPlayer({
     const fetchUrl = async () => {
       setLoading(true)
       try {
-        const res = await fetch(`/api/r2-content?key=${encodeURIComponent(audioR2Key)}`)
+        const res = await fetch(`/api/r2-content?key=${encodeURIComponent(audioR2Key)}&signed=true`)
         if (res.ok) {
           const data = await res.json()
           setAudioUrl(data.url)
