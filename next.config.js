@@ -20,11 +20,11 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://*.cloudflare.com https://cloudflareinsights.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://*.cloudflare.com https://*.cloudflareinsights.com",
               "style-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
               "img-src 'self' data: blob: https: http:",
               "font-src 'self' data: https://challenges.cloudflare.com",
-              "connect-src 'self' https://challenges.cloudflare.com https://*.cloudflare.com https://*.supabase.co wss://*.supabase.co",
+              "connect-src 'self' https://challenges.cloudflare.com https://*.cloudflare.com https://*.cloudflareinsights.com https://*.supabase.co wss://*.supabase.co",
               "frame-src 'self' https://challenges.cloudflare.com https://*.cloudflare.com",
               "worker-src 'self' blob:",
               "child-src 'self' blob: https://challenges.cloudflare.com https://*.cloudflare.com",

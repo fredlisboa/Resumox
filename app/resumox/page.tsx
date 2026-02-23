@@ -187,12 +187,14 @@ export default function ResumoxLoginPage() {
               <label htmlFor="email" className="block text-sm font-semibold text-[#A29BFE] mb-2">
                 Seu E-mail de Compra
               </label>
-              <p className="text-xs text-[#6C5CE7] mb-3 flex items-center gap-1">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                </svg>
-                Use o mesmo email que você cadastrou na Hotmart.
-              </p>
+              <div className="relative mb-4 p-3 rounded-xl border border-[#FF6B6B]/40 bg-gradient-to-r from-[#FF6B6B]/15 via-[#FF6B6B]/10 to-[#FF6B6B]/15 backdrop-blur-sm shadow-[0_0_20px_rgba(255,107,107,0.2),0_0_40px_rgba(255,107,107,0.1)] animate-pulse">
+                <p className="text-sm font-semibold text-[#FF6B6B] flex items-center gap-2">
+                  <svg className="w-5 h-5 flex-shrink-0 drop-shadow-[0_0_6px_rgba(255,107,107,0.6)]" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                  </svg>
+                  Use o mesmo email que você cadastrou na Cakto.
+                </p>
+              </div>
               <input
                 id="email"
                 type="email"
