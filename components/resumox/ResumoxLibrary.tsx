@@ -96,12 +96,9 @@ export default function ResumoxLibrary() {
         </div>
       ) : (
         <section>
-          {(search || selectedCategory) && (
+          {(search || selectedCategory) && selectedCategory && categories.find((c) => c.slug === selectedCategory) && (
             <h2 className="text-sm font-bold text-resumox-text mb-3">
-              {total} {total === 1 ? 'livro' : 'livros'}
-              {selectedCategory && categories.find((c) => c.slug === selectedCategory)
-                ? ` em ${categories.find((c) => c.slug === selectedCategory)!.emoji} ${categories.find((c) => c.slug === selectedCategory)!.label}`
-                : ''}
+              {categories.find((c) => c.slug === selectedCategory)!.emoji} {categories.find((c) => c.slug === selectedCategory)!.label}
             </h2>
           )}
           <div className="space-y-2">
@@ -111,9 +108,6 @@ export default function ResumoxLibrary() {
           </div>
           <LoadMoreButton
             loading={loadingMore}
-            hasMore={hasMore}
-            total={total}
-            loadedCount={books.length}
             onLoadMore={loadMore}
           />
         </section>

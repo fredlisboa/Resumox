@@ -88,8 +88,16 @@ export function usePaginatedBooks({
   }, [fetchPage])
 
   const loadMore = useCallback(() => {
-    if (loadingMore || !hasMore) return
-    fetchPage(page + 1, true)
+    if (loadingMore) return
+    if (hasMore) {
+      fetchPage(page + 1, true)
+    } else {
+      // Loop back to the beginning
+      setBooks([])
+      setPage(1)
+      setHasMore(false)
+      fetchPage(1, false)
+    }
   }, [fetchPage, page, loadingMore, hasMore])
 
   return { books, loading, loadingMore, hasMore, total, loadMore }

@@ -36,15 +36,11 @@ export default function BuscaPage() {
             </div>
           ) : books.length > 0 ? (
             <div className="space-y-2">
-              <p className="text-xs text-resumox-muted mb-2">{total} resultado{total !== 1 ? 's' : ''}</p>
               {books.map((book) => (
                 <BookCard key={book.id} book={book} />
               ))}
               <LoadMoreButton
                 loading={loadingMore}
-                hasMore={hasMore}
-                total={total}
-                loadedCount={books.length}
                 onLoadMore={loadMore}
               />
             </div>

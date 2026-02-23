@@ -41,9 +41,7 @@ export default function CategoriaPage() {
         <h1 className="text-xl font-extrabold text-resumox-text mb-1">
           {categoryLabel || slug}
         </h1>
-        <p className="text-sm text-resumox-muted mb-6">
-          {total} {total === 1 ? 'livro' : 'livros'}
-        </p>
+        <div className="mb-6" />
 
         {loading ? (
           <div className="flex justify-center py-8">
@@ -58,9 +56,6 @@ export default function CategoriaPage() {
             ))}
             <LoadMoreButton
               loading={loadingMore}
-              hasMore={hasMore}
-              total={total}
-              loadedCount={books.length}
               onLoadMore={loadMore}
             />
           </div>

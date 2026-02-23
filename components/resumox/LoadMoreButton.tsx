@@ -2,17 +2,12 @@
 
 interface LoadMoreButtonProps {
   loading: boolean
-  hasMore: boolean
-  total: number
-  loadedCount: number
   onLoadMore: () => void
 }
 
-export default function LoadMoreButton({ loading, hasMore, total, loadedCount, onLoadMore }: LoadMoreButtonProps) {
-  if (!hasMore) return null
-
+export default function LoadMoreButton({ loading, onLoadMore }: LoadMoreButtonProps) {
   return (
-    <div className="flex flex-col items-center gap-2 pt-4 pb-2">
+    <div className="flex flex-col items-center pt-4 pb-2">
       <button
         onClick={onLoadMore}
         disabled={loading}
@@ -30,9 +25,6 @@ export default function LoadMoreButton({ loading, hasMore, total, loadedCount, o
           'Carregar mais livros'
         )}
       </button>
-      <p className="text-xs text-resumox-muted">
-        {loadedCount} de {total} livros
-      </p>
     </div>
   )
 }
