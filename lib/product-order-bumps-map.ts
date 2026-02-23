@@ -64,11 +64,11 @@ export const PRODUCT_ORDER_BUMPS_MAP: Record<string, MainProductConfig> = {
     ]
   },
 
-  // Resumox (produto principal - sem order bumps)
+  // ResumoX (produto principal - sem order bumps)
   // TODO: Substituir RESUMOX_HOTMART_ID pelo ID real do produto na Hotmart
   'RESUMOX_HOTMART_ID': {
     product_id: 'RESUMOX_HOTMART_ID',
-    product_name: 'Resumox',
+    product_name: 'ResumoX',
     order_bumps: []
   }
 }

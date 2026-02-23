@@ -1,7 +1,7 @@
 #!/usr/bin/env tsx
 
 /**
- * Resumox — Import Pre-Generated Summaries
+ * ResumoX — Import Pre-Generated Summaries
  *
  * Reads pre-generated markdown files (from resumos-gerados/) and inserts
  * books + content into Supabase. Skips PDF extraction and Claude API.

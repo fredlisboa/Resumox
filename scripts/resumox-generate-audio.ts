@@ -1,7 +1,7 @@
 #!/usr/bin/env tsx
 
 /**
- * Resumox Audio Generation Script
+ * ResumoX Audio Generation Script
  *
  * Generates TTS audio for book summaries using Microsoft Edge TTS (free).
  * Processes books that don't have audio yet, uploads MP3 to R2, and updates DB.

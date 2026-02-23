@@ -109,7 +109,7 @@ export type Database = {
         Insert: Omit<Database['public']['Tables']['user_products']['Row'], 'id' | 'created_at' | 'updated_at'>
         Update: Partial<Database['public']['Tables']['user_products']['Insert']>
       }
-      // ── Resumox tables ──
+      // ── ResumoX tables ──
       resumox_books: {
         Row: {
           id: string

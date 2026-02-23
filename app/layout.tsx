@@ -3,7 +3,7 @@ import './globals.css'
 import SecurityProvider from '@/components/SecurityProvider'
 
 export const metadata: Metadata = {
-  title: 'Resumox — Resumos de Livros que Transformam',
+  title: 'ResumoX — Resumos de Livros que Transformam',
   description: '659 resumos de livros com áudio, mapa mental, insights e exercícios práticos. Pagamento único. Zero mensalidade.',
   manifest: '/resumox/manifest.json',
   icons: {
@@ -19,15 +19,15 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'Resumox'
+    title: 'ResumoX'
   },
   formatDetection: {
     telephone: false
   },
-  keywords: ['Resumox', 'resumos de livros', 'desenvolvimento pessoal', 'livros de negócios'],
-  authors: [{ name: 'Resumox' }],
-  creator: 'Resumox',
-  publisher: 'Resumox',
+  keywords: ['ResumoX', 'resumos de livros', 'desenvolvimento pessoal', 'livros de negócios'],
+  authors: [{ name: 'ResumoX' }],
+  creator: 'ResumoX',
+  publisher: 'ResumoX',
   robots: 'noindex, nofollow',
 }
 
@@ -50,7 +50,7 @@ export default function RootLayout({
       <head>
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="Resumox" />
+        <meta name="apple-mobile-web-app-title" content="ResumoX" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <link rel="apple-touch-icon" href="/resumox/apple-touch-icon.png?v=2" />
         {/* Preconnect to Cloudflare Turnstile for better performance */}

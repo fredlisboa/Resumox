@@ -1,4 +1,4 @@
-# Resumox - Estrutura do Projeto
+# ResumoX - Estrutura do Projeto
 
 Plataforma PWA multi-produto para entrega de conteúdos digitais, construída com **Next.js 14 (App Router)**, **Supabase** e **Cloudflare R2**.
 

@@ -556,7 +556,7 @@
   color: rgb(226 232 240); /* slate-200 - slightly lighter for emphasis in dark mode */
 }
 
-/* ===== Resumox Theme ===== */
+/* ===== ResumoX Theme ===== */
 .resumox-theme {
   --rx-bg: #0A0A0F;
   --rx-surface: #13131A;
@@ -579,7 +579,7 @@
   --rx-radius-sm: 10px;
 }
 
-/* Resumox editorial content styling */
+/* ResumoX editorial content styling */
 .resumox-content h2 {
   font-family: var(--font-playfair, 'Playfair Display', serif);
   font-size: 22px;
@@ -669,7 +669,7 @@
   color: var(--rx-accent-light);
 }
 
-/* Resumox scrollbar override */
+/* ResumoX scrollbar override */
 .resumox-theme ::-webkit-scrollbar-track {
   background: var(--rx-bg);
 }

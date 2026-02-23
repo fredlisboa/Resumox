@@ -1,8 +1,8 @@
-# Resumox — Guia de Geração de Resumos para LLMs
+# ResumoX — Guia de Geração de Resumos para LLMs
 
 ## Visão Geral
 
-Você receberá um **PDF com o resumo detalhado de um livro**. Sua tarefa é interpretar esse conteúdo e devolver **4 saídas independentes** que serão armazenadas no banco de dados do projeto Resumox:
+Você receberá um **PDF com o resumo detalhado de um livro**. Sua tarefa é interpretar esse conteúdo e devolver **4 saídas independentes** que serão armazenadas no banco de dados do projeto ResumoX:
 
 | # | Campo no Banco | Tipo    | Descrição                              |
 |---|----------------|---------|----------------------------------------|

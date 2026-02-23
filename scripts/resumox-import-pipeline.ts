@@ -1,9 +1,9 @@
 #!/usr/bin/env tsx
 
 /**
- * Resumox Book Import Pipeline
+ * ResumoX Book Import Pipeline
  *
- * Processes PDF book summaries and generates all content for the Resumox platform:
+ * Processes PDF book summaries and generates all content for the ResumoX platform:
  * 1. Extracts text from PDFs via pdfjs-dist
  * 2. Uses Claude API to generate summary_html, mindmap_json, insights_json, exercises_json
  * 3. Categorizes the book and assigns metadata
@@ -286,7 +286,7 @@ PDF filename for context: ${pdfFilename}`
   // Step 2: Generate summary_html
   console.log('  [2/4] Generating summary HTML...')
   const summaryHtml = await callClaude(
-    `You are a book summary writer for a Brazilian PT-BR learning platform called Resumox.
+    `You are a book summary writer for a Brazilian PT-BR learning platform called ResumoX.
 Write engaging, well-structured HTML summaries of business/self-help books.
 
 Use these HTML patterns for formatting:

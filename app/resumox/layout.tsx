@@ -9,12 +9,12 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'Resumox — Resumos de Livros que Transformam',
+  title: 'ResumoX — Resumos de Livros que Transformam',
   description: '659 resumos de livros com áudio, mapa mental, insights e exercícios práticos. Pagamento único. Zero mensalidade.',
   keywords: ['resumos de livros', 'livros de negócios', 'desenvolvimento pessoal', 'finanças', 'produtividade', 'resumox'],
-  authors: [{ name: 'Resumox' }],
-  creator: 'Resumox',
-  publisher: 'Resumox',
+  authors: [{ name: 'ResumoX' }],
+  creator: 'ResumoX',
+  publisher: 'ResumoX',
   icons: {
     icon: [
       { url: '/resumox/favicon-32x32.png?v=2', sizes: '32x32', type: 'image/png' },
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'Resumox',
+    title: 'ResumoX',
   },
   robots: 'noindex, nofollow',
 }

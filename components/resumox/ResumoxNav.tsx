@@ -35,7 +35,7 @@ export default function ResumoxNav({ showBack = false, backHref = '/resumox/dash
       )}
 
       <span className="font-extrabold text-base tracking-tight text-resumox-accent-light">
-        Resumox
+        ResumoX
       </span>
 
       <StreakBadge streak={streak} />

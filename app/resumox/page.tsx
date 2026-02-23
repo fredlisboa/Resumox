@@ -165,7 +165,7 @@ export default function ResumoxLoginPage() {
           <p className="text-lg text-[#A29BFE] mb-3 font-semibold">Parabéns pela sua compra!</p>
           <p className="text-base text-[#8888A0] mb-6">659 livros. Pagamento único. Zero mensalidade.</p>
           <div className="inline-block px-6 py-2 bg-[#13131A]/80 border border-[#6C5CE7]/30 rounded-full mb-4">
-            <p className="text-3xl font-bold text-[#E8E8ED] tracking-tight">Resumox</p>
+            <p className="text-3xl font-bold text-[#E8E8ED] tracking-tight">ResumoX</p>
           </div>
         </div>
 
@@ -261,8 +261,8 @@ export default function ResumoxLoginPage() {
         <EmailSupportModal
           isOpen={showEmailModal}
           onClose={() => setShowEmailModal(false)}
-          subject="Suporte de Acesso - Resumox"
-          body="Olá, preciso de ajuda para acessar minha biblioteca do Resumox"
+          subject="Suporte de Acesso - ResumoX"
+          body="Olá, preciso de ajuda para acessar minha biblioteca do ResumoX"
           locale="pt-BR"
         />
 
@@ -273,7 +273,7 @@ export default function ResumoxLoginPage() {
             </svg>
             <p className="text-sm font-semibold">Acesso Protegido</p>
           </div>
-          <p className="text-xs text-[#8888A0]">Resumox — Protegido por Criptografia</p>
+          <p className="text-xs text-[#8888A0]">ResumoX — Protegido por Criptografia</p>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 {
   "id": "/resumox/",
-  "name": "Resumox — Resumos de Livros",
-  "short_name": "Resumox",
+  "name": "ResumoX — Resumos de Livros",
+  "short_name": "ResumoX",
   "description": "659 resumos de livros com áudio, mapa mental, insights e exercícios práticos. Pagamento único. Zero mensalidade.",
   "start_url": "/resumox/dashboard",
   "scope": "/resumox/",

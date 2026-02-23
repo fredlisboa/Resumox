@@ -27,7 +27,7 @@ export default function InsightCard({
   }
 
   const handleShare = async () => {
-    const shareText = `"${text}"\n— ${bookTitle}\n\nVia Resumox`
+    const shareText = `"${text}"\n— ${bookTitle}\n\nVia ResumoX`
     if (navigator.share) {
       try {
         await navigator.share({ text: shareText })

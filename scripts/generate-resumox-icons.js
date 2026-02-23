@@ -7,7 +7,7 @@ const resumoxDir = path.join(publicDir, 'resumox');
 const svgPath = path.join(resumoxDir, 'icon.svg');
 
 async function generateIcons() {
-  console.log('Generating Resumox app icons...\n');
+  console.log('Generating ResumoX app icons...\n');
 
   try {
     const svgBuffer = fs.readFileSync(svgPath);
@@ -29,7 +29,7 @@ async function generateIcons() {
         .toFile(path.join(resumoxDir, name));
     }
 
-    console.log('\nAll Resumox icons generated successfully!');
+    console.log('\nAll ResumoX icons generated successfully!');
     console.log('\nGenerated files:');
     sizes.forEach(({ name, size }) => {
       console.log(`  ${name} (${size}x${size})`);

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════
-// Resumox — TypeScript types for book summaries product
+// ResumoX — TypeScript types for book summaries product
 // ══════════════════════════════════════════════════════════
 
 // ── Database row types ──

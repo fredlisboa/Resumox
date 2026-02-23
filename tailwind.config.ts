@@ -31,7 +31,7 @@ const config: Config = {
           300: '#67e8f9',
           glow: '#00ffff', // Neon cyan for glows
         },
-        // Resumox Brand Colors
+        // ResumoX Brand Colors
         resumox: {
           bg: '#0A0A0F',
           surface: '#13131A',

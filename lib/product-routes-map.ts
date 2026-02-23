@@ -83,10 +83,10 @@ export const PRODUCT_ROUTES_MAP: Record<string, ProductRouteConfig> = {
     description: 'Receita personalizada do NutriChá para emagrecimento natural (PT-BR)'
   },
 
-  // Resumox - PT-BR (product_id placeholder, atualizar com o ID real da Hotmart)
+  // ResumoX - PT-BR (product_id placeholder, atualizar com o ID real da Hotmart)
   'RESUMOX_HOTMART_ID': {
     product_id: 'RESUMOX_HOTMART_ID',
-    product_name: 'Resumox',
+    product_name: 'ResumoX',
     login_route: '/resumox',
     dashboard_route: '/resumox/dashboard',
     theme: 'dark',
