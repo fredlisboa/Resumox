@@ -25,8 +25,8 @@ export interface CaktoProductConfig {
  */
 export const CAKTO_PRODUCT_MAP: Record<string, CaktoProductConfig> = {
   // Kit Sono Infantil - PT-BR (Cakto - Produção)
-  'ee5a7622-4cf9-476c-96e6-b0a865bb08cd': {
-    cakto_product_id: 'ee5a7622-4cf9-476c-96e6-b0a865bb08cd',
+  '1643d897-535b-431c-a4cc-56d4dab1e956': {
+    cakto_product_id: '1643d897-535b-431c-a4cc-56d4dab1e956',
     cakto_product_name: 'Kit Sono Infantil',
     content_product_id: '7065534',
     content_product_name: 'Kit Sono Infantil',

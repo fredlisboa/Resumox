@@ -54,8 +54,8 @@ export const PRODUCT_ROUTES_MAP: Record<string, ProductRouteConfig> = {
   },
 
   // Kit Sono Infantil - PT-BR version (Cakto - Produção)
-  'ee5a7622-4cf9-476c-96e6-b0a865bb08cd': {
-    product_id: 'ee5a7622-4cf9-476c-96e6-b0a865bb08cd',
+  '1643d897-535b-431c-a4cc-56d4dab1e956': {
+    product_id: '1643d897-535b-431c-a4cc-56d4dab1e956',
     product_name: 'Kit Sono Infantil',
     login_route: '/sono-infantil',
     dashboard_route: '/sono-infantil/dashboard',
