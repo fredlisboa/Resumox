@@ -64,10 +64,9 @@ export const PRODUCT_ORDER_BUMPS_MAP: Record<string, MainProductConfig> = {
     ]
   },
 
-  // ResumoX (produto principal - sem order bumps)
-  // TODO: Substituir RESUMOX_HOTMART_ID pelo ID real do produto na Hotmart
-  'RESUMOX_HOTMART_ID': {
-    product_id: 'RESUMOX_HOTMART_ID',
+  // ResumoX (produto principal - sem order bumps) - Cakto Produção
+  '1643d897-535b-431c-a4cc-56d4dab1e956': {
+    product_id: '1643d897-535b-431c-a4cc-56d4dab1e956',
     product_name: 'ResumoX',
     order_bumps: []
   }

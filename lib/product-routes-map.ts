@@ -53,14 +53,14 @@ export const PRODUCT_ROUTES_MAP: Record<string, ProductRouteConfig> = {
     description: 'Guias e áudios para o sono do bebê'
   },
 
-  // Kit Sono Infantil - PT-BR version (Cakto - Produção)
+  // ResumoX - PT-BR (Cakto - Produção)
   '1643d897-535b-431c-a4cc-56d4dab1e956': {
     product_id: '1643d897-535b-431c-a4cc-56d4dab1e956',
-    product_name: 'Kit Sono Infantil',
-    login_route: '/sono-infantil',
-    dashboard_route: '/sono-infantil/dashboard',
+    product_name: 'ResumoX',
+    login_route: '/resumox',
+    dashboard_route: '/resumox/dashboard',
     theme: 'dark',
-    description: 'Guias e áudios para o sono do bebê (PT-BR)'
+    description: '659 resumos de livros com áudio, mapa mental, insights e exercícios práticos'
   },
 
   // Kit Sono Infantil - PT-BR version (Cakto - Teste)
@@ -83,15 +83,8 @@ export const PRODUCT_ROUTES_MAP: Record<string, ProductRouteConfig> = {
     description: 'Receita personalizada do NutriChá para emagrecimento natural (PT-BR)'
   },
 
-  // ResumoX - PT-BR (product_id placeholder, atualizar com o ID real da Hotmart)
-  'RESUMOX_HOTMART_ID': {
-    product_id: 'RESUMOX_HOTMART_ID',
-    product_name: 'ResumoX',
-    login_route: '/resumox',
-    dashboard_route: '/resumox/dashboard',
-    theme: 'dark',
-    description: '659 resumos de livros com áudio, mapa mental, insights e exercícios práticos'
-  }
+  // ResumoX - PT-BR (placeholder removido, usar UUID Cakto '1643d897-...' acima)
+
 }
 
 /**

@@ -24,13 +24,13 @@ export interface CaktoProductConfig {
  * 3. Certifique-se de que a rota está configurada em PRODUCT_ROUTES_MAP
  */
 export const CAKTO_PRODUCT_MAP: Record<string, CaktoProductConfig> = {
-  // Kit Sono Infantil - PT-BR (Cakto - Produção)
+  // ResumoX - PT-BR (Cakto - Produção)
   '1643d897-535b-431c-a4cc-56d4dab1e956': {
     cakto_product_id: '1643d897-535b-431c-a4cc-56d4dab1e956',
-    cakto_product_name: 'Kit Sono Infantil',
-    content_product_id: '7065534',
-    content_product_name: 'Kit Sono Infantil',
-    dashboard_route: '/sono-infantil/dashboard',
+    cakto_product_name: 'ResumoX',
+    content_product_id: '1643d897-535b-431c-a4cc-56d4dab1e956',
+    content_product_name: 'ResumoX',
+    dashboard_route: '/resumox/dashboard',
     language: 'pt-BR'
   },
 
