@@ -296,9 +296,12 @@ Além das 4 saídas acima, forneça também os seguintes metadados para cadastro
   "category_emoji": "💰",
   "reading_time_min": 12,
   "cover_gradient_from": "#1a1a2e",
-  "cover_gradient_to": "#0f3460"
+  "cover_gradient_to": "#0f3460",
+  "cover_image_r2_key": null
 }
 ```
+
+> **Nota**: O campo `cover_image_r2_key` será `null` inicialmente. A imagem da capa real deve ser buscada e enviada ao R2 após o cadastro do livro (veja seção "Imagem da Capa" abaixo).
 
 ### Categorias disponíveis
 
@@ -328,7 +331,7 @@ Calcule baseado na contagem de palavras do `summary_html`:
 
 ### Gradientes da capa (`cover_gradient_from` / `cover_gradient_to`)
 
-Escolha cores escuras que combinem com o tema do livro. Exemplos:
+Escolha cores escuras que combinem com o tema do livro. Estes gradientes são usados como **fallback** quando a imagem real da capa não está disponível.
 
 | Tema | from | to |
 |---|---|---|
@@ -337,6 +340,67 @@ Escolha cores escuras que combinem com o tema do livro. Exemplos:
 | Natureza / Saúde | `#0a1a0f` | `#1a3a2e` |
 | Energia / Produtividade | `#2e1a0a` | `#4a2e1a` |
 | Genérico / Neutro | `#1a1a2e` | `#16213e` |
+
+### Imagem da Capa (`cover_image_r2_key`)
+
+Após cadastrar o livro, é **obrigatório** buscar e fazer upload da imagem da capa real do livro para o Cloudflare R2. O app exibe a capa real quando disponível, caindo no gradiente CSS apenas como fallback.
+
+#### Como adicionar a capa
+
+1. **Buscar a imagem** — use Google Books API ou Open Library API:
+   ```
+   # Google Books (busca por título + autor)
+   https://www.googleapis.com/books/v1/volumes?q=<titulo>+<autor>&maxResults=3&printType=books
+   # → volumeInfo.imageLinks.thumbnail (ou medium/large)
+
+   # Open Library (busca por título + autor)
+   https://openlibrary.org/search.json?q=<titulo>+<autor>&limit=3&fields=key,cover_i
+   # → se cover_i existir: https://covers.openlibrary.org/b/id/<cover_i>-L.jpg
+   ```
+
+2. **Download da imagem** — baixe a imagem em alta resolução (>5KB, preferencialmente >20KB)
+
+3. **Upload para R2** — faça upload para `resumox/imgs/<slug>.jpg` (ou `.png`):
+   ```typescript
+   await uploadFileToR2({
+     key: `resumox/imgs/${slug}.jpg`,
+     body: imageBuffer,
+     contentType: 'image/jpeg',
+   })
+   ```
+
+4. **Atualizar banco** — grave o caminho R2 no campo `cover_image_r2_key`:
+   ```sql
+   UPDATE resumox_books
+   SET cover_image_r2_key = 'r2://resumox/imgs/<slug>.jpg'
+   WHERE slug = '<slug>';
+   ```
+
+#### Script automatizado
+
+Use o script `scripts/resumox-upload-covers.ts` para buscar e fazer upload de capas automaticamente:
+
+```bash
+# Todos os livros sem capa
+npx tsx scripts/resumox-upload-covers.ts
+
+# Livro específico
+npx tsx scripts/resumox-upload-covers.ts --slug "nome-do-livro"
+
+# Forçar re-download mesmo que já tenha capa
+npx tsx scripts/resumox-upload-covers.ts --slug "nome-do-livro" --force
+
+# Testar sem efetuar uploads (dry-run)
+npx tsx scripts/resumox-upload-covers.ts --dry-run
+```
+
+O script usa Google Books API (primário) e Open Library (fallback) para encontrar capas automaticamente.
+
+#### Como a capa é exibida no app
+
+O componente `BookCover` verifica se `cover_image_r2_key` existe:
+- **Se sim**: renderiza `<img>` com `src="/api/r2-content?key=<r2-key>"` (capa real)
+- **Se não (ou erro de carregamento)**: renderiza o gradiente CSS com título/autor sobrepostos (fallback)
 
 ---
 
@@ -525,6 +589,15 @@ Antes de entregar, valide:
 - [ ] JSON é válido e parseable
 - [ ] Texto em Português do Brasil
 - [ ] Extensão do resumo: 2.000-4.000 palavras
+
+### Checklist da Capa (pós-cadastro)
+
+- [ ] Script `resumox-upload-covers.ts` executou para o livro (ou upload manual feito)
+- [ ] `cover_image_r2_key` preenchido no banco (`r2://resumox/imgs/<slug>.jpg`)
+- [ ] Arquivo de imagem existe no R2 em `resumox/imgs/<slug>.jpg` (ou `.png`)
+- [ ] Imagem tem resolução adequada (>5KB, preferencialmente >20KB)
+- [ ] Capa aparece corretamente no card do livro na listagem
+- [ ] Capa aparece corretamente no hero da página do livro
 
 ### Checklist do Áudio (pós-geração)
 

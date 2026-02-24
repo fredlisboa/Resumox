@@ -20,11 +20,12 @@ export default function BookCard({ book, compact = false }: BookCardProps) {
           author={book.author}
           gradientFrom={book.cover_gradient_from}
           gradientTo={book.cover_gradient_to}
+          coverImageR2Key={book.cover_image_r2_key}
           size="sm"
           className="w-full h-24 mb-2"
         />
-        <p className="text-xs font-semibold text-resumox-text truncate">{book.title}</p>
-        <p className="text-[10px] text-resumox-muted truncate">{book.author}</p>
+        <p className="text-sm font-bold text-resumox-text truncate leading-tight">{book.title}</p>
+        <p className="text-xs text-resumox-muted truncate mt-0.5">{book.author}</p>
         {progress > 0 && (
           <div className="mt-1.5 h-1 bg-resumox-surface3 rounded-full overflow-hidden">
             <div
@@ -52,11 +53,12 @@ export default function BookCard({ book, compact = false }: BookCardProps) {
         author={book.author}
         gradientFrom={book.cover_gradient_from}
         gradientTo={book.cover_gradient_to}
+        coverImageR2Key={book.cover_image_r2_key}
         size="sm"
       />
       <div className="flex-1 min-w-0 flex flex-col justify-center">
-        <p className="text-sm font-bold text-resumox-text truncate">{book.title}</p>
-        <p className="text-xs text-resumox-muted truncate">{book.author}</p>
+        <p className="text-[15px] font-extrabold text-resumox-text leading-tight line-clamp-2">{book.title}</p>
+        <p className="text-sm text-resumox-muted mt-0.5">{book.author}</p>
         <div className="flex items-center gap-2 mt-1.5">
           <span className="text-[10px] text-resumox-muted flex items-center gap-1">
             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>

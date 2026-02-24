@@ -28,7 +28,8 @@ export default function BookHero({ book }: BookHeroProps) {
           author={book.author}
           gradientFrom={book.cover_gradient_from}
           gradientTo={book.cover_gradient_to}
-          size="md"
+          coverImageR2Key={book.cover_image_r2_key}
+          size="lg"
         />
 
         <div className="flex-1 min-w-0">
@@ -41,9 +42,9 @@ export default function BookHero({ book }: BookHeroProps) {
           </span>
 
           <h1
-            className="font-playfair font-extrabold text-2xl leading-tight mb-1"
+            className="font-playfair font-extrabold text-[26px] leading-tight mb-1.5"
             style={{
-              background: 'linear-gradient(135deg, #fff, #ccc)',
+              background: 'linear-gradient(135deg, #fff, #ddd)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
             }}
@@ -52,10 +53,10 @@ export default function BookHero({ book }: BookHeroProps) {
           </h1>
 
           {book.original_title && (
-            <p className="text-xs text-resumox-muted italic mb-2">{book.original_title}</p>
+            <p className="text-xs text-resumox-muted italic mb-1.5">{book.original_title}</p>
           )}
 
-          <p className="text-[13px] text-resumox-muted mb-3">{book.author}</p>
+          <p className="text-[15px] font-semibold text-resumox-accent-light mb-3">{book.author}</p>
 
           {/* Meta chips */}
           <div className="flex flex-wrap gap-2">

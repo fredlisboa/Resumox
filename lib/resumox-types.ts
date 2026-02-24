@@ -21,6 +21,7 @@ export interface ResumoxBook {
   mindmap_image_r2_key: string | null
   cover_gradient_from: string
   cover_gradient_to: string
+  cover_image_r2_key: string | null
   rating_avg: number
   rating_count: number
   is_featured: boolean
