@@ -225,12 +225,26 @@ async function main() {
       continue
     }
 
-    // Download image
-    const imageData = await downloadImage(imageUrl)
+    // Download image — if Google Books fails, try Open Library fallback
+    let imageData = await downloadImage(imageUrl)
     if (!imageData) {
-      console.log(`   ✗ Failed to download image\n`)
-      failed++
-      continue
+      // Try Open Library as fallback
+      let fallbackUrl: string | null = null
+      console.log(`   Searching Open Library (fallback): "${searchTitle}"...`)
+      fallbackUrl = await searchOpenLibrary(searchTitle, book.author)
+      if (!fallbackUrl && book.original_title) {
+        console.log(`   Trying PT title on Open Library: "${book.title}"...`)
+        fallbackUrl = await searchOpenLibrary(book.title, book.author)
+      }
+      if (fallbackUrl) {
+        console.log(`   Found fallback: ${fallbackUrl.substring(0, 80)}...`)
+        imageData = await downloadImage(fallbackUrl)
+      }
+      if (!imageData) {
+        console.log(`   ✗ Failed to download image\n`)
+        failed++
+        continue
+      }
     }
 
     // Determine content type from first bytes
