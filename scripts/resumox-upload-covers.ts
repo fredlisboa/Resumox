@@ -108,6 +108,18 @@ async function searchOpenLibrary(title: string, author: string): Promise<string 
   return null
 }
 
+function isGoogleBooksPlaceholder(buf: Buffer): boolean {
+  // The Google Books "image not available" placeholder is a grayscale PNG ~8.9-9.2 KB
+  const isPng = buf[0] === 0x89 && buf[1] === 0x50
+  if (isPng && buf.length > 8000 && buf.length < 10000) {
+    // PNG color type at byte 25: 0 = grayscale
+    if (buf.length > 25 && buf[25] === 0) {
+      return true
+    }
+  }
+  return false
+}
+
 async function downloadImage(url: string): Promise<Buffer | null> {
   try {
     const res = await fetch(url, {
@@ -120,6 +132,10 @@ async function downloadImage(url: string): Promise<Buffer | null> {
     // Skip tiny placeholder images (< 5KB is likely a placeholder)
     if (buf.length < 5000) {
       console.log(`  Image too small (${buf.length} bytes), skipping`)
+      return null
+    }
+    if (isGoogleBooksPlaceholder(buf)) {
+      console.log(`  Detected Google Books "image not available" placeholder, skipping`)
       return null
     }
     return buf
@@ -225,12 +241,26 @@ async function main() {
       continue
     }
 
-    // Download image
-    const imageData = await downloadImage(imageUrl)
+    // Download image — if Google Books fails, try Open Library fallback
+    let imageData = await downloadImage(imageUrl)
     if (!imageData) {
-      console.log(`   ✗ Failed to download image\n`)
-      failed++
-      continue
+      // Try Open Library as fallback
+      let fallbackUrl: string | null = null
+      console.log(`   Searching Open Library (fallback): "${searchTitle}"...`)
+      fallbackUrl = await searchOpenLibrary(searchTitle, book.author)
+      if (!fallbackUrl && book.original_title) {
+        console.log(`   Trying PT title on Open Library: "${book.title}"...`)
+        fallbackUrl = await searchOpenLibrary(book.title, book.author)
+      }
+      if (fallbackUrl) {
+        console.log(`   Found fallback: ${fallbackUrl.substring(0, 80)}...`)
+        imageData = await downloadImage(fallbackUrl)
+      }
+      if (!imageData) {
+        console.log(`   ✗ Failed to download image\n`)
+        failed++
+        continue
+      }
     }
 
     // Determine content type from first bytes

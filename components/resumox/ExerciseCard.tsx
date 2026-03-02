@@ -33,7 +33,7 @@ export default function ExerciseCard({
   const [xpPopIdx, setXpPopIdx] = useState<number | null>(null)
   const [allDone, setAllDone] = useState(false)
   const popTimer = useRef<NodeJS.Timeout>()
-  const colors = themeColors[colorTheme]
+  const colors = themeColors[colorTheme] || themeColors.accent
 
   useEffect(() => {
     setLocalState(checklistState)
