@@ -27,8 +27,10 @@ export default function PanelPratica({ exercises, checklistState, onChecklistCha
   let totalChecked = 0
   let totalItems = 0
   exercises.forEach((exercise, i) => {
-    const state = checklistState[`exercise_${i}`] || new Array(exercise.checklist.length).fill(false)
-    totalItems += exercise.checklist.length
+    const ex = exercise as ExerciseData & Record<string, unknown>
+    const checklist = ex.checklist || (ex.steps as string[]) || []
+    const state = checklistState[`exercise_${i}`] || new Array(checklist.length).fill(false)
+    totalItems += checklist.length
     totalChecked += state.filter(Boolean).length
   })
   const totalXp = totalChecked * 2
@@ -55,19 +57,24 @@ export default function PanelPratica({ exercises, checklistState, onChecklistCha
           )}
         </div>
       </div>
-      {exercises.map((exercise, i) => (
-        <ExerciseCard
-          key={i}
-          title={exercise.title}
-          icon={exercise.icon}
-          colorTheme={exercise.color_theme}
-          description={exercise.description}
-          templateText={exercise.template_text}
-          checklist={exercise.checklist}
-          checklistState={checklistState[`exercise_${i}`] || new Array(exercise.checklist.length).fill(false)}
-          onChecklistChange={(state) => handleExerciseChange(i, state)}
-        />
-      ))}
+      {exercises.map((exercise, i) => {
+        const ex = exercise as ExerciseData & Record<string, unknown>
+        const colorTheme = ex.color_theme || (ex.color as string) || (ex.accent as string) || (ex.theme as string) || 'accent'
+        const checklist = ex.checklist || (ex.steps as string[]) || []
+        return (
+          <ExerciseCard
+            key={i}
+            title={ex.title}
+            icon={ex.icon || '📝'}
+            colorTheme={colorTheme as 'accent' | 'green' | 'orange'}
+            description={ex.description || ''}
+            templateText={ex.template_text}
+            checklist={checklist}
+            checklistState={checklistState[`exercise_${i}`] || new Array(checklist.length).fill(false)}
+            onChecklistChange={(state) => handleExerciseChange(i, state)}
+          />
+        )
+      })}
     </div>
   )
 }
