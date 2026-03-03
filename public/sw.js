@@ -23,12 +23,16 @@ self.addEventListener('install', (event) => {
   self.skipWaiting()
 })
 
-// Fetch event - Network first, fallback to cache
+// Fetch event - Network first, fallback to cache (GET only)
 self.addEventListener('fetch', (event) => {
+  // Only cache GET requests — Cache API does not support POST/PUT/etc.
+  if (event.request.method !== 'GET') {
+    return
+  }
+
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        // Clone the response
         const responseToCache = response.clone()
 
         caches.open(CACHE_NAME)
