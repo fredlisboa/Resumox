@@ -7,7 +7,7 @@ interface PanelMindMapProps {
 }
 
 export default function PanelMindMap({ data }: PanelMindMapProps) {
-  if (!data) {
+  if (!data || !Array.isArray(data.branches) || data.branches.length === 0) {
     return (
       <div className="px-5 text-center py-8">
         <p className="text-sm text-resumox-muted">Mapa mental em breve.</p>
@@ -60,7 +60,7 @@ export default function PanelMindMap({ data }: PanelMindMapProps) {
                 </p>
 
                 <ul className="space-y-1.5">
-                  {branch.items.map((item, j) => (
+                  {(branch.items ?? []).map((item, j) => (
                     <li key={j} className="text-[11px] text-resumox-text leading-relaxed flex items-start gap-2">
                       <span className="text-resumox-accent mt-0.5 flex-shrink-0">•</span>
                       {item}
