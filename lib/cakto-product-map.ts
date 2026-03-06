@@ -42,7 +42,7 @@ export const CAKTO_PRODUCT_MAP: Record<string, CaktoProductConfig> = {
     content_product_name: 'Kit Sono Infantil',
     dashboard_route: '/sono-infantil/dashboard',
     language: 'pt-BR'
-  }
+  },
 
   // ResumoX R$27,00 - PT-BR (Cakto - Produção)
   '788e1b74-b3ce-47ba-8fbd-63ee3526b20b': {
