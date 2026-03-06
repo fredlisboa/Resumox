@@ -1,0 +1,74 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://evolution2.studiodental.care/message/sendText/Info04",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "DECD4097B18C-4D4E-869F-BA4470BE5FB7"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "*/*"
+            },
+            {
+              "name": "Accept-Encoding",
+              "value": "gzip, deflate, br"
+            },
+            {
+              "name": "Connection",
+              "value": "keep-alive"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "=5561981510201"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.finalMessage }}"
+            },
+            {
+              "name": "options",
+              "value": "{\"linkPreview\": true}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4827991b-fa2d-41d2-87e4-9d5d9298d96a",
+      "name": "HTTP Request43",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        800,
+        6112
+      ],
+      "continueOnFail": true
+    }
+  ],
+  "connections": {
+    "HTTP Request43": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "55093559961ab871156eaf00dd8689dbb50fd475b345b0d7fbffaa64d93eaebd"
+  }
+}
