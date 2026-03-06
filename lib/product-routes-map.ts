@@ -83,7 +83,15 @@ export const PRODUCT_ROUTES_MAP: Record<string, ProductRouteConfig> = {
     description: 'Receita personalizada do NutriChá para emagrecimento natural (PT-BR)'
   },
 
-  // ResumoX - PT-BR (placeholder removido, usar UUID Cakto '1643d897-...' acima)
+  // ResumoX R$27,00 - PT-BR (Cakto - Produção)
+  '788e1b74-b3ce-47ba-8fbd-63ee3526b20b': {
+    product_id: '788e1b74-b3ce-47ba-8fbd-63ee3526b20b',
+    product_name: 'ResumoX R$27,00',
+    login_route: '/resumox',
+    dashboard_route: '/resumox/dashboard',
+    theme: 'dark',
+    description: '659 resumos de livros com áudio, mapa mental, insights e exercícios práticos'
+  },
 
 }
 

@@ -44,6 +44,16 @@ export const CAKTO_PRODUCT_MAP: Record<string, CaktoProductConfig> = {
     language: 'pt-BR'
   }
 
+  // ResumoX R$27,00 - PT-BR (Cakto - Produção)
+  '788e1b74-b3ce-47ba-8fbd-63ee3526b20b': {
+    cakto_product_id: '788e1b74-b3ce-47ba-8fbd-63ee3526b20b',
+    cakto_product_name: 'ResumoX R$27,00',
+    content_product_id: '1643d897-535b-431c-a4cc-56d4dab1e956',
+    content_product_name: 'ResumoX',
+    dashboard_route: '/resumox/dashboard',
+    language: 'pt-BR'
+  },
+
   // Adicione novos produtos Cakto aqui seguindo o mesmo padrão
   // Exemplo:
   // 'uuid-do-produto-cakto': {
